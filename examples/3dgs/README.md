@@ -2,6 +2,7 @@
 
 使用本仓库的通用模板展示既有 3D Gaussian Splatting 文献记录：**493 个方法、21 类技术方向、484 条技术关联、5 篇综述来源**。
 
+- [在线体验](https://htmlpreview.github.io/?https://github.com/XuanwenZhou/research-atlas/blob/main/examples/3dgs/index.html)：使用 GitHub HTML Preview 加载本目录的 HTML，无需下载。
 - [交互式 HTML](index.html)：下载后用浏览器打开，或克隆仓库后直接打开本文件夹中的 `index.html`。GitHub 文件页面只展示源码。
 - [结构化数据](project-data.json)：可使用仓库脚本重新构建、校验和导出。
 - [完整文献 CSV](bibliography.csv) · [完整 BibTeX](bibliography.bib)：与当前 JSON 对应，保留实际元数据。

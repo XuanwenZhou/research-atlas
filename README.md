@@ -1,12 +1,13 @@
 <p align="center">
-  <img src="assets/research-atlas-logo.svg" width="100" height="100" alt="Research Atlas Logo">
+  <img src="assets/research-atlas-logo.svg" width="72" height="72" alt="Research Atlas Logo">
 </p>
 
 <h1 align="center">Research Atlas</h1>
 
 <p align="center">
   <strong>从综述论文到技术演进图</strong><br>
-  根据综述和原始论文，整理方法合集、技术分类和有来源依据的技术关系。
+  让 Codex 阅读综述和原始论文，整理方法、技术分类和有依据的演进关系，<br>
+  交付可以搜索、筛选和追踪技术路径的独立 HTML 图谱。
 </p>
 
 <p align="center">
@@ -17,40 +18,47 @@
 </p>
 
 <p align="center">
-  <a href="examples/3dgs/README.md"><img src="docs/brand/button-demo.svg" alt="浏览 3DGS 示例" height="42"></a>
+  <a href="https://htmlpreview.github.io/?https://github.com/XuanwenZhou/research-atlas/blob/main/examples/3dgs/index.html"><img src="docs/brand/button-demo.svg" alt="在线体验 3DGS 示例" height="42"></a>
   <a href="#安装"><img src="docs/brand/button-start.svg" alt="安装与使用" height="42"></a>
   <a href="SKILL.md"><img src="docs/brand/button-docs.svg" alt="查看使用规范" height="42"></a>
 </p>
 
-<table>
-  <tr>
-    <td width="50%">
-      <strong>总方法合集</strong><br>
-      按技术分类检索方法，查看论文、机制和来源。
-      <a href="docs/images/3dgs-method-catalog.png"><img src="docs/images/3dgs-method-catalog.png" alt="3DGS 方法合集实际页面：分类导航、检索和方法卡片" width="100%"></a>
-    </td>
-    <td width="50%">
-      <strong>技术演进关系图</strong><br>
-      浏览全部方法，沿时间轴查看技术联系。
-      <a href="docs/images/3dgs-evolution-map.png"><img src="docs/images/3dgs-evolution-map.png" alt="3DGS 全部方法图谱实际页面：时间轴、技术方向和四类关系" width="100%"></a>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/readme-catalog-dark.png">
+    <img src="docs/images/readme-catalog-light.png" width="820" alt="真实 3DGS 方法合集：按技术分类浏览方法，搜索论文并查看机制与来源">
+  </picture>
+</p>
 
-<p align="center"><sub>上图为真实 3DGS 示例，点击可查看大图。交互体验请下载仓库后打开 <code>examples/3dgs/index.html</code>。</sub></p>
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/readme-graph-dark.png"><img src="docs/images/readme-graph-light.png" width="405" alt="全部方法的技术演进图：时间轴、技术方向和关系连线"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/readme-evidence-dark.png"><img src="docs/images/readme-evidence-light.png" width="405" alt="搜索 Endo-4DGS 后点击连线，查看技术关系和原论文依据"></picture>
+</p>
+
+<p align="center"><sub>上图均来自实际示例。在线体验使用 GitHub HTML Preview，也可下载后直接打开 <code>examples/3dgs/index.html</code>。</sub></p>
+
+<a name="为什么使用"></a>
+
+## 为什么使用
+
+综述中的分类、论文列表和技术关系往往分散在不同章节。只整理标题和摘要，还不足以看清方法之间的联系。
+
+> **这些方法分别解决什么问题？采用了什么机制？哪些技术关系有文献依据？**
+
+Research Atlas 将这些信息整理进同一份数据：用方法合集检索和比较，用时间轴浏览技术路线，点击节点或连线回到论文与来源。研究其他领域时，使用相同流程和通用模板即可。
 
 <a name="主要功能"></a>
 
 ## <img src="docs/brand/icon-stack-2.svg" width="24" height="24" alt=""> 主要功能
 
-<p align="center">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/brand/feature-extract-dark.svg"><img src="docs/brand/feature-extract-light.svg" width="406" alt="文献提取：从综述追溯原始论文，保留引用位置和来源记录"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/brand/feature-catalog-dark.svg"><img src="docs/brand/feature-catalog-light.svg" width="406" alt="方法合集：合并重复记录，区分论文和方法，支持搜索和持续补充"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/brand/feature-taxonomy-dark.svg"><img src="docs/brand/feature-taxonomy-light.svg" width="406" alt="技术分类：根据研究问题和核心机制分类，支持主分类和辅助标签"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/brand/feature-relations-dark.svg"><img src="docs/brand/feature-relations-light.svg" width="406" alt="演进分析：区分继承、扩展、借鉴和同方向研究，保留文献依据"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/brand/feature-search-dark.svg"><img src="docs/brand/feature-search-light.svg" width="406" alt="文献补充：沿技术路线寻找后续研究，保留已有 ID 和更新记录"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/brand/feature-export-dark.svg"><img src="docs/brand/feature-export-light.svg" width="406" alt="交互交付：独立 HTML、结构化数据和文献清单，支持筛选、路径查看和导出"></picture>
-</p>
+| 能力 | 你能得到什么 |
+|---|---|
+| <img src="docs/brand/icon-book-2.svg" width="20" height="20" alt=""> **文献提取** | 从综述追溯原始论文，记录综述来源、引用编号和原文位置；区分阅读全文、摘要和转述。 |
+| <img src="docs/brand/icon-stack-2.svg" width="20" height="20" alt=""> **方法合集** | 去重并统一论文信息，区分论文和方法，支持一文多法、机制检索与方法比较。 |
+| <img src="docs/brand/icon-sitemap.svg" width="20" height="20" alt=""> **技术分类** | 根据研究问题和核心机制归纳分类，保留主要归属、辅助标签和分类依据。 |
+| <img src="docs/brand/icon-git-branch.svg" width="20" height="20" alt=""> **演进分析** | 区分直接继承、框架扩展、机制借鉴和同方向研究；查看已有技术关系中的前驱与后续路径。 |
+| <img src="docs/brand/icon-search.svg" width="20" height="20" alt=""> **文献补充** | 沿分类和技术路线查找后续研究，记录检索范围和截止日期，增量更新时保留已有 ID。 |
+| <img src="docs/brand/icon-file-export.svg" width="20" height="20" alt=""> **交互交付** | 独立 HTML、完整 JSON、分类和关系数据、CSV/BibTeX，以及检索核验报告；图谱可导出 SVG。 |
 
 <a name="安装"></a>
 
@@ -59,14 +67,18 @@
 将完整仓库放入用户级 Skill 目录，确保 `SKILL.md` 位于该目录根部：
 
 ```bash
-git clone https://github.com/3465252812/research-atlas.git ~/.agents/skills/research-evolution-map
+git clone https://github.com/XuanwenZhou/research-atlas.git ~/.agents/skills/research-evolution-map
 ```
 
 Windows 用户目录通常为 `%USERPROFILE%/.agents/skills/research-evolution-map`。也可将仓库放入项目的 `.agents/skills/research-evolution-map`。如果已有同名 Skill，请先备份或在原目录更新，避免重复安装。
 
-在 Codex 中查找 **Research Atlas｜科研技术图谱**，或输入 `$research-evolution-map` 调用。GitHub 仓库名为 `research-atlas`；Skill 安装目录和调用名沿用 `research-evolution-map`，兼容现有项目。未显示时可重启 Codex。
+在 Codex 中查找 **Research Atlas｜科研技术图谱**，或输入 `$research-evolution-map` 调用。安装目录和调用名保留为 `research-evolution-map`；未显示时可重启 Codex。
 
-数据脚本要求 **Python 3.10+**，只依赖标准库。文献阅读和联网检索由 Codex 结合当前可用工具完成。
+| 环境 | 用途 |
+|---|---|
+| Codex 与可用的阅读、检索工具 | 阅读文献、分析机制、分类和技术关系 |
+| Python 3.10+ | 数据校验、去重、构建和导出，仅依赖标准库 |
+| 现代浏览器 | 浏览生成的 HTML，无需服务器或前端依赖 |
 
 <a name="使用示例"></a>
 
@@ -79,7 +91,16 @@ Windows 用户目录通常为 `%USERPROFILE%/.agents/skills/research-evolution-m
 最终生成交互式 HTML、JSON 数据、文献清单和核验报告。
 ```
 
-你会得到可独立打开的 **HTML**、可继续更新的 **JSON 数据**、**CSV/BibTeX 文献清单**，以及检索核验报告和未核实问题清单。更新项目时，提供原始 JSON 和新增资料即可；已有数据也可用于进一步整理专题方向。
+你会得到可独立打开的 **HTML**、可继续更新的 **JSON 数据**、**CSV/BibTeX 文献清单**，以及检索核验报告和未核实问题清单。
+
+更新已有项目时，可以这样提出需求：
+
+```text
+使用 $research-evolution-map，基于现有项目 JSON 和这批新增论文，
+补充方法、技术分类与关系依据，保留已有 ID，并重新生成 HTML 和文献清单。
+```
+
+已有数据也可用于进一步整理专题方向。
 
 <a name="工作流程"></a>
 
@@ -93,6 +114,24 @@ Windows 用户目录通常为 `%USERPROFILE%/.agents/skills/research-evolution-m
 </picture>
 
 综述解析、方法提取、去重、分类、关系分析、沿路线补充文献和 HTML 构建连续完成。分类依据、来源位置、事实或推断及核验状态随数据保存，交付时汇总需要进一步讨论的问题。
+
+<details>
+<summary>查看数据如何生成图谱</summary>
+
+Codex 负责文献阅读与技术判断；Python 脚本负责结构校验、HTML 构建和数据导出。
+
+```mermaid
+flowchart LR
+    A["综述与原始论文"] --> B["Codex：方法提取与文献整合"]
+    B --> C["技术分类与关系依据"]
+    C --> D["项目 JSON"]
+    D --> E["validate_data.py"]
+    E --> F["build_html.py"]
+    F --> G["方法合集与技术演进图"]
+    F --> H["JSON / CSV / BibTeX / 核验报告"]
+```
+
+</details>
 
 <a name="html-输出效果"></a>
 
@@ -118,7 +157,7 @@ Windows 用户目录通常为 `%USERPROFILE%/.agents/skills/research-evolution-m
 
 [操作指南](examples/3dgs/README.md) · [HTML 文件](examples/3dgs/index.html) · [JSON 数据](examples/3dgs/project-data.json) · [文献 CSV](examples/3dgs/bibliography.csv) · [BibTeX](examples/3dgs/bibliography.bib)
 
-GitHub 文件页面显示 HTML 源码；下载后用浏览器打开即可交互，无需服务器或前端依赖。
+GitHub 文件页面显示 HTML 源码；首屏“在线体验”提供浏览入口，下载后的 HTML 可直接离线打开。
 
 <details>
 <summary><strong>查看完整操作演示</strong>：分类、详情、关系依据、技术路径和导出</summary>
@@ -159,6 +198,31 @@ GitHub 文件页面显示 HTML 源码；下载后用浏览器打开即可交互�
 </details>
 
 示例保留实际核验状态，不代表全部信息已核实或文献收录穷尽。另有 `assets/example-data.json` 作为小型虚构数据，用于脚本和交互测试。
+
+<a name="常见问题"></a>
+
+## 常见问题
+
+<details>
+<summary>图谱会自动只挑选一条主线吗？</summary>
+
+默认展示全部收录方法。搜索、技术方向、年份和关系类型筛选用于按需浏览；重置后恢复全部方法。
+
+</details>
+
+<details>
+<summary>图中连线都表示技术继承吗？</summary>
+
+只有 `direct`、`extension` 和 `borrow` 表示相应技术联系，`theme` 仅表示同方向研究。点击连线可查看说明和依据；事实、整理推断及核验状态保存在数据中。
+
+</details>
+
+<details>
+<summary>生成后的 HTML 需要联网或安装前端吗？</summary>
+
+不需要。模板的样式、脚本和项目数据内嵌在 HTML 中，下载后可离线浏览。打开论文原文或使用在线预览服务时需要联网。
+
+</details>
 
 <a name="本地构建与校验"></a>
 
@@ -221,7 +285,7 @@ research-atlas/
 <table>
   <tr>
     <td align="center" width="50%">
-      <a href="https://github.com/3465252812">
+      <a href="https://github.com/XuanwenZhou">
         <img src="docs/brand/coffee-cat-avatar.png" width="64" height="64" alt="Coffee Cat 的 GitHub 头像"><br>
         <strong>Coffee Cat</strong>
       </a><br>
