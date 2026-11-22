@@ -1,19 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="820" height="112" viewBox="0 0 820 112" role="img" aria-label="综述与论文 → 方法、分类和技术关系 → 交互式 HTML 图谱"><title>综述与论文 → 方法、分类和技术关系 → 交互式 HTML 图谱</title><rect x=".5" y=".5" width="819" height="111" rx="14" fill="#152531" stroke="#2E4554"/><g transform="translate(24 23) scale(1.125)" fill="none" stroke="#80C9C0" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="112" viewBox="0 0 820 112" role="img" aria-label="综述与论文 → 方法、分类和技术关系 → 交互式 HTML 图谱"><title>综述与论文 → 方法、分类和技术关系 → 交互式 HTML 图谱</title><rect x=".5" y=".5" width="819" height="111" rx="4" fill="#131922" stroke="#253142"/><rect x="1" y="1" width="818" height="3" fill="#79A8EB"/><g transform="translate(24 23) scale(1.125)" fill="none" stroke="#79A8EB" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12" />
   <path d="M19 16h-12a2 2 0 0 0 -2 2" />
-  <path d="M9 8h6" /></g><g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif" fill="#ECF3F7"><text x="63" y="43" font-size="18" font-weight="650">提供文献</text><text x="24" y="80" font-size="14" fill="#B8C8D2">综述、论文、已有资料</text></g><g transform="translate(249 41) scale(0.8333333333333334)" fill="none" stroke="#B8C8D2" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M9 8h6" /></g><g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif" fill="#E9EEF5"><text x="63" y="43" font-family="Cambria,'Palatino Linotype','Noto Serif SC',Georgia,serif" font-size="18" font-weight="700">提供文献</text><text x="24" y="80" font-size="14" fill="#8F9FB3">综述、论文、已有资料</text></g><g transform="translate(249 41) scale(0.8333333333333334)" fill="none" stroke="#6D7E93" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M5 12l14 0" />
   <path d="M13 18l6 -6" />
-  <path d="M13 6l6 6" /></g><g transform="translate(299 23) scale(1.125)" fill="none" stroke="#80C9C0" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M13 6l6 6" /></g><g transform="translate(299 23) scale(1.125)" fill="none" stroke="#79A8EB" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M5 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
   <path d="M5 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
   <path d="M15 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
   <path d="M7 8l0 8" />
   <path d="M9 18h6a2 2 0 0 0 2 -2v-5" />
-  <path d="M14 14l3 -3l3 3" /></g><g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif" fill="#ECF3F7"><text x="338" y="43" font-size="18" font-weight="650">整理技术</text><text x="299" y="80" font-size="14" fill="#B8C8D2">方法、分类、关系依据</text></g><g transform="translate(524 41) scale(0.8333333333333334)" fill="none" stroke="#B8C8D2" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M14 14l3 -3l3 3" /></g><g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif" fill="#E9EEF5"><text x="338" y="43" font-family="Cambria,'Palatino Linotype','Noto Serif SC',Georgia,serif" font-size="18" font-weight="700">整理技术</text><text x="299" y="80" font-size="14" fill="#8F9FB3">方法、分类、关系依据</text></g><g transform="translate(524 41) scale(0.8333333333333334)" fill="none" stroke="#6D7E93" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M5 12l14 0" />
   <path d="M13 18l6 -6" />
-  <path d="M13 6l6 6" /></g><g transform="translate(574 23) scale(1.125)" fill="none" stroke="#80C9C0" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M13 6l6 6" /></g><g transform="translate(574 23) scale(1.125)" fill="none" stroke="#79A8EB" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M4 8h16" />
   <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" />
-  <path d="M8 4v4" /></g><g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif" fill="#ECF3F7"><text x="613" y="43" font-size="18" font-weight="650">浏览图谱</text><text x="574" y="80" font-size="14" fill="#B8C8D2">方法合集、时间轴、导出</text></g></svg>
+  <path d="M8 4v4" /></g><g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif" fill="#E9EEF5"><text x="613" y="43" font-family="Cambria,'Palatino Linotype','Noto Serif SC',Georgia,serif" font-size="18" font-weight="700">浏览图谱</text><text x="574" y="80" font-size="14" fill="#8F9FB3">方法合集、时间轴、导出</text></g></svg>

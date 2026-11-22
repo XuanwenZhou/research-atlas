@@ -3,7 +3,7 @@ interface:
   short_description: "从综述整理方法与技术关系，生成可交互、可追溯的科研技术图谱"
   icon_small: "./assets/research-atlas-icon.png"
   icon_large: "./assets/research-atlas-logo.svg"
-  brand_color: "#147D78"
+  brand_color: "#1D3C6A"
   default_prompt: "使用 $research-evolution-map 整理已有综述和相关文献，提取方法、归纳技术分类、分析继承关系并补充文献，生成交互式 HTML 技术演进图。"
 policy:
   allow_implicit_invocation: true

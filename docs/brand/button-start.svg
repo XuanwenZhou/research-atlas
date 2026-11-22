@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="162" height="42" viewBox="0 0 162 42" role="img" aria-label="安装与使用"><title>安装与使用</title><rect x=".5" y=".5" width="161" height="41" rx="8" fill="#E9F4F2" stroke="#B8D7D2"/><g transform="translate(13 11) scale(0.8333333333333334)" fill="none" stroke="#147D78" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+<svg xmlns="http://www.w3.org/2000/svg" width="162" height="42" viewBox="0 0 162 42" role="img" aria-label="安装与使用"><title>安装与使用</title><rect x=".5" y=".5" width="161" height="41" rx="4" fill="#F7F9FB" stroke="#C5D1DF"/><g transform="translate(13 11) scale(0.8333333333333334)" fill="none" stroke="#1D3C6A" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M8 9l3 3l-3 3" />
   <path d="M13 15l3 0" />
-  <path d="M3 6a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -12" /></g><text x="43" y="26" font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif" font-size="14" font-weight="600" fill="#125E5A">安装与使用</text><g transform="translate(133 13) scale(0.6666666666666666)" fill="none" stroke="#147D78" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M3 6a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -12" /></g><text x="43" y="26" font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif" font-size="14" font-weight="600" fill="#1D3C6A">安装与使用</text><g transform="translate(133 13) scale(0.6666666666666666)" fill="none" stroke="#1D3C6A" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M5 12l14 0" />
   <path d="M13 18l6 -6" />
   <path d="M13 6l6 6" /></g></svg>
