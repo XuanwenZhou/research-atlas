@@ -143,6 +143,22 @@ class PipelineTests(unittest.TestCase):
             export(self.data, d)
             bib = (Path(d) / 'bibliography.bib').read_text(encoding='utf-8')
             self.assertIn('title = {{3DGS-SLAM via NeRF}}', bib)
+    def test_recent_coverage_gap_and_report_table(self):
+        d = copy.deepcopy(self.data)
+        d['metadata']['is_synthetic'] = False
+        d['metadata']['search_cutoff'] = '2026-11-22'
+        # Expand to 15 older methods (2018) so recent 3-year window (2024-2026) is empty for representation
+        for i in range(12):
+            m = copy.deepcopy(d['methods'][0])
+            m['id'] = f'm-old-{i}'
+            d['methods'].append(m)
+        warns = {w['code'] for w in validate(d)['warnings']}
+        self.assertIn('recent_coverage_gap', warns)
+        with tempfile.TemporaryDirectory() as tmp:
+            build(d, Path(tmp) / 'map.html')
+            report_md = (Path(tmp) / 'verification-report.md').read_text(encoding='utf-8')
+            self.assertIn('## 一级方向 × 近年覆盖', report_md)
+            self.assertIn('| 表示机制 |', report_md)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

@@ -258,6 +258,11 @@ def validate(data):
         isolated = len(tables['methods']) - len(connected)
         if isolated > len(tables['methods']) * 0.5:
             issue('warning', 'isolated_methods_high', 'edges', f'孤立方法占比偏高（{isolated}/{len(tables["methods"])}），请核查新增批次是否遗漏有依据的关系，勿无依据强连')
+    if not meta.get('is_synthetic') and len(tables['methods']) >= 15 and isinstance(meta.get('search_cutoff'), str) and len(meta['search_cutoff']) >= 4 and meta['search_cutoff'][:4].isdigit():
+        cov = coverage_summary(data)
+        empty_recent = [r['name'] for r in cov['rows'] if r['total'] > 0 and sum(r['recent'].values()) == 0]
+        if empty_recent:
+            issue('warning', 'recent_coverage_gap', 'methods', f"以下一级方向在近三年({cov['recent_years'][0]}–{cov['recent_years'][-1]})收录为 0，请核查是否遗漏近年补检：{', '.join(empty_recent)}")
     for tid, t in tables['research_tracks'].items():
         loc = 'research_tracks.' + tid
         ref(t.get('method_ids', []), tables['methods'], loc)
@@ -338,6 +343,45 @@ def view_model(data):
 def html_payload(data):
     """Slim single-source payload embedded in HTML; the viewer hydrates view models client-side."""
     return dict(canonical=data)
+
+def coverage_summary(data):
+    """Compute top-level group x recent 3-year method coverage (by primary group)."""
+    meta = data.get('metadata') if isinstance(data, dict) else {}
+    cutoff = meta.get('search_cutoff') if isinstance(meta, dict) else None
+    cutoff_year = int(cutoff[:4]) if isinstance(cutoff, str) and len(cutoff) >= 4 and cutoff[:4].isdigit() else None
+    papers = {p['id']: p for p in data.get('papers', []) if isinstance(p, dict) and isinstance(p.get('id'), str)}
+    groups = [g for g in data.get('groups', []) if isinstance(g, dict) and isinstance(g.get('id'), str)]
+    gmap = {g['id']: g for g in groups}
+    roots = [g for g in groups if not g.get('parent_id') or g.get('parent_id') not in gmap]
+    if cutoff_year is None:
+        ys = [int(p['first_public_date'][:4]) for p in papers.values()
+              if isinstance(p.get('first_public_date'), str) and len(p['first_public_date']) >= 4 and p['first_public_date'][:4].isdigit()]
+        cutoff_year = max(ys) if ys else dt.date.today().year
+    recent = [str(cutoff_year - 2), str(cutoff_year - 1), str(cutoff_year)]
+    rows = {r['id']: dict(id=r['id'], name=r.get('name', r['id']), total=0, earlier=0, unknown=0, recent={y: 0 for y in recent}) for r in roots}
+    for m in data.get('methods', []):
+        if not isinstance(m, dict):
+            continue
+        gid = m.get('primary_group')
+        if gid not in gmap:
+            continue
+        root_id = gmap[gid].get('parent_id') if gmap[gid].get('parent_id') in rows else gid
+        if root_id not in rows:
+            continue
+        row = rows[root_id]
+        row['total'] += 1
+        ys = [papers[pid]['first_public_date'][:4] for pid in (m.get('paper_ids') or [])
+              if pid in papers and isinstance(papers[pid].get('first_public_date'), str) and len(papers[pid]['first_public_date']) >= 4]
+        y = min(ys) if ys else None
+        if not y:
+            row['unknown'] += 1
+        elif y in row['recent']:
+            row['recent'][y] += 1
+        elif y < recent[0]:
+            row['earlier'] += 1
+        else:
+            row['recent'][recent[-1]] += 1
+    return dict(recent_years=recent, rows=list(rows.values()))
 
 def merge_papers(data, plan):
     result = copy.deepcopy(data)

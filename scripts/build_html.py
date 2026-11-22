@@ -4,7 +4,7 @@ import datetime as dt
 import json
 from collections import Counter
 from pathlib import Path
-from data_model import read_json, write_json, validate, html_payload
+from data_model import read_json, write_json, validate, html_payload, coverage_summary
 from export_bibliography import export
 
 def build(data, output, strict=False):
@@ -27,9 +27,17 @@ def build(data, output, strict=False):
     export(data, out)
     counts = report['counts']
     warning_counts = Counter(x['code'] for x in report['warnings'])
+    cov = coverage_summary(data)
+    ry = cov['recent_years']
+    cov_lines = [
+        f"| 一级方向 | 总计 | {ry[0]} 前 | {ry[0]} | {ry[1]} | {ry[2]} | 未知日期 |",
+        '|---|---:|---:|---:|---:|---:|---:|',
+        *[f"| {r['name']} | {r['total']} | {r['earlier']} | {r['recent'][ry[0]]} | {r['recent'][ry[1]]} | {r['recent'][ry[2]]} | {r['unknown']} |" for r in cov['rows']]
+    ]
     md = ['# 文献检索与核验报告', '', f"领域：{data['metadata'].get('domain', '')}",
           f"检索截止：{data['metadata'].get('search_cutoff') or '未记录'}", f"构建时间（UTC）：{dt.datetime.now(dt.timezone.utc).isoformat()}",
           '', '## 实际数据', '', *[f'- {k}: {v}' for k, v in counts.items()],
+          '', '## 一级方向 × 近年覆盖', '', *cov_lines,
           '', '## 覆盖与限制', '', str(data['metadata'].get('coverage_limitations') or '未记录'),
           '', '结构检查通过；未在本次构建中进行在线链接访问、原文重读或浏览器交互测试。',
           '构建不会把 first_html_delivered 自动设为 true；实际向用户交付后由研究工作流记录。',
