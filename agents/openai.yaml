@@ -6,4 +6,4 @@ interface:
   brand_color: "#1D3C6A"
   default_prompt: "使用 $research-evolution-map 全面梳理该领域综述与近三年主流顶会/预印本论文，主动分批检索各技术分支，提取方法、归纳分类、核查有据演进关系，生成交互式 HTML 技术演进图和文献清单。"
 policy:
-  allow_implicit_invocation: true
+  allow_implicit_invocation: false
