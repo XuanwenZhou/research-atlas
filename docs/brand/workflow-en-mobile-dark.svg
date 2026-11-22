@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="358" height="290" viewBox="0 0 358 290" role="img" aria-label="Input Literature -> Synthesize and Verify -> Explore Atlas"><title>Input Literature -&gt; Synthesize and Verify -&gt; Explore Atlas</title><rect x=".5" y=".5" width="357" height="289" rx="4" fill="#131922" stroke="#253142"/><rect x="1" y="1" width="356" height="3" fill="#79A8EB"/><g transform="translate(24 30) scale(1.125)" fill="none" stroke="#79A8EB" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12" />
+  <path d="M19 16h-12a2 2 0 0 0 -2 2" />
+  <path d="M9 8h6" /></g><g font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif"><text x="70" y="48" font-family="Cambria,'Palatino Linotype','Noto Serif SC',Georgia,serif" font-size="18" font-weight="700" fill="#E9EEF5">1. Input Literature</text><text x="70" y="74" font-size="13.5" fill="#8F9FB3">Surveys, primary papers &amp; notes</text></g><g transform="translate(24 120) scale(1.125)" fill="none" stroke="#79A8EB" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M5 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M15 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M7 8l0 8" />
+  <path d="M9 18h6a2 2 0 0 0 2 -2v-5" />
+  <path d="M14 14l3 -3l3 3" /></g><g font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif"><text x="70" y="138" font-family="Cambria,'Palatino Linotype','Noto Serif SC',Georgia,serif" font-size="18" font-weight="700" fill="#E9EEF5">2. Synthesize &amp; Verify</text><text x="70" y="164" font-size="13.5" fill="#8F9FB3">Methods, taxonomy &amp; cited edges</text></g><g transform="translate(24 210) scale(1.125)" fill="none" stroke="#79A8EB" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M4 8h16" />
+  <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" />
+  <path d="M8 4v4" /></g><g font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif"><text x="70" y="228" font-family="Cambria,'Palatino Linotype','Noto Serif SC',Georgia,serif" font-size="18" font-weight="700" fill="#E9EEF5">3. Explore Atlas</text><text x="70" y="254" font-size="13.5" fill="#8F9FB3">Interactive HTML, JSON &amp; BibTeX</text></g></svg>
