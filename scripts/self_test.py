@@ -16,6 +16,8 @@ class PipelineTests(unittest.TestCase):
         self.data = read_json(ROOT / 'assets' / 'example-data.json')
     def codes(self):
         return {e['code'] for e in validate(self.data)['errors']}
+    def warn_codes(self):
+        return {w['code'] for w in validate(self.data)['warnings']}
     def test_example_is_structurally_valid(self):
         self.assertFalse(validate(self.data)['errors'])
         self.assertTrue(self.data['metadata']['is_synthetic'])
@@ -108,6 +110,39 @@ class PipelineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             with self.assertRaises(ValueError):
                 build(self.data, Path(d) / 'map.html')
+    def test_problem_equals_mechanism_warns(self):
+        self.data['methods'][0]['problem'] = self.data['methods'][0]['mechanism']
+        self.assertIn('problem_equals_mechanism', self.warn_codes())
+    def test_duplicate_edge_pair_warns(self):
+        dup = copy.deepcopy(self.data['edges'][0])
+        dup['id'] = 'e-dup-theme'
+        dup['type'] = 'theme'
+        self.data['edges'].append(dup)
+        self.assertIn('duplicate_edge_pair', self.warn_codes())
+    def test_group_order_fragmented_warns(self):
+        self.data['groups'].append(dict(
+            id='rep-sub-2', name='二级分散子类', parent_id='representation',
+            definition='测试', problem='测试', rationale='测试', representative_method_ids=[], index=3
+        ))
+        self.assertIn('group_order_fragmented', self.warn_codes())
+    def test_reverse_date_edge_warns(self):
+        self.data['edges'][0]['source'], self.data['edges'][0]['target'] = 'm-gamma', 'm-alpha'
+        self.assertIn('reverse_date_edge', self.warn_codes())
+    def test_title_only_fact_edge_warns(self):
+        self.data['edges'][0]['claim_basis'] = 'fact'
+        self.assertIn('title_only_fact_edge', self.warn_codes())
+    def test_html_payload_is_slim_canonical(self):
+        with tempfile.TemporaryDirectory() as d:
+            target = Path(d) / 'map.html'; build(self.data, target)
+            embedded = json.loads(target.read_text(encoding='utf-8').split('type="application/json">', 1)[1].split('</script>', 1)[0])
+            self.assertEqual(set(embedded.keys()), {'canonical'})
+            self.assertEqual(embedded['canonical'], self.data)
+    def test_bibtex_protects_title_case(self):
+        self.data['papers'][0]['title'] = '3DGS-SLAM via NeRF'
+        with tempfile.TemporaryDirectory() as d:
+            export(self.data, d)
+            bib = (Path(d) / 'bibliography.bib').read_text(encoding='utf-8')
+            self.assertIn('title = {{3DGS-SLAM via NeRF}}', bib)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

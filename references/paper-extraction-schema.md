@@ -10,15 +10,15 @@ id、title（完整标题）、authors（原署名顺序字符串数组）、url
 
 ## methods
 
-id、name、paper_ids（至少一个有效论文）、primary_group、group_ids（含主分类）、tags、aliases、modules；分析字段 problem、mechanism、contributions、value、scenarios、limitations 为字符串或 null。featured 布尔及 featured_reason；classification_basis、verification、provenance、evidence。一文多法写分拆理由，别名不得重复建方法。
+id、name、paper_ids（至少一个有效论文）、primary_group、group_ids（含主分类）、tags、aliases、modules；分析字段 problem、mechanism、contributions、value、scenarios、limitations 为字符串或 null。featured 布尔及 featured_reason；classification_basis、verification、provenance、evidence。一文多法写分拆理由，别名不得重复建方法。name 优先采用论文简称或简短技术短语（建议 ≤ 36 字符，清洗裸 LaTeX 数学语法，如 `$L^{2}DGS$` 转为 `L²DGS`），完整标题保存在 paper.title。problem 与 mechanism 分开提炼；只有单句机制概述时将 problem 置 null，不得复制 mechanism 充当 problem。
 
 ## groups
 
-id、name、parent_id（一级 null，二级指一级）、definition、problem、rationale、representative_method_ids、index。survey_mappings 保存原综述分类及异同，candidate_alternatives 保存争议。主归属优先二级，可先保留一级待补，不创建无依据空壳。
+id、name、parent_id（一级 null，二级指一级）、definition、problem、rationale、representative_method_ids、index。survey_mappings 保存原综述分类及异同，candidate_alternatives 保存争议。主归属优先二级，可先保留一级待补，不创建无依据空壳。groups 数组须按“一级分类紧跟其全部二级子类”连续排列；增量新增二级子类时插入所属一级分类末尾并重排 index，不改变已有 ID。
 
 ## edges
 
-id、source、target 指方法 ID，起点是前驱，终点是使用者；论文经 paper_ids 追溯。type 仅 direct/extension/borrow/theme。description、basis、claim_basis（fact/inference）、confidence（0–1；未校准用 null）、verification、evidence[]。theme 存储顺序无继承语义。已核非 theme 边必须为 fact，有原始全文证据、位置和核验日期；推断继承候选只能待核并明确显示。
+id、source、target 指方法 ID，起点是前驱，终点是使用者；论文经 paper_ids 追溯。type 仅 direct/extension/borrow/theme。description、basis、claim_basis（fact/inference）、confidence（0–1；未校准用 null）、verification、evidence[]。theme 存储顺序无继承语义。已核非 theme 边必须为 fact，有原始全文证据、位置和核验日期；仅凭题名/元数据记录不得标为 fact；推断继承候选只能待核并明确显示。同一对方法已有技术边时不重复添加 theme 边。
 
 ## 来源和证据
 

@@ -32,7 +32,9 @@ def export(data, directory):
             fields['howpublished'] = p['venue']
         if p.get('arxiv_id'):
             fields['archivePrefix'] = 'arXiv'
-        entries.append('@misc{' + p['id'] + ',\n' + ',\n'.join('  ' + k + ' = {' + bib_escape(v) + '}' for k, v in fields.items() if v) + '\n}')
+        entries.append('@misc{' + p['id'] + ',\n' + ',\n'.join(
+            '  ' + k + ' = {' + ('{' + bib_escape(v) + '}' if k == 'title' else bib_escape(v)) + '}'
+            for k, v in fields.items() if v) + '\n}')
     (directory / 'bibliography.bib').write_text('\n\n'.join(entries) + '\n', encoding='utf-8')
 
 def main():

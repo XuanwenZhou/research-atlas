@@ -72,7 +72,7 @@ git clone https://github.com/XuanwenZhou/research-atlas.git ~/.agents/skills/res
 
 Windows 用户目录通常为 `%USERPROFILE%/.agents/skills/research-evolution-map`。也可将仓库放入项目的 `.agents/skills/research-evolution-map`。如果已有同名 Skill，请先备份或在原目录更新，避免重复安装。
 
-在 Codex 中查找 **Research Atlas｜科研技术图谱**，或输入 `$research-evolution-map` 调用。安装目录和调用名保留为 `research-evolution-map`；未显示时可重启 Codex。
+在 Codex 中查找 **Research Atlas｜科研技术图谱**，或输入 `$research-evolution-map` 调用。安装目录和调用名保留为 `research-evolution-map`；未显示时可重启 Codex。本仓库采用标准 Agent Skills 结构（`SKILL.md` + `references/` + `scripts/` + `assets/`），也可直接兼容 Claude Code、Cursor、Antigravity 等支持 Skill 的工具。
 
 | 环境 | 用途 |
 |---|---|

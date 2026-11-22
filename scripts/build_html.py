@@ -4,7 +4,7 @@ import datetime as dt
 import json
 from collections import Counter
 from pathlib import Path
-from data_model import read_json, write_json, validate, view_model
+from data_model import read_json, write_json, validate, html_payload
 from export_bibliography import export
 
 def build(data, output, strict=False):
@@ -16,7 +16,7 @@ def build(data, output, strict=False):
     template = (Path(__file__).resolve().parent.parent / 'assets' / 'evolution-map-template.html').read_text(encoding='utf-8')
     if template.count('__RESEARCH_DATA__') != 1:
         raise ValueError('Template must contain exactly one data marker')
-    payload = json.dumps(view_model(data), ensure_ascii=False).replace('<', '\\u003c').replace('\u2028', '\\u2028').replace('\u2029', '\\u2029')
+    payload = json.dumps(html_payload(data), ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c').replace('\u2028', '\\u2028').replace('\u2029', '\\u2029')
     output.write_text(template.replace('__RESEARCH_DATA__', payload), encoding='utf-8')
     out = output.parent
     write_json(out / 'project-data.json', data)

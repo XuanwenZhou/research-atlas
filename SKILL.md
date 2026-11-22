@@ -1,6 +1,6 @@
 ---
 name: research-evolution-map
-description: 根据科研综述和原始论文提取方法、整合文献、归纳技术分类、分析技术继承关系并补充相关研究，生成交互式 HTML 技术演进图；支持数据导出、增量更新和专题整理。适用于领域文献梳理、方法合集和技术路线分析。
+description: 从综述及原始论文提取方法，主动检索各技术分支和近年研究，归纳分类与技术关系，生成可增量更新的交互式 HTML 技术演进图。适用于领域文献梳理、方法合集和技术路线分析。
 ---
 
 # Research Atlas｜科研技术图谱
@@ -18,10 +18,10 @@ description: 根据科研综述和原始论文提取方法、整合文献、归�
 
 1. **界定领域与来源**：读 [research-workflow.md](references/research-workflow.md)。盘点综述、研究范围、时间、访问层级和资料缺口。
 2. **解析综述**：读 [paper-extraction-schema.md](references/paper-extraction-schema.md) 和 [evidence-and-verification.md](references/evidence-and-verification.md)。提取各综述分类、方法和参考编号，追溯原论文，保存综述 ID、引用标签和位置。只读摘要或转述时不得声称阅读全文。
-3. **整合方法**：区分 papers 与 methods，支持一文多法、多来源。记录重复候选，核对标识冲突后再合并。未知信息用 null 或空列表，注明待核，禁止补造。
-4. **归纳技术分类**：读 [taxonomy-guidelines.md](references/taxonomy-guidelines.md)。比较综述框架，从真实机制归纳一二级方向、主分类和辅助标签，定义边界、代表方法及分类依据，保留争议候选。
-5. **技术演进分析**：读 [relationship-classification.md](references/relationship-classification.md)。仅用 direct / extension / borrow / theme；逐边保存说明、依据、来源、原文位置、置信度、事实/推断和核验状态。优先阅读原论文 Introduction、Related Work、Method，识别基础、分叉、桥接、融合及并行研究。
-6. **沿路线补充文献**：读 [literature-search-strategy.md](references/literature-search-strategy.md)。按分类、前向引用、官方会刊目录、arXiv 和项目页检索。记录实际查询、日期、范围、纳入理由，发现新路线和桥接论文，保留分类和关系变更的依据及不确定性。
+3. **整合方法**：区分 papers 与 methods，支持一文多法、多来源。方法名取简洁简称或短语（完整原标题放 `paper.title`，清洗裸 LaTeX 符号）；`problem` 与 `mechanism` 分开提炼，禁止直接复制 `mechanism` 填 `problem`。记录重复候选，核对标识冲突后再合并。未知信息用 null 或空列表，注明待核，禁止补造。
+4. **归纳技术分类**：读 [taxonomy-guidelines.md](references/taxonomy-guidelines.md)。比较综述框架，从真实机制归纳一二级方向、主分类和辅助标签，定义边界、代表方法及分类依据，保留争议候选；增量新增二级子类时保持紧跟所属一级分类排列，避免分类断裂和极稀疏空壳。
+5. **技术演进分析**：读 [relationship-classification.md](references/relationship-classification.md)。仅用 direct / extension / borrow / theme；逐边保存说明、依据、来源、原文位置、置信度、事实/推断和核验状态。优先阅读原论文 Introduction、Related Work、Method，识别基础、分叉、桥接、融合及并行研究；仅凭题名/元数据不得标为 `fact`，同一对方法已有技术边时不重复叠加 `theme` 边。
+6. **沿路线主动补检**：读 [literature-search-strategy.md](references/literature-search-strategy.md)。综述提供起点。用户未另定近年范围时，优先深查当前年和此前两个自然年。按方向和年份扫描相关会刊目录、跟踪关键论文的后续引用，并检索补足新机制和空白分支。遇到结果上限时分页或拆分查询。批量纳入会刊条目后，同步回填关键 DOI/arXiv 与预印本首发日期，并对新增批次核查与已有代表方法的有据关联（避免大面积孤立节点）。生成首图后仍按覆盖情况继续扩充，交付时说明实际查了哪些年、会刊和分支，以及哪些候选尚待筛。
 7. **生成交互式 HTML**：读 [html-output-specification.md](references/html-output-specification.md)。构建方法合集与包含全部收录方法的技术演进图，不自动筛选主线；方向、关系类型和搜索用于按需浏览，重置后恢复全部方法。
 8. **验收交付**：读 [quality-control.md](references/quality-control.md)。交付 HTML、完整 JSON、分类和关系 JSON、CSV/BibTeX、检索核验报告及待核清单。区分结构检查、浏览器实测和学术真实性核验，统一说明分类依据、未核信息及值得进一步讨论的问题。
 

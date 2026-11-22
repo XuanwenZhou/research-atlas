@@ -1,56 +1,822 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Research Evolution Map</title><style>:root{color-scheme:light dark;--bg:#f4f6f9;--panel:#fff;--soft:#eef2f7;--ink:#192d45;--muted:#56677d;--line:#d8e1ec;--accent:#315fa5;--tint:#eaf1fc;--grid:#e9eef5;--direct:#315fa5;--extension:#477e77;--borrow:#826435;--theme:#8493a6;--shadow:0 12px 50px #172c4626;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;font-size:14px;background:var(--bg);color:var(--ink)}
-:root[data-theme="dark"]{color-scheme:dark;--bg:#0e1825;--panel:#162436;--soft:#1c2c41;--ink:#e8eff9;--muted:#afbed1;--line:#34485e;--accent:#9ac5ff;--tint:#233f60;--grid:#23354b;--direct:#9ac5ff;--extension:#7ebeb0;--borrow:#d4b680;--theme:#91a5bd;--shadow:0 12px 50px #0008}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0e1825;--panel:#162436;--soft:#1c2c41;--ink:#e8eff9;--muted:#afbed1;--line:#34485e;--accent:#9ac5ff;--tint:#233f60;--grid:#23354b;--direct:#9ac5ff;--extension:#7ebeb0;--borrow:#d4b680;--theme:#91a5bd;--shadow:0 12px 50px #0008}}
-*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:9px 12px;white-space:nowrap}button:hover{border-color:var(--accent);background:var(--tint)}button:disabled{opacity:.4;cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,.graph-viewport:focus-visible{outline:3px solid var(--accent);outline-offset:3px}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}[hidden]{display:none!important}h1,h2,h3,p{margin-top:0}a,button,input,select{-webkit-tap-highlight-color:transparent}
-.masthead{border-bottom:1px solid var(--line);background:var(--panel)}.hero{max-width:1640px;margin:auto;padding:36px 36px 31px;display:flex;align-items:center;justify-content:space-between;gap:30px}.brand{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:1px}.hero h1{font-size:clamp(24px,2.7vw,35px);font-weight:650;letter-spacing:-.6px;margin:9px 0 12px;line-height:1.3}.hero p{margin:0;font-size:13px;color:var(--muted);line-height:1.8}.hero-stats{display:flex;gap:33px;margin:0;flex-shrink:0}.hero-stats div{min-width:65px}.hero-stats dt{font-size:29px;letter-spacing:-1px;font-weight:650;font-variant-numeric:tabular-nums}.hero-stats dd{margin:6px 0 0;color:var(--muted);font-size:11px}.shell{max-width:1640px;margin:auto;padding:0 36px 42px}.page-nav{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:23px 0}.tabs{display:flex;border-bottom:1px solid var(--line);gap:24px}.tabs button{border:0;border-bottom:2px solid transparent;border-radius:0;padding:10px 2px 14px;background:transparent;color:var(--muted);font-size:14px}.tabs button span{font-size:10px;margin-left:8px}.tabs .active{color:var(--accent);border-color:var(--accent);font-weight:650}.page-nav>button{font-size:11px}.section-heading{margin:3px 0 17px}.section-heading h2{font-size:23px;font-weight:650;margin:0 0 8px;letter-spacing:-.3px}.section-heading p{font-size:12px;color:var(--muted);line-height:1.8;margin:0}.toolbar{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:13px;display:flex;align-items:end;gap:12px;margin-bottom:18px}.toolbar label{display:flex;flex-direction:column;gap:7px;font-size:11px;color:var(--muted);min-width:0}.toolbar input,.toolbar select{background:var(--panel);border:1px solid var(--line);border-radius:6px;color:var(--ink);padding:9px 11px;height:36px;max-width:100%;font-size:12px}.toolbar input::placeholder{color:var(--muted);opacity:1}.search-label{flex:1;min-width:150px!important}.toolbar>button{font-size:11px;height:36px}.check{font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center;white-space:nowrap}.check input{accent-color:var(--accent);margin:0;width:14px;height:14px}
-.collection-layout{display:grid;grid-template-columns:225px minmax(0,1fr);gap:24px;align-items:start}.direction-panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 10px;position:sticky;top:16px}.direction-panel h3{font-size:12px;margin:0 9px 12px;font-weight:650;color:var(--muted)}.directions{display:flex;flex-direction:column;gap:2px}.direction{border:0;background:transparent;border-radius:6px;padding:9px 10px;font-size:11px;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;white-space:normal}.direction span{font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}.direction.active{background:var(--tint);color:var(--accent);font-weight:650}.results-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px;gap:12px}.results-heading p{font-size:12px;color:var(--muted);margin:0;line-height:1.8}.results-heading b{color:var(--ink);font-weight:650}.method-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.method-card{padding:17px 17px 14px;border:1px solid var(--line);border-radius:9px;background:var(--panel);display:flex;flex-direction:column;min-height:185px;min-width:0}.card-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:9px;font-size:10px;color:var(--muted)}.card-top .category-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.method-name{font-size:13px;line-height:1.6;text-align:left;padding:0;border:0;background:transparent!important;border-radius:0;white-space:normal;font-weight:650;color:var(--ink);overflow-wrap:anywhere}.method-name:hover{color:var(--accent)}.card-description{font-size:11px;line-height:1.8;color:var(--muted);margin:9px 0 15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.card-bottom{display:flex;gap:10px;align-items:center;margin-top:auto;border-top:1px solid var(--grid);padding-top:10px}.card-bottom a,.card-bottom button{font-size:10px}.card-bottom button{padding:0;border:0;color:var(--accent);background:transparent!important}.featured-tag{margin-left:auto;color:var(--muted);font-size:9px}.pagination{display:flex;justify-content:center;align-items:center;gap:18px;margin:25px 0 10px;font-size:11px;color:var(--muted)}.pagination button{font-size:11px}.empty{text-align:center;padding:65px 20px;background:var(--panel);color:var(--muted);border-radius:9px}.empty h3{font-size:16px;color:var(--ink)}.empty p{font-size:12px;line-height:1.8}.empty button{font-size:12px}
-.graph-toolbar{flex-wrap:wrap;gap:11px}.segmented{display:flex;padding:3px;background:var(--soft);border-radius:7px;align-self:end;gap:2px;flex-shrink:0}.segmented button{background:transparent;border:0;border-radius:5px;font-size:11px;padding:10px}.segmented button.active{background:var(--panel);color:var(--accent);font-weight:650;box-shadow:0 1px 4px #172c4615}.segmented button span{font-variant-numeric:tabular-nums}.graph-toolbar .search-label{min-width:175px!important}.graph-toolbar select{max-width:170px}.graph-tools{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 12px;flex-wrap:wrap}.legend{display:flex;gap:15px;align-items:center;flex-wrap:wrap;font-size:10px;color:var(--muted)}.legend span{display:flex;gap:6px;align-items:center}.line{width:25px;height:0;border-top:2px solid;display:inline-block}.line.direct{border-color:var(--direct)}.line.extension{border-color:var(--extension);border-top-style:dashed}.line.borrow{border-color:var(--borrow);border-top-style:dashed}.line.theme{border-color:var(--theme);border-top-style:dotted}.zoom-tools{display:flex;gap:5px;align-items:center}.zoom-tools button{font-size:11px;padding:7px 10px}.zoom-tools output{font-size:10px;min-width:36px;text-align:center;color:var(--muted)}.graph-workspace{display:grid;grid-template-columns:minmax(0,1fr) 306px;gap:17px;align-items:start}.chart-panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:0}.chart-caption{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:12px 14px;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted)}.graph-viewport{height:680px;max-height:74vh;min-height:360px;overflow:auto;overscroll-behavior:contain;position:relative;background:var(--panel);cursor:grab;scrollbar-color:var(--line) var(--soft)}.graph-viewport.panning{cursor:grabbing;user-select:none}.graph-viewport svg{display:block;max-width:none;touch-action:pan-x pan-y}.chart-note{font-size:10px;line-height:1.9;padding:12px 15px;margin:0;border-top:1px solid var(--line);color:var(--muted)}.graph-detail{border:1px solid var(--line);border-radius:10px;background:var(--panel);max-height:790px;overflow:auto;position:sticky;top:16px}.detail-title{display:flex;gap:8px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:13px 16px}.detail-title h3{font-size:12px;margin:0;font-weight:650}.detail-title button{font-size:10px;padding:5px 8px}.detail-empty{padding:29px 20px;color:var(--muted);font-size:12px;line-height:1.9}.detail-empty strong{font-size:15px;color:var(--ink);display:block;font-weight:600;margin-bottom:12px}.detail-help{font-size:11px;background:var(--soft);padding:12px;border-radius:6px;margin-top:28px}.method-detail{padding:20px}.method-detail .kicker{font-size:10px;color:var(--accent);margin-bottom:10px}.method-detail h3,.method-detail h2{font-size:19px;line-height:1.55;margin:0 0 9px;overflow-wrap:anywhere;font-weight:650}.method-detail .paper-title{font-size:11px;color:var(--muted);line-height:1.75;margin:0 0 12px}.method-detail .meta{font-size:10px;line-height:1.8;color:var(--muted);margin:0 0 15px}.detail-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:17px}.detail-links a,.detail-links button{font-size:11px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;line-height:1.5}.detail-field{margin:16px 0}.detail-field h4{font-size:11px;margin:0 0 6px;font-weight:650}.detail-field p{font-size:12px;line-height:1.85;color:var(--muted);margin:0}.detail-modules{font-size:10px;line-height:1.9;color:var(--muted)}.relation-list{display:flex;flex-direction:column;gap:7px;margin-top:8px}.relation-item{padding:10px;background:var(--soft);border-radius:6px;font-size:10px;line-height:1.8}.relation-item button{background:transparent;padding:0;border:0;font-size:11px;line-height:1.7;text-align:left;color:var(--accent);white-space:normal;font-weight:600}.relation-item p{margin:6px 0;color:var(--muted)}.relation-item .relation-meta{color:var(--muted);font-size:9px}.relation-item a{font-size:10px}.source-list{padding-left:17px;font-size:10px;color:var(--muted);line-height:1.9}.source-list li{margin-bottom:5px}.relation-heading{display:flex;gap:7px;align-items:center}.graph-node{cursor:pointer;outline:none}.graph-node .node-bg{fill:var(--panel);stroke:var(--line);stroke-width:1.2}.graph-node:hover .node-bg,.graph-node:focus-visible .node-bg{stroke:var(--accent);stroke-width:2.3;fill:var(--tint)}.graph-node text{fill:var(--ink);pointer-events:none}.graph-node .node-name{font-size:12px;font-weight:600}.graph-node .node-date{font-size:9px;fill:var(--muted)}.graph-node .node-stripe{fill:var(--accent);opacity:.45}.graph-node.selected .node-bg{fill:var(--tint);stroke:var(--accent);stroke-width:2.6}.graph-node.related .node-bg{stroke:var(--accent);stroke-width:1.6}.graph-node.dim{opacity:.24}.edge{fill:none;stroke-width:1.8;cursor:pointer;opacity:.52}.edge.direct{stroke:var(--direct)}.edge.extension{stroke:var(--extension);stroke-dasharray:7 5}.edge.borrow{stroke:var(--borrow);stroke-dasharray:10 3 2 3}.edge.theme{stroke:var(--theme);stroke-dasharray:2 5;stroke-width:1.3;opacity:.42}.edge.highlight{opacity:1;stroke-width:2.5}.edge.dim{opacity:.06}.edge-hit{fill:none;stroke:transparent;stroke-width:12;cursor:pointer}.lane-bg{fill:var(--panel)}.lane-bg.alt{fill:var(--soft);opacity:.52}.lane-line{stroke:var(--line);stroke-width:1}.lane-title{font-size:12px;fill:var(--ink);font-weight:650}.lane-description{font-size:9px;fill:var(--muted)}.lane-count{font-size:10px;fill:var(--accent)}.axis-bg{fill:var(--soft)}.axis-label{font-size:12px;fill:var(--ink);font-weight:650}.year-line{stroke:var(--grid);stroke-width:1;stroke-dasharray:3 4}.axis-sub{font-size:9px;fill:var(--muted)}.edge-detail{padding:20px}.edge-detail h4{font-size:14px;line-height:1.8;margin:10px 0}.edge-detail p{font-size:12px;line-height:1.9;color:var(--muted)}.edge-detail .edge-names{font-size:12px;color:var(--ink);line-height:1.9;overflow-wrap:anywhere}.edge-detail a{font-size:11px}.edge-detail button{font-size:11px;margin:10px 5px 0 0;white-space:normal}.graph-workspace:fullscreen{background:var(--bg);padding:15px;grid-template-columns:minmax(0,1fr) 325px}.graph-workspace:fullscreen .graph-viewport{height:calc(100dvh - 135px);max-height:none}.graph-workspace:fullscreen .graph-detail{max-height:calc(100dvh - 30px)}
-dialog{max-width:760px;width:calc(100% - 36px);max-height:90dvh;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}dialog::backdrop{background:#0c203b80}.dialog-top{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--panel);font-size:11px;color:var(--muted);position:sticky;top:0;z-index:1}.dialog-top button{font-size:11px;padding:6px 10px}.dialog-top+.method-detail{padding:25px}.noscript{padding:20px;background:var(--panel)}
-@media(min-width:1450px){.graph-viewport{height:720px}.method-card{min-height:190px}}
-@media(max-width:1190px){.method-list{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-layout{grid-template-columns:205px minmax(0,1fr);gap:18px}.graph-workspace{grid-template-columns:minmax(0,1fr) 275px}.hero-stats{gap:23px}.graph-toolbar .segmented{width:auto}.graph-toolbar .search-label{flex:1}.graph-toolbar>label:not(.search-label){flex:1}.hero{padding:28px}.shell{padding-left:28px;padding-right:28px}}
-@media(max-width:850px){.hero{gap:22px;align-items:start}.hero-stats{gap:15px}.hero-stats dt{font-size:24px}.hero-stats div{min-width:48px}.hero-stats dd{font-size:10px}.collection-layout{display:block}.direction-panel{position:static;padding:12px;margin-bottom:16px}.direction-panel h3{margin-bottom:8px}.directions{flex-direction:row;overflow:auto;gap:5px}.direction{white-space:nowrap;flex-shrink:0;padding:8px 10px;border:1px solid var(--line)}.overview-toolbar{flex-wrap:wrap}.overview-toolbar .search-label{flex-basis:100%}.graph-workspace{display:block}.graph-detail{position:static;margin-top:16px;max-height:none}.graph-viewport{max-height:none;height:620px}.graph-detail .detail-empty{padding:22px}.graph-detail .detail-help{margin-top:15px}.graph-workspace:fullscreen{display:block;overflow:auto}.graph-workspace:fullscreen .graph-detail{max-height:none}.graph-workspace:fullscreen .graph-viewport{height:75dvh}.tabs{gap:20px}.graph-toolbar .segmented{width:100%;justify-content:space-between}.graph-toolbar .search-label{flex-basis:100%}}
-@media(max-width:540px){.hero{padding:24px 18px;display:block}.hero h1{font-size:24px}.hero p{font-size:12px;line-height:1.8}.hero-stats{margin-top:21px;gap:37px}.hero-stats dt{font-size:25px}.shell{padding:0 16px 30px}.page-nav{padding:17px 0;gap:8px;align-items:center}.tabs{gap:15px}.tabs button{font-size:12px;padding-bottom:12px}.tabs button span{display:none}.page-nav>button{padding:7px 8px;font-size:10px}.section-heading h2{font-size:21px}.section-heading p{font-size:11px}.toolbar{padding:11px;gap:10px}.toolbar label:not(.search-label){flex:1}.toolbar label:not(.search-label) select{width:100%;max-width:none}.overview-toolbar>button{flex:1}.method-list{grid-template-columns:1fr}.method-card{min-height:155px;padding:15px}.card-description{-webkit-line-clamp:2}.results-heading{align-items:start}.results-heading .check{font-size:10px;margin-top:4px}.pagination{gap:13px}.graph-toolbar .segmented button{font-size:10px;padding:9px 7px}.graph-toolbar>button{width:100%}.legend{font-size:9px;gap:10px}.zoom-tools{flex-wrap:wrap;gap:4px}.zoom-tools button{font-size:10px;padding:7px 9px}.chart-caption{flex-wrap:wrap;gap:8px;padding:10px;font-size:10px}.chart-caption .check{font-size:10px}.graph-viewport{height:560px;min-height:300px}.chart-note{font-size:9px;padding:10px}.method-detail{padding:17px}.dialog-top+.method-detail{padding:20px}.method-detail h2{font-size:19px}.graph-tools{gap:12px}.empty{padding:45px 12px}}
-@media(max-width:540px){.graph-viewport{min-height:240px}}
-.graph-toolbar>label:not(.search-label){min-width:130px}
-@media(max-width:540px){.overview-toolbar label:not(.search-label){flex:1 1 calc((100% - 20px)/3)}.overview-toolbar>button{flex:1 1 calc((100% - 10px)/2)}.graph-toolbar>label:not(.search-label){flex:1 1 calc((100% - 10px)/2)}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
-@media print{.page-nav,.toolbar,.direction-panel,.pagination,.zoom-tools,.graph-detail,.check,.card-bottom button{display:none!important}.masthead{border:0}.hero,.shell{padding:15px}.collection-layout{display:block}.method-list{grid-template-columns:repeat(2,minmax(0,1fr))}.method-card{break-inside:avoid}.graph-workspace{display:block}.graph-viewport{height:auto;max-height:none;overflow:visible}.chart-panel{overflow:visible}.graph-viewport svg{width:100%!important;height:auto!important}.hero-stats{gap:20px}}
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Research Atlas · 技术演进图</title>
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#f5f6f3;
+  --bg-subtle:#edf0ec;
+  --panel:#ffffff;
+  --panel-alt:#fafbf9;
+  --soft:#eef2f1;
+  --soft-hover:#e4eae8;
+  --ink:#132534;
+  --ink-2:#2c4052;
+  --muted:#5c6d7d;
+  --muted-2:#7a8a99;
+  --line:#dce3e6;
+  --line-strong:#c4d0d6;
+  --grid:#e8eeef;
+  --accent:#147d78;
+  --accent-hover:#0e625e;
+  --accent-ink:#ffffff;
+  --tint:#e6f4f2;
+  --tint-strong:#d3ece8;
+  --ring:rgba(20,125,120,.22);
+  --hero-glow:rgba(20,125,120,.10);
+  --hero-glow-2:rgba(30,90,168,.06);
+  --direct:#1e5aa8;
+  --extension:#147d78;
+  --borrow:#b4651e;
+  --theme:#8594a3;
+  --badge-ok-bg:#e5f5ee;
+  --badge-ok-ink:#16664b;
+  --badge-warn-bg:#fdf2e4;
+  --badge-warn-ink:#9a5216;
+  --badge-muted-bg:#eef2f4;
+  --badge-muted-ink:#536474;
+  --g0:#147d78;--g1:#2563a6;--g2:#7857a3;--g3:#b56722;--g4:#3c7b57;--g5:#9c4966;--g6:#2c7896;--g7:#6b6a37;
+  --shadow-xs:0 1px 2px rgba(19,37,52,.04);
+  --shadow-sm:0 1px 2px rgba(19,37,52,.045),0 6px 18px rgba(19,37,52,.035);
+  --shadow-md:0 2px 6px rgba(19,37,52,.06),0 12px 28px rgba(19,37,52,.07);
+  --shadow-lg:0 24px 64px rgba(14,29,43,.24);
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:16px;
+  font-family:"Segoe UI Variable Text","Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei UI","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  font-size:14px;
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0b1219;
+  --bg-subtle:#0f1923;
+  --panel:#121e29;
+  --panel-alt:#152330;
+  --soft:#182735;
+  --soft-hover:#203244;
+  --ink:#ebf1f6;
+  --ink-2:#cedae5;
+  --muted:#92a6ba;
+  --muted-2:#72889e;
+  --line:#223445;
+  --line-strong:#334b62;
+  --grid:#1a2a38;
+  --accent:#3bc1b7;
+  --accent-hover:#58d4ca;
+  --accent-ink:#07201f;
+  --tint:#123338;
+  --tint-strong:#17454b;
+  --ring:rgba(59,193,183,.28);
+  --hero-glow:rgba(59,193,183,.13);
+  --hero-glow-2:rgba(111,179,250,.07);
+  --direct:#6fb3fa;
+  --extension:#4ad0c4;
+  --borrow:#eaa75b;
+  --theme:#7d93a8;
+  --badge-ok-bg:#113229;
+  --badge-ok-ink:#6ee0b7;
+  --badge-warn-bg:#382613;
+  --badge-warn-ink:#f2b56e;
+  --badge-muted-bg:#1b2b3a;
+  --badge-muted-ink:#9eb2c5;
+  --g0:#3bc1b7;--g1:#6caef6;--g2:#b495e8;--g3:#e8a45c;--g4:#6bc793;--g5:#e086a4;--g6:#66bdd9;--g7:#c2be6e;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.22);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.24),0 8px 24px rgba(0,0,0,.22);
+  --shadow-md:0 4px 12px rgba(0,0,0,.32),0 16px 36px rgba(0,0,0,.32);
+  --shadow-lg:0 28px 72px rgba(0,0,0,.58);
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0b1219;--bg-subtle:#0f1923;--panel:#121e29;--panel-alt:#152330;--soft:#182735;--soft-hover:#203244;
+    --ink:#ebf1f6;--ink-2:#cedae5;--muted:#92a6ba;--muted-2:#72889e;--line:#223445;--line-strong:#334b62;--grid:#1a2a38;
+    --accent:#3bc1b7;--accent-hover:#58d4ca;--accent-ink:#07201f;--tint:#123338;--tint-strong:#17454b;
+    --ring:rgba(59,193,183,.28);--hero-glow:rgba(59,193,183,.13);--hero-glow-2:rgba(111,179,250,.07);
+    --direct:#6fb3fa;--extension:#4ad0c4;--borrow:#eaa75b;--theme:#7d93a8;
+    --badge-ok-bg:#113229;--badge-ok-ink:#6ee0b7;--badge-warn-bg:#382613;--badge-warn-ink:#f2b56e;--badge-muted-bg:#1b2b3a;--badge-muted-ink:#9eb2c5;
+    --g0:#3bc1b7;--g1:#6caef6;--g2:#b495e8;--g3:#e8a45c;--g4:#6bc793;--g5:#e086a4;--g6:#66bdd9;--g7:#c2be6e;
+    --shadow-xs:0 1px 2px rgba(0,0,0,.22);--shadow-sm:0 1px 2px rgba(0,0,0,.24),0 8px 24px rgba(0,0,0,.22);
+    --shadow-md:0 4px 12px rgba(0,0,0,.32),0 16px 36px rgba(0,0,0,.32);--shadow-lg:0 28px 72px rgba(0,0,0,.58);
+  }
+}
 
-.research-panel{margin:0 0 18px;border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:17px 20px}.research-intro{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:15px}.research-intro .kicker{font-size:10px;color:var(--accent)}.research-intro h3{font-size:16px;line-height:1.65;margin:4px 0 0;font-weight:650}.research-intro>button{font-size:11px;flex-shrink:0}.research-sections{display:grid;grid-template-columns:1fr 1fr;gap:22px}.research-sections section{min-width:0}.research-sections h4{font-size:12px;line-height:1.8;margin:0 0 9px;font-weight:650;display:flex;gap:9px;align-items:baseline}.research-sections h4>span{color:var(--accent);font-size:10px;font-variant-numeric:tabular-nums}.research-route-buttons{display:flex;flex-wrap:wrap;gap:6px}.research-route-buttons button{font-size:10px;padding:7px 8px;background:var(--soft);display:flex;gap:7px;align-items:center;border-color:transparent}.research-route-buttons button b{font-size:10px;color:var(--accent)}.research-route-buttons button>span{color:var(--muted);font-variant-numeric:tabular-nums}.research-route-buttons button.active{background:var(--tint);border-color:var(--accent);color:var(--accent)}.research-note{font-size:10px;line-height:1.9;color:var(--muted);margin:13px 0 8px}.research-path{background:var(--soft);border-left:3px solid var(--accent);padding:12px 15px;margin:13px 0;font-size:11px}.research-path strong{font-size:12px;color:var(--ink)}.research-path p{font-size:11px;line-height:1.9;margin:5px 0;color:var(--muted)}.research-evidence{font-size:10px;color:var(--muted);line-height:1.9}.research-evidence summary{cursor:pointer;color:var(--accent)}.research-evidence p{margin:8px 0}.research-evidence>div{display:flex;gap:8px 18px;flex-wrap:wrap}.membership-buttons{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}.membership-buttons button{font-size:10px;padding:5px 7px;white-space:normal;text-align:left;background:var(--soft);color:var(--accent)}.research-section-bg{fill:var(--tint)}.research-section-title{fill:var(--accent);font-size:15px;font-weight:650}.research-section-desc{fill:var(--muted);font-size:10px}
-.research-update-bar{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0 12px;margin:0 0 16px}.research-update-bar>p{font-size:11px;line-height:1.9;color:var(--muted);margin:0 0 9px}.research-update-bar b{color:var(--ink);font-weight:600}.research-period-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.research-period-controls label{display:flex;align-items:center;gap:9px;font-size:11px;color:var(--muted)}.research-period-controls select{font-size:11px;padding:7px 26px 7px 9px;max-width:100%;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink)}.research-period-controls button{font-size:11px;padding:7px 10px}.research-period-controls>span{font-size:10px;color:var(--muted)}.date-evidence{background:var(--soft);padding:12px;border-radius:6px}.date-evidence p+p{margin-top:8px}.date-source-links{display:flex;flex-wrap:wrap;gap:7px 13px;margin-top:9px;font-size:10px}.date-evidence p{overflow-wrap:anywhere}
-@media(max-width:540px){.research-period-controls label{width:100%}.research-period-controls select{flex:1;min-width:0}.research-period-controls>span{width:100%}.research-update-bar>p{font-size:10px}}
-@media(max-width:850px){.research-sections{grid-template-columns:1fr;gap:17px}.research-intro{align-items:flex-start}.research-intro h3{font-size:14px}}
-@media(max-width:540px){.research-panel{padding:14px 13px}.research-intro{display:block}.research-intro>button{margin-top:9px;padding:6px 8px;font-size:10px}.research-sections h4{font-size:11px}.research-route-buttons button{font-size:10px;padding:6px}.graph-toolbar .segmented{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}.graph-toolbar .segmented button{width:100%;font-size:11px;padding:10px 5px}}
-</style></head>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit;color:inherit}
+button{
+  cursor:pointer;background:var(--panel);color:var(--ink);
+  border:1px solid var(--line);border-radius:var(--radius-sm);
+  padding:8px 13px;white-space:nowrap;line-height:1.3;
+  transition:background-color .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease,transform .14s ease;
+}
+button:hover:not(:disabled){border-color:var(--line-strong);background:var(--soft)}
+button:active:not(:disabled){transform:translateY(.5px)}
+button:disabled{opacity:.42;cursor:not-allowed}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,.graph-viewport:focus-visible{
+  outline:none;box-shadow:0 0 0 3px var(--ring);border-color:var(--accent);
+}
+a{color:var(--accent);text-decoration:none;transition:color .15s ease}
+a:hover{color:var(--accent-hover);text-decoration:underline;text-underline-offset:3px}
+[hidden]{display:none!important}
+h1,h2,h3,h4,p{margin-top:0}
+a,button,input,select{-webkit-tap-highlight-color:transparent}
+
+.btn-primary{
+  background:var(--accent);color:var(--accent-ink);border-color:transparent;font-weight:600;
+  box-shadow:0 1px 2px rgba(14,98,94,.22);
+}
+.btn-primary:hover:not(:disabled){background:var(--accent-hover);border-color:transparent;color:var(--accent-ink)}
+
+/* Masthead */
+.masthead{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(640px 260px at 92% -15%,var(--hero-glow),transparent 72%),
+    radial-gradient(480px 220px at 8% -10%,var(--hero-glow-2),transparent 70%),
+    var(--panel);
+  border-bottom:1px solid var(--line);
+}
+.hero{
+  max-width:1620px;margin:auto;padding:28px 36px 26px;
+  display:flex;align-items:center;justify-content:space-between;gap:32px;
+}
+.hero-copy{min-width:0;max-width:780px}
+.brand-row{display:inline-flex;align-items:center;gap:8px;margin-bottom:10px}
+.brand-mark{
+  width:24px;height:24px;border-radius:7px;flex-shrink:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#18364b;color:#f2f7fa;box-shadow:var(--shadow-xs);
+}
+.brand{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--accent);background:var(--tint);
+  padding:4px 10px;border-radius:999px;
+  font-size:12px;font-weight:650;letter-spacing:.2px;
+}
+.cutoff-chip{
+  display:inline-flex;align-items:center;
+  color:var(--muted);background:var(--soft);
+  padding:4px 10px;border-radius:999px;
+  font-size:11.5px;font-weight:500;font-variant-numeric:tabular-nums;
+}
+.hero h1{
+  font-size:clamp(22px,2.3vw,31px);font-weight:720;letter-spacing:-.025em;
+  margin:0 0 8px;line-height:1.26;color:var(--ink);
+}
+.hero p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.72;max-width:68ch}
+
+.hero-stats{
+  display:flex;align-items:stretch;margin:0;flex-shrink:0;
+  background:var(--panel-alt);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow-xs);overflow:hidden;
+}
+.hero-stats>div{
+  padding:13px 22px;min-width:104px;position:relative;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.hero-stats>div+div::before{
+  content:"";position:absolute;left:0;top:18%;bottom:18%;width:1px;background:var(--line);
+}
+.hero-stats dt{
+  font-size:27px;line-height:1.1;letter-spacing:-.03em;font-weight:720;
+  font-variant-numeric:tabular-nums;color:var(--ink);
+}
+.hero-stats dd{margin:5px 0 0;color:var(--muted);font-size:11.5px;font-weight:500}
+
+/* Shell & Nav */
+.shell{max-width:1620px;margin:auto;padding:0 36px 48px}
+.page-nav{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:18px 0 16px;
+}
+.tabs{
+  display:inline-flex;align-items:center;gap:4px;padding:4px;
+  background:var(--soft);border:1px solid var(--line);border-radius:11px;
+}
+.tabs button{
+  border:0;border-radius:8px;padding:8px 16px;background:transparent;
+  color:var(--muted);font-size:13.5px;font-weight:550;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.tabs button:hover:not(.active){color:var(--ink);background:var(--soft-hover)}
+.tabs button span{
+  font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;
+  padding:2px 7px;border-radius:999px;background:var(--panel);color:var(--muted);
+  border:1px solid var(--line);
+}
+.tabs .active{
+  background:var(--panel);color:var(--accent);font-weight:650;
+  box-shadow:var(--shadow-xs);
+}
+.tabs .active span{background:var(--tint);color:var(--accent);border-color:transparent}
+#theme-toggle{
+  font-size:12px;font-weight:550;color:var(--muted);padding:7px 12px;border-radius:999px;
+  display:inline-flex;align-items:center;gap:6px;background:var(--panel);
+}
+#theme-toggle:hover{color:var(--ink);border-color:var(--line-strong)}
+
+.section-heading{margin:2px 0 14px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.section-heading h2{font-size:20px;font-weight:700;margin:0;letter-spacing:-.02em;color:var(--ink)}
+.section-heading p{font-size:12.5px;color:var(--muted);line-height:1.65;margin:0}
+
+/* Toolbars */
+.toolbar{
+  border:1px solid var(--line);border-radius:var(--radius-md);background:var(--panel);
+  box-shadow:var(--shadow-xs);padding:14px 16px;
+  display:flex;align-items:end;gap:12px;margin-bottom:18px;
+}
+.toolbar label{
+  display:flex;flex-direction:column;gap:6px;
+  font-size:11.5px;font-weight:550;color:var(--muted);min-width:0;
+}
+.toolbar input,.toolbar select{
+  background:var(--panel-alt);border:1px solid var(--line);border-radius:var(--radius-sm);
+  color:var(--ink);padding:0 12px;height:38px;max-width:100%;font-size:13px;font-weight:450;
+  transition:border-color .15s ease,background-color .15s ease,box-shadow .15s ease;
+}
+.toolbar select{
+  appearance:none;-webkit-appearance:none;padding-right:30px;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235c6d7d' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+}
+:root[data-theme="dark"] .toolbar select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2392a6ba' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .toolbar select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2392a6ba' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  }
+}
+.toolbar input:hover,.toolbar select:hover{border-color:var(--line-strong)}
+.toolbar input:focus,.toolbar select:focus{background:var(--panel);border-color:var(--accent)}
+.toolbar input::placeholder{color:var(--muted-2);opacity:1}
+.search-wrap{position:relative;display:flex;align-items:center}
+.search-wrap svg{
+  position:absolute;left:11px;width:15px;height:15px;color:var(--muted-2);pointer-events:none;
+}
+.search-wrap input{width:100%;padding-left:34px}
+.search-label{flex:1;min-width:190px!important}
+.toolbar>button{font-size:12.5px;height:38px;padding:0 14px}
+.check{
+  font-size:12.5px;color:var(--muted);display:inline-flex;gap:7px;align-items:center;
+  white-space:nowrap;cursor:pointer;user-select:none;
+}
+.check input{accent-color:var(--accent);margin:0;width:15px;height:15px;cursor:pointer}
+
+/* Collection View */
+.collection-layout{display:grid;grid-template-columns:252px minmax(0,1fr);gap:22px;align-items:start}
+.direction-panel{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-md);
+  box-shadow:var(--shadow-xs);padding:14px 10px;
+  position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent;
+}
+.direction-panel h3{
+  font-size:11.5px;letter-spacing:.4px;text-transform:uppercase;
+  margin:2px 10px 10px;font-weight:700;color:var(--muted);
+}
+.directions{display:flex;flex-direction:column;gap:2px}
+.direction{
+  border:0;background:transparent;border-radius:8px;padding:8px 10px;
+  font-size:12.5px;line-height:1.4;color:var(--ink-2);
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  text-align:left;white-space:normal;position:relative;
+}
+.direction:hover{background:var(--soft);color:var(--ink)}
+.direction.is-parent{font-weight:620;color:var(--ink);margin-top:3px}
+.direction.is-all{font-weight:650;color:var(--ink);margin-bottom:4px;padding-bottom:9px;border-bottom:1px solid var(--grid);border-radius:8px 8px 4px 4px}
+.direction.is-child{padding-left:24px;font-size:12px;color:var(--muted)}
+.direction.is-child::before{
+  content:"";position:absolute;left:12px;top:4px;bottom:4px;width:1.5px;
+  background:var(--line);border-radius:2px;
+}
+.direction-label{display:inline-flex;align-items:center;gap:7px;min-width:0}
+.direction-dot{width:7px;height:7px;border-radius:999px;flex-shrink:0;background:var(--g-color,var(--accent))}
+.direction.is-child .direction-dot{width:5px;height:5px;opacity:.72}
+.direction .dir-count{
+  font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;
+  background:var(--soft);padding:1.5px 7px;border-radius:999px;flex-shrink:0;
+}
+.direction.active{background:var(--tint);color:var(--accent);font-weight:650}
+.direction.active::before{background:var(--accent)}
+.direction.active .dir-count{background:var(--tint-strong);color:var(--accent)}
+
+.results-heading{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:0 0 14px;gap:12px;padding:0 2px;
+}
+.results-heading p{font-size:13px;color:var(--muted);margin:0;line-height:1.6}
+.results-heading b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+
+.method-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.method-card{
+  position:relative;overflow:hidden;
+  padding:18px 18px 14px;border:1px solid var(--line);border-radius:var(--radius-md);
+  background:var(--panel);box-shadow:var(--shadow-xs);
+  display:flex;flex-direction:column;min-height:192px;min-width:0;
+  transition:transform .16s ease,box-shadow .18s ease,border-color .16s ease;
+}
+.method-card::before{
+  content:"";position:absolute;left:0;top:0;right:0;height:3px;
+  background:var(--g-color,var(--accent));opacity:.72;transition:opacity .16s ease;
+}
+.method-card:hover{
+  transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--line-strong);
+}
+.method-card:hover::before{opacity:1}
+.card-top{
+  display:flex;justify-content:space-between;gap:8px;align-items:center;
+  margin-bottom:10px;font-size:11.5px;color:var(--muted);
+}
+.card-top .category-name{
+  display:inline-flex;align-items:center;gap:6px;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  background:var(--soft);color:var(--ink-2);padding:2.5px 8px;border-radius:999px;font-weight:550;
+}
+.card-top .category-name::before{
+  content:"";width:6px;height:6px;border-radius:999px;flex-shrink:0;
+  background:var(--g-color,var(--accent));
+}
+.card-date{
+  font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;
+  white-space:nowrap;flex-shrink:0;
+}
+.method-name{
+  font-size:15px;line-height:1.45;text-align:left;padding:0;border:0;
+  background:transparent!important;border-radius:0;white-space:normal;
+  font-weight:680;color:var(--ink);overflow-wrap:anywhere;letter-spacing:-.01em;
+}
+.method-name:hover{color:var(--accent)}
+.card-description{
+  font-size:12.5px;line-height:1.72;color:var(--muted);margin:9px 0 16px;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.card-bottom{
+  display:flex;gap:12px;align-items:center;margin-top:auto;
+  border-top:1px solid var(--grid);padding-top:11px;
+}
+.card-bottom a,.card-bottom button{font-size:12px;font-weight:550}
+.card-bottom button{padding:0;border:0;color:var(--accent);background:transparent!important}
+.card-bottom button:hover{color:var(--accent-hover);text-decoration:underline;text-underline-offset:3px}
+.featured-tag{
+  margin-left:auto;background:var(--tint);color:var(--accent);
+  font-size:10.5px;font-weight:650;padding:2px 8px;border-radius:999px;
+}
+
+.pagination{
+  display:flex;justify-content:center;align-items:center;gap:14px;
+  margin:26px 0 6px;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;
+}
+.pagination button{font-size:12.5px;padding:7px 14px;border-radius:999px}
+.empty{
+  text-align:center;padding:64px 24px;background:var(--panel);
+  border:1px dashed var(--line-strong);color:var(--muted);border-radius:var(--radius-md);
+}
+.empty h3{font-size:16px;color:var(--ink);margin-bottom:8px}
+.empty p{font-size:13px;line-height:1.7;margin-bottom:16px}
+.empty button{font-size:12.5px}
+
+/* Graph View */
+.graph-toolbar{flex-wrap:wrap;gap:11px}
+.segmented{
+  display:flex;padding:3px;background:var(--soft);border:1px solid var(--line);
+  border-radius:9px;align-self:end;gap:2px;flex-shrink:0;
+}
+.segmented button{
+  background:transparent;border:0;border-radius:6px;font-size:12px;font-weight:550;
+  padding:8px 11px;color:var(--muted);
+}
+.segmented button.active{
+  background:var(--panel);color:var(--accent);font-weight:650;box-shadow:var(--shadow-xs);
+}
+.segmented button span{font-variant-numeric:tabular-nums}
+.graph-toolbar .search-label{min-width:190px!important}
+.graph-toolbar select{max-width:178px}
+.graph-toolbar>label:not(.search-label){min-width:128px}
+
+.graph-tools{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  margin:0 0 12px;flex-wrap:wrap;
+}
+.legend{
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  font-size:12px;color:var(--muted);
+}
+.legend span{
+  display:inline-flex;gap:7px;align-items:center;
+  background:var(--panel);border:1px solid var(--line);border-radius:999px;
+  padding:5px 11px;box-shadow:var(--shadow-xs);
+}
+.line{width:22px;height:0;border-top:2.2px solid;display:inline-block;flex-shrink:0}
+.line.direct{border-color:var(--direct)}
+.line.extension{border-color:var(--extension);border-top-style:dashed}
+.line.borrow{border-color:var(--borrow);border-top-style:dashed}
+.line.theme{border-color:var(--theme);border-top-style:dotted}
+
+.zoom-tools{display:flex;gap:6px;align-items:center}
+.zoom-pill{
+  display:inline-flex;align-items:center;background:var(--panel);
+  border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;
+  box-shadow:var(--shadow-xs);
+}
+.zoom-pill button{border:0;border-radius:0;padding:7px 11px;font-size:13px;font-weight:600}
+.zoom-pill output{
+  font-size:11.5px;min-width:44px;text-align:center;color:var(--muted);
+  font-variant-numeric:tabular-nums;border-left:1px solid var(--grid);border-right:1px solid var(--grid);
+  padding:0 6px;
+}
+.zoom-tools>button{font-size:12px;padding:7px 12px;box-shadow:var(--shadow-xs)}
+
+.graph-workspace{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+.chart-panel{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);overflow:hidden;min-width:0;
+}
+.chart-caption{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:11px 16px;border-bottom:1px solid var(--line);background:var(--panel-alt);
+  font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;
+}
+.graph-viewport{
+  height:680px;max-height:74vh;min-height:360px;overflow:auto;overscroll-behavior:contain;
+  position:relative;background:var(--panel);cursor:grab;
+  scrollbar-color:var(--line-strong) var(--soft);
+}
+.graph-viewport.panning{cursor:grabbing;user-select:none}
+.graph-viewport svg{display:block;max-width:none;touch-action:pan-x pan-y}
+.chart-note{
+  font-size:11.5px;line-height:1.75;padding:11px 16px;margin:0;
+  border-top:1px solid var(--line);background:var(--panel-alt);color:var(--muted);
+}
+
+/* Detail Sidebar & Modal */
+.graph-detail{
+  border:1px solid var(--line);border-radius:var(--radius-md);background:var(--panel);
+  box-shadow:var(--shadow-sm);max-height:800px;overflow:auto;position:sticky;top:16px;
+  scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent;
+}
+.detail-title{
+  display:flex;gap:8px;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--line);padding:13px 18px;background:var(--panel-alt);
+  position:sticky;top:0;z-index:2;
+}
+.detail-title h3{font-size:13px;margin:0;font-weight:700;color:var(--ink)}
+.detail-title button{font-size:11.5px;padding:4px 10px;border-radius:999px}
+.detail-empty{padding:32px 22px;color:var(--muted);font-size:13px;line-height:1.8}
+.detail-empty strong{font-size:15.5px;color:var(--ink);display:block;font-weight:680;margin-bottom:10px;letter-spacing:-.01em}
+.detail-help{
+  font-size:12px;background:var(--soft);border-left:3px solid var(--accent);
+  padding:12px 14px;border-radius:0 8px 8px 0;margin-top:22px;line-height:1.7;
+}
+
+.method-detail,.edge-detail{padding:20px}
+.kicker-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.kicker{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11.5px;font-weight:650;color:var(--accent);
+  background:var(--tint);padding:3px 9px;border-radius:999px;
+}
+.kicker.direct{color:var(--direct);background:rgba(30,90,168,.11)}
+.kicker.extension{color:var(--extension);background:var(--tint)}
+.kicker.borrow{color:var(--borrow);background:rgba(180,101,30,.12)}
+.kicker.theme{color:var(--muted);background:var(--soft)}
+.status-chip{
+  display:inline-flex;align-items:center;font-size:11px;font-weight:600;
+  padding:2.5px 8px;border-radius:999px;
+}
+.status-chip.ok{background:var(--badge-ok-bg);color:var(--badge-ok-ink)}
+.status-chip.warn{background:var(--badge-warn-bg);color:var(--badge-warn-ink)}
+.status-chip.muted{background:var(--badge-muted-bg);color:var(--badge-muted-ink)}
+
+.method-detail h3,.method-detail h2{
+  font-size:20px;line-height:1.4;margin:0 0 8px;overflow-wrap:anywhere;
+  font-weight:720;letter-spacing:-.02em;color:var(--ink);
+}
+.method-detail .paper-title{
+  font-size:12.5px;color:var(--muted);line-height:1.68;margin:0 0 14px;
+}
+.detail-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.detail-links a,.detail-links button{
+  font-size:12px;font-weight:550;padding:7px 12px;border:1px solid var(--line);
+  border-radius:var(--radius-sm);line-height:1.4;background:var(--panel-alt);
+  display:inline-flex;align-items:center;gap:5px;
+}
+.detail-links a:hover,.detail-links button:hover{
+  border-color:var(--accent);background:var(--tint);color:var(--accent);text-decoration:none;
+}
+
+.detail-field{margin:16px 0}
+.detail-field h4{
+  font-size:11.5px;letter-spacing:.3px;margin:0 0 7px;font-weight:700;color:var(--ink-2);
+}
+.detail-field p{font-size:13px;line-height:1.8;color:var(--muted);margin:0}
+
+.date-evidence{
+  background:var(--panel-alt);border:1px solid var(--line);
+  padding:13px 15px;border-radius:10px;
+}
+.date-evidence p+p{margin-top:8px}
+.date-evidence p{overflow-wrap:anywhere;font-size:12.5px;line-height:1.85}
+.meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;font-size:12px;line-height:1.65;color:var(--muted)}
+.meta-grid b{color:var(--ink-2);font-weight:600}
+.date-evidence .detail-links{margin:10px 0 0}
+
+.relation-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.relation-item{
+  padding:11px 13px;background:var(--panel-alt);border:1px solid var(--line);
+  border-radius:10px;font-size:11.5px;line-height:1.65;
+  transition:border-color .15s ease,background-color .15s ease;
+}
+.relation-item:hover{border-color:var(--line-strong);background:var(--soft)}
+.relation-item button{
+  background:transparent;padding:0;border:0;font-size:13px;line-height:1.5;
+  text-align:left;color:var(--accent);white-space:normal;font-weight:650;margin-top:4px;
+}
+.relation-item button:hover{text-decoration:underline;text-underline-offset:3px}
+.relation-item p{margin:5px 0 0;color:var(--muted);font-size:12px;line-height:1.65}
+.relation-heading{display:flex;gap:7px;align-items:center;color:var(--muted);font-size:11px;font-weight:550}
+
+.source-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.source-list li{
+  padding:10px 12px;background:var(--panel-alt);border:1px solid var(--line);
+  border-radius:9px;font-size:12px;line-height:1.65;color:var(--muted);
+}
+.source-list li a{font-weight:600;word-break:break-word}
+.ev-locator{
+  display:block;margin-top:5px;font-size:11.5px;color:var(--ink-2);
+  background:var(--soft);padding:4px 8px;border-radius:6px;line-height:1.55;
+}
+.ev-quote{
+  margin:6px 0 0;padding:5px 9px;border-left:2.5px solid var(--accent);
+  font-size:11.5px;color:var(--muted);font-style:italic;line-height:1.6;
+}
+.ev-date{display:block;margin-top:4px;font-size:11px;color:var(--muted-2);font-variant-numeric:tabular-nums}
+
+.edge-detail h4{font-size:16px;line-height:1.55;margin:0 0 10px;font-weight:700;color:var(--ink)}
+.edge-flow{
+  background:var(--panel-alt);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;margin:0 0 14px;
+}
+.edge-detail .edge-names{
+  font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.7;
+  margin:0;overflow-wrap:anywhere;
+}
+.edge-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.edge-actions button{font-size:12px;padding:7px 12px;flex:1;min-width:100px}
+
+/* SVG Styles */
+.graph-canvas-bg{fill:var(--panel)}
+.lane-bg{fill:var(--panel)}
+.lane-bg.alt{fill:var(--panel-alt)}
+.col-bg-alt{fill:var(--soft);opacity:.28}
+.lane-line{stroke:var(--line);stroke-width:1}
+.lane-title{font-size:12.5px;fill:var(--ink);font-weight:700}
+.lane-parent-kicker{font-size:10px;fill:var(--muted);font-weight:600}
+.lane-description{font-size:10.5px;fill:var(--muted)}
+.lane-count-bg{fill:var(--soft)}
+.lane-count{font-size:10.5px;fill:var(--accent);font-weight:600}
+.axis-bg{fill:var(--panel-alt)}
+.axis-border{stroke:var(--line);stroke-width:1}
+.axis-label{font-size:13px;fill:var(--ink);font-weight:700}
+.axis-sub{font-size:10px;fill:var(--muted)}
+.year-line{stroke:var(--grid);stroke-width:1;stroke-dasharray:3 4}
+
+.graph-node{cursor:pointer;outline:none;transition:opacity .16s ease}
+.graph-node .node-bg{fill:var(--panel);stroke:var(--line);stroke-width:1.15}
+.graph-node:hover .node-bg,.graph-node:focus-visible .node-bg{
+  stroke:var(--accent);stroke-width:2.1;fill:var(--tint);
+}
+.graph-node text{fill:var(--ink);pointer-events:none}
+.graph-node .node-name{font-size:12.5px;font-weight:650}
+.graph-node .node-date{font-size:10.5px;fill:var(--muted)}
+.graph-node .node-stripe{opacity:.85}
+.graph-node.selected .node-bg{fill:var(--tint);stroke:var(--accent);stroke-width:2.5}
+.graph-node.related .node-bg{stroke:var(--accent);stroke-width:1.65}
+.graph-node.dim{opacity:.22}
+
+.edge{fill:none;stroke-width:1.75;cursor:pointer;opacity:.68;stroke-linecap:round;stroke-linejoin:round;transition:opacity .15s ease,stroke-width .15s ease}
+.edge.direct{stroke:var(--direct)}
+.edge.extension{stroke:var(--extension);stroke-dasharray:7 4.5}
+.edge.borrow{stroke:var(--borrow);stroke-dasharray:10 3.5 2 3.5}
+.edge.theme{stroke:var(--theme);stroke-dasharray:2 4.5;stroke-width:1.3;opacity:.45}
+.dense-graph .edge{opacity:.34}
+.dense-graph .edge.theme{opacity:.22}
+.edge.highlight,.dense-graph .edge.highlight{opacity:1;stroke-width:2.6}
+.edge.dim,.dense-graph .edge.dim{opacity:.07}
+.edge-hit{fill:none;stroke:transparent;stroke-width:13;cursor:pointer}
+
+.graph-workspace:fullscreen{background:var(--bg);padding:16px;grid-template-columns:minmax(0,1fr) 350px}
+.graph-workspace:fullscreen .graph-viewport{height:calc(100dvh - 135px);max-height:none}
+.graph-workspace:fullscreen .graph-detail{max-height:calc(100dvh - 32px)}
+
+/* Dialog */
+dialog{
+  max-width:780px;width:calc(100% - 32px);max-height:90dvh;padding:0;
+  border:1px solid var(--line);border-radius:var(--radius-lg);
+  background:var(--panel);color:var(--ink);box-shadow:var(--shadow-lg);
+}
+dialog::backdrop{background:rgba(11,20,30,.58);backdrop-filter:blur(4px)}
+.dialog-top{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 22px;border-bottom:1px solid var(--line);background:var(--panel-alt);
+  font-size:12.5px;font-weight:650;color:var(--muted);position:sticky;top:0;z-index:2;
+}
+.dialog-top button{font-size:12px;padding:5px 12px;border-radius:999px}
+.dialog-top+.method-detail{padding:24px 26px}
+.noscript{padding:22px;background:var(--panel);border-radius:var(--radius-md);margin:16px}
+
+/* Research Tracks Panel */
+.research-panel{
+  margin:0 0 18px;border:1px solid var(--line);border-radius:var(--radius-md);
+  background:var(--panel);box-shadow:var(--shadow-xs);padding:18px 20px;
+}
+.research-intro{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+.research-intro h3{font-size:16px;line-height:1.5;margin:6px 0 4px;font-weight:700}
+.research-intro p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.65}
+.research-intro>button{font-size:12px;flex-shrink:0}
+.research-route-buttons{display:flex;flex-wrap:wrap;gap:7px}
+.research-route-buttons button{
+  font-size:12px;padding:7px 11px;background:var(--soft);
+  display:inline-flex;gap:7px;align-items:center;border-color:transparent;border-radius:999px;
+}
+.research-route-buttons button>span{color:var(--muted);font-variant-numeric:tabular-nums;font-size:11px}
+.research-route-buttons button.active{background:var(--tint);border-color:var(--accent);color:var(--accent);font-weight:600}
+.research-note{font-size:11.5px;line-height:1.75;color:var(--muted);margin:12px 0 0}
+.research-period-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+.research-period-controls label{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.research-period-controls select{
+  font-size:12px;padding:6px 10px;border:1px solid var(--line);border-radius:var(--radius-sm);
+  background:var(--panel-alt);color:var(--ink);
+}
+.research-section-bg{fill:var(--tint)}
+.research-section-title{fill:var(--accent);font-size:14.5px;font-weight:700}
+.research-section-desc{fill:var(--muted);font-size:11px}
+
+/* Responsive */
+@media(min-width:1460px){.graph-viewport{height:720px}.method-card{min-height:198px}}
+@media(max-width:1190px){
+  .method-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .collection-layout{grid-template-columns:228px minmax(0,1fr);gap:18px}
+  .graph-workspace{grid-template-columns:minmax(0,1fr) 300px}
+  .hero{padding:24px 28px}.shell{padding:0 28px 40px}
+  .graph-toolbar .search-label{flex:1}
+  .graph-toolbar>label:not(.search-label){flex:1}
+}
+@media(max-width:860px){
+  .hero{flex-direction:column;align-items:stretch;gap:18px;padding:22px 20px}
+  .hero-stats{align-self:flex-start}
+  .shell{padding:0 20px 36px}
+  .collection-layout{display:block}
+  .direction-panel{position:static;max-height:none;padding:12px;margin-bottom:16px}
+  .directions{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .direction,.direction.is-child,.direction.is-all,.direction.is-parent{
+    white-space:nowrap;flex-shrink:0;padding:7px 11px;margin:0;border:1px solid var(--line);border-radius:999px;
+  }
+  .direction.is-child::before{display:none}
+  .overview-toolbar{flex-wrap:wrap}
+  .overview-toolbar .search-label{flex-basis:100%}
+  .graph-workspace{display:block}
+  .graph-detail{position:static;margin-top:16px;max-height:none}
+  .graph-viewport{max-height:none;height:600px}
+  .graph-workspace:fullscreen{display:block;overflow:auto}
+  .graph-workspace:fullscreen .graph-detail{max-height:none}
+  .graph-workspace:fullscreen .graph-viewport{height:75dvh}
+  .graph-toolbar .segmented{width:100%;justify-content:space-between}
+  .graph-toolbar .search-label{flex-basis:100%}
+}
+@media(max-width:540px){
+  .hero{padding:20px 16px}.hero h1{font-size:22px}.hero p{font-size:12.5px}
+  .hero-stats{width:100%}.hero-stats>div{flex:1;min-width:0;padding:11px 12px}.hero-stats dt{font-size:22px}
+  .shell{padding:0 14px 30px}
+  .page-nav{padding:14px 0 12px;gap:8px;flex-wrap:wrap}
+  .tabs{flex:1;justify-content:space-between}.tabs button{flex:1;justify-content:center;padding:8px 10px;font-size:12.5px}
+  .tabs button span{display:none}
+  .section-heading{margin-bottom:12px}.section-heading h2{font-size:18px}.section-heading p{font-size:12px}
+  .toolbar{padding:12px;gap:10px}
+  .overview-toolbar label:not(.search-label){flex:1 1 calc(50% - 5px)}
+  .overview-toolbar label:not(.search-label) select{width:100%}
+  .overview-toolbar>button{flex:1 1 calc(50% - 5px)}
+  .graph-toolbar>label:not(.search-label){flex:1 1 calc((100% - 10px)/2);min-width:0}
+  .graph-toolbar>label:not(.search-label) select{width:100%;max-width:none}
+  .graph-toolbar>button{width:100%}
+  .method-list{grid-template-columns:1fr}.method-card{min-height:164px;padding:15px}
+  .meta-grid{grid-template-columns:1fr}
+  .legend{font-size:11px;gap:6px}.legend span{padding:4px 9px}
+  .zoom-tools{flex-wrap:wrap;gap:5px}.zoom-tools>button{font-size:11.5px;padding:6px 10px}
+  .chart-caption{flex-wrap:wrap;gap:8px;padding:10px 12px;font-size:11.5px}
+  .graph-viewport{height:520px;min-height:240px}
+  .method-detail,.edge-detail{padding:16px}.dialog-top+.method-detail{padding:18px}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+@media print{
+  .page-nav,.toolbar,.direction-panel,.pagination,.zoom-tools,.graph-detail,.check,.card-bottom button{display:none!important}
+  .masthead{border:0;background:#fff}.hero,.shell{padding:14px}
+  .collection-layout{display:block}.method-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .method-card{break-inside:avoid;box-shadow:none}.graph-workspace{display:block}
+  .graph-viewport{height:auto;max-height:none;overflow:visible}.chart-panel{overflow:visible;box-shadow:none}
+  .graph-viewport svg{width:100%!important;height:auto!important}
+}
+</style>
+</head>
 <body>
 <header class="masthead">
   <div class="hero">
-    <div class="hero-copy"><span class="brand" id="domain-name"></span><h1>总方法合集与技术演进</h1><p><span id="domain-description"></span></p></div>
-    <dl class="hero-stats"><div><dt>0</dt><dd>收录方法</dd></div><div><dt>0</dt><dd>技术方向</dd></div><div><dt>0</dt><dd>关系连线</dd></div></dl>
+    <div class="hero-copy">
+      <div class="brand-row">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="2.2"/><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M6 8.2v7.6M8.2 18h6.3a3.5 3.5 0 0 0 3.5-3.5V8.2"/></svg>
+        </span>
+        <span class="brand" id="domain-name"></span>
+        <span class="cutoff-chip" id="domain-cutoff"></span>
+      </div>
+      <h1>总方法合集与技术演进</h1>
+      <p><span id="domain-description"></span></p>
+    </div>
+    <dl class="hero-stats">
+      <div><dt>0</dt><dd>收录方法</dd></div>
+      <div><dt>0</dt><dd>技术方向</dd></div>
+      <div><dt>0</dt><dd>关系连线</dd></div>
+    </dl>
   </div>
 </header>
+
 <main class="shell">
-  <nav class="page-nav" aria-label="内容导航"><div class="tabs" role="tablist"><button id="overview-tab" type="button" role="tab" aria-selected="true" aria-controls="overview-view" data-view="overview" class="active">总方法合集 <span>0</span></button><button id="evolution-tab" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="evolution-view" data-view="evolution">技术演进关系图 <span>0 节点</span></button></div><button id="theme-toggle" type="button" aria-label="切换明暗主题">主题：自动</button></nav>
+  <nav class="page-nav" aria-label="内容导航">
+    <div class="tabs" role="tablist">
+      <button id="overview-tab" type="button" role="tab" aria-selected="true" aria-controls="overview-view" data-view="overview" class="active">总方法合集 <span>0</span></button>
+      <button id="evolution-tab" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="evolution-view" data-view="evolution">技术演进关系图 <span>0 节点</span></button>
+    </div>
+    <button id="theme-toggle" type="button" aria-label="切换明暗主题">主题：自动</button>
+  </nav>
+
   <section id="overview-view" role="tabpanel" aria-labelledby="overview-tab">
-    <div class="section-heading"><h2>总方法合集</h2><p>按技术方向聚合方法；点击名称查看核心机制、适用边界与论文来源。</p></div>
+    <div class="section-heading">
+      <h2>总方法合集</h2>
+      <p>按技术方向聚合方法；点击名称查看核心机制、适用边界与论文来源。</p>
+    </div>
     <div class="toolbar overview-toolbar">
-      <label class="search-label"><span>检索方法</span><input id="method-search" type="search" autocomplete="off" placeholder="搜索名称、论文标题、机制或别名"></label>
+      <label class="search-label">
+        <span>检索方法</span>
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="method-search" type="search" autocomplete="off" placeholder="搜索名称、论文标题、作者、机制或别名">
+        </div>
+      </label>
       <label><span>时间</span><select id="method-year"><option value="">全部年份</option></select></label>
       <label><span>排序</span><select id="method-sort"><option value="direction">按技术方向</option><option value="newest">按时间从新到旧</option><option value="name">按名称</option></select></label>
       <label><span>导出格式</span><select id="method-export-format"><option value="json">JSON 数据</option><option value="csv">文献 CSV</option><option value="bib">BibTeX</option></select></label>
-      <button id="method-reset" type="button">重置筛选</button><button id="export-methods" type="button">导出当前合集</button>
+      <button id="method-reset" type="button">重置筛选</button>
+      <button id="export-methods" type="button" class="btn-primary">导出当前合集</button>
     </div>
     <div class="collection-layout">
-      <aside class="direction-panel"><h3>技术方向</h3><div id="directions" class="directions" aria-label="筛选技术方向"></div></aside>
-      <div class="collection-main"><div class="results-heading"><p id="method-count" aria-live="polite"></p><label class="check"><input id="featured-only" type="checkbox">仅代表方法</label></div><div id="method-list" class="method-list"></div><div id="collection-empty" class="empty" hidden><h3>没有匹配的方法</h3><p>尝试缩短关键词或放宽技术方向与年份。</p><button type="button" id="empty-reset">清除筛选</button></div><div class="pagination"><button id="page-prev" type="button">上一页</button><span id="page-status" aria-live="polite"></span><button id="page-next" type="button">下一页</button></div></div>
+      <aside class="direction-panel">
+        <h3>技术方向</h3>
+        <div id="directions" class="directions" aria-label="筛选技术方向"></div>
+      </aside>
+      <div class="collection-main">
+        <div class="results-heading">
+          <p id="method-count" aria-live="polite"></p>
+          <label class="check"><input id="featured-only" type="checkbox">仅代表方法</label>
+        </div>
+        <div id="method-list" class="method-list"></div>
+        <div id="collection-empty" class="empty" hidden>
+          <h3>没有匹配的方法</h3>
+          <p>尝试缩短关键词或放宽技术方向与年份条件。</p>
+          <button type="button" id="empty-reset">清除筛选</button>
+        </div>
+        <div class="pagination">
+          <button id="page-prev" type="button">上一页</button>
+          <span id="page-status" aria-live="polite"></span>
+          <button id="page-next" type="button">下一页</button>
+        </div>
+      </div>
     </div>
   </section>
+
   <section id="evolution-view" role="tabpanel" aria-labelledby="evolution-tab" hidden>
-    <div class="section-heading"><h2>技术演进关系图</h2><p>横向按时间展开，纵向分技术路线。默认展示全部方法，支持年份筛选、关系类型筛选和前驱／后续路径追踪。</p></div>
+    <div class="section-heading">
+      <h2>技术演进关系图</h2>
+      <p>横向按时间展开，纵向按技术路线分层。默认展示全部方法，支持年份筛选、关系筛选与多跳技术路径追踪。</p>
+    </div>
     <div class="toolbar graph-toolbar">
-      <div class="segmented" role="group" aria-label="图谱方法范围"><button type="button" data-scope="all" class="active" aria-pressed="true">全部方法 0</button><span id="track-buttons" style="display:contents"></span></div>
-      <label class="search-label"><span>检索节点</span><input id="graph-search" type="search" autocomplete="off" placeholder="搜索并定位方法"></label>
+      <div class="segmented" role="group" aria-label="图谱方法范围">
+        <button type="button" data-scope="all" class="active" aria-pressed="true">全部方法 0</button>
+        <span id="track-buttons" style="display:contents"></span>
+      </div>
+      <label class="search-label">
+        <span>检索节点</span>
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="graph-search" type="search" autocomplete="off" placeholder="搜索并定位方法">
+        </div>
+      </label>
       <label><span>路线</span><select id="graph-direction"><option value="">全部技术方向</option></select></label>
       <label><span>起始年份</span><select id="graph-year-from"><option value="">不限起始</option></select></label>
       <label><span>结束年份</span><select id="graph-year-to"><option value="">不限结束</option></select></label>
@@ -59,233 +825,969 @@ dialog{max-width:760px;width:calc(100% - 36px);max-height:90dvh;padding:0;border
       <button id="graph-reset" type="button">重置图谱</button>
     </div>
     <div id="research-panel" class="research-panel" hidden aria-label="可选专题路线"></div>
-    <div class="graph-tools"><div class="legend"><span><i class="line direct"></i>明确依赖</span><span><i class="line extension"></i>框架扩展</span><span><i class="line borrow"></i>技术借鉴</span><span><i class="line theme"></i>同方向研究</span></div><div class="zoom-tools"><button id="zoom-out" type="button" aria-label="缩小关系图">−</button><output id="zoom-status">100%</output><button id="zoom-in" type="button" aria-label="放大关系图">+</button><button id="fit-width" type="button">适宽</button><button id="export-svg" type="button">导出 SVG</button><button id="graph-fullscreen" type="button">全屏阅读</button></div></div>
+    <div class="graph-tools">
+      <div class="legend">
+        <span><i class="line direct"></i>明确依赖</span>
+        <span><i class="line extension"></i>框架扩展</span>
+        <span><i class="line borrow"></i>技术借鉴</span>
+        <span><i class="line theme"></i>同方向研究</span>
+      </div>
+      <div class="zoom-tools">
+        <div class="zoom-pill">
+          <button id="zoom-out" type="button" aria-label="缩小关系图">−</button>
+          <output id="zoom-status">100%</output>
+          <button id="zoom-in" type="button" aria-label="放大关系图">+</button>
+        </div>
+        <button id="fit-width" type="button">适宽</button>
+        <button id="export-svg" type="button">导出 SVG</button>
+        <button id="graph-fullscreen" type="button">全屏阅读</button>
+      </div>
+    </div>
     <div id="graph-workspace" class="graph-workspace">
-      <div class="chart-panel"><div class="chart-caption"><span id="graph-count" aria-live="polite"></span><label class="check"><input type="checkbox" id="neighbor-only">只看所选方法的关联</label></div><div id="graph-viewport" class="graph-viewport" tabindex="0" aria-label="技术演进图，可滚动、拖动、缩放或使用方向键浏览"><svg id="evolution-svg" xmlns="http://www.w3.org/2000/svg" aria-label="技术演进关系图"></svg><div id="graph-empty" class="empty" hidden><h3>没有匹配的节点</h3><p>清除关键词或切换至全部方法。</p><button id="graph-empty-reset" type="button">清除筛选</button></div></div><p class="chart-note">时间按现有文献记录排列。箭头表示技术依赖、框架扩展或技术借鉴，点线表示同方向研究；具体判断依据见连线详情。拖动空白处平移，Ctrl + 滚轮缩放。</p></div>
-      <aside id="graph-detail" class="graph-detail"><div class="detail-title"><h3>方法与关系</h3><button id="clear-selection" type="button" hidden>清除选择</button></div><div id="graph-detail-body" class="detail-empty"><strong>选择一个方法，展开它的技术脉络</strong><p>节点对应独立方法。点击后查看机制与论文，也可继续点击前驱、后续或同方向方法。</p><div class="detail-help">同方向研究表示相关探索，不代表直接继承。点击连线查看关系依据及核验状态。</div></div></aside>
+      <div class="chart-panel">
+        <div class="chart-caption">
+          <span id="graph-count" aria-live="polite"></span>
+          <label class="check"><input type="checkbox" id="neighbor-only">只看所选方法的关联</label>
+        </div>
+        <div id="graph-viewport" class="graph-viewport" tabindex="0" aria-label="技术演进图，可滚动、拖动、缩放或使用方向键浏览">
+          <svg id="evolution-svg" xmlns="http://www.w3.org/2000/svg" aria-label="技术演进关系图"></svg>
+          <div id="graph-empty" class="empty" hidden>
+            <h3>没有匹配的节点</h3>
+            <p>清除关键词、调整年份范围或切换至全部方法。</p>
+            <button id="graph-empty-reset" type="button">清除筛选</button>
+          </div>
+        </div>
+        <p class="chart-note">时间按现有文献记录排列。箭头表示明确依赖、框架扩展或技术借鉴，点线表示同方向研究；点击连线查看依据与原文位置。拖动空白处平移，Ctrl + 滚轮缩放。</p>
+      </div>
+      <aside id="graph-detail" class="graph-detail">
+        <div class="detail-title">
+          <h3>方法与关系</h3>
+          <button id="clear-selection" type="button" hidden>清除选择</button>
+        </div>
+        <div id="graph-detail-body" class="detail-empty">
+          <strong>选择一个方法，展开它的技术脉络</strong>
+          <p>每个节点代表一项独立方法。点击节点查看核心机制与论文信息，或点击任意连线核对技术关系依据与原文定位。</p>
+          <div class="detail-help">同方向研究仅表示机制对照或并行探索，不构成技术继承路径。</div>
+        </div>
+      </aside>
     </div>
   </section>
-  <noscript><p class="noscript">请启用 JavaScript 以使用方法筛选与关系图。</p></noscript>
+
+  <noscript><p class="noscript">请启用 JavaScript 以使用方法筛选与交互式技术演进图。</p></noscript>
 </main>
-<dialog id="method-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span>方法详情</span><button id="close-dialog" type="button" aria-label="关闭方法详情">关闭 ×</button></div><div id="dialog-content"></div></dialog>
+
+<dialog id="method-dialog" aria-labelledby="dialog-title">
+  <div class="dialog-top">
+    <span>方法与文献详情</span>
+    <button id="close-dialog" type="button" aria-label="关闭方法详情">关闭 ×</button>
+  </div>
+  <div id="dialog-content"></div>
+</dialog>
+
 <script id="method-data" type="application/json">__RESEARCH_DATA__</script>
 <script>(() => {
   'use strict';
-  const D = JSON.parse(document.getElementById('method-data').textContent);
-  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
-  const E = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const norm = s => String(s ?? '').toLocaleLowerCase().replace(/[\s_\-–—:：]/g,'');
 
-  document.title=D.metadata.title||D.metadata.domain+' · 技术演进图';
-  $('#domain-name').textContent=D.metadata.domain||'Research Evolution Map';
-  $('#domain-description').textContent=(D.metadata.description||'沿着问题、机制与证据理解领域全貌。')+(D.metadata.is_synthetic?'【虚构示例，仅供流程测试】':'')+' 检索截至 '+(D.metadata.search_cutoff||'未记录');
-  $$('.hero-stats dt').forEach((e,i)=>e.textContent=[D.methods.length,D.groups.length,D.edges.length][i]);
-  $('#overview-tab span').textContent=D.methods.length;$('#evolution-tab span').textContent=D.methods.length+' 节点';
-  $('[data-scope="all"]').textContent='全部方法 '+D.methods.length;
-  $('#track-buttons').innerHTML=D.tracks.map(t=>'<button type="button" data-scope="research" data-track="'+t.id+'" aria-pressed="false">'+E(t.name)+'</button>').join('');
-  const methods = new Map(D.methods.map(m=>[m.id,m]));
-  const groups = new Map(D.groups.map(g=>[g.id,g]));
-  let researchLanes=new Map(), researchPlacements=new Map(), researchEdges=[];
+  function hydrateData(raw){
+    if(raw && raw.methods && raw.groups && raw.edges) return raw;
+    const c = (raw && raw.canonical) || raw || {};
+    const pmap = new Map((c.papers || []).map(p => [p.id, p]));
+    const methods = (c.methods || []).map(m => {
+      const ps = (m.paper_ids || []).map(id => pmap.get(id)).filter(Boolean);
+      const p = ps[0] || {};
+      const dates = ps.map(x => x.first_public_date).filter(Boolean).sort();
+      const legacy = m.legacy || {};
+      return {
+        ...legacy, ...m,
+        title: p.title || m.name,
+        authors: p.authors || [],
+        papers: ps,
+        date: dates[0] || '时间待核',
+        group: m.primary_group,
+        url: p.url || null,
+        tech: m.mechanism,
+        limit: m.limitations,
+        references: m.provenance || [],
+        dateBasis: p.date_basis || '',
+        dateAudit: legacy.dateAudit,
+        publication: legacy.publication
+      };
+    });
+    const normEdge = e => ({
+      ...e,
+      label: e.description || '',
+      evidenceText: (e.evidence || []).map(x => x.summary).filter(Boolean).join('；'),
+      url: (e.evidence || []).find(x => x.url)?.url || '',
+      origin: e.claim_basis
+    });
+    const groups = (c.groups || []).map((g, i) => ({...g, desc: g.definition || '', index: g.index ?? i}));
+    const tracks = (c.research_tracks || []).filter(t => t.enabled !== false).map(t => ({
+      ...t,
+      groups: (t.groups || []).map((g, i) => ({...g, desc: g.definition || '', index: g.index ?? i})),
+      edges: (t.edges || []).map(normEdge)
+    }));
+    return {
+      methods, groups, edges: (c.edges || []).map(normEdge),
+      surveys: c.surveys || [], tracks, metadata: c.metadata || {}, canonical: c
+    };
+  }
+
+  function orderHierarchy(list){
+    const byId = new Map(list.map(g => [g.id, g]));
+    const children = new Map();
+    const roots = [];
+    for(const g of list){
+      if(g.parent_id && byId.has(g.parent_id)){
+        if(!children.has(g.parent_id)) children.set(g.parent_id, []);
+        children.get(g.parent_id).push(g);
+      } else {
+        roots.push(g);
+      }
+    }
+    const out = [];
+    let rootIdx = 0;
+    for(const r of roots){
+      const colorVar = `var(--g${rootIdx % 8})`;
+      out.push({...r, _order: out.length, _color: colorVar});
+      for(const ch of children.get(r.id) || []){
+        out.push({...ch, _order: out.length, _color: colorVar});
+      }
+      rootIdx++;
+    }
+    return out;
+  }
+
+  const D = hydrateData(JSON.parse(document.getElementById('method-data').textContent));
+  D.groups = orderHierarchy(D.groups);
+  D.tracks = D.tracks.map(t => ({...t, groups: orderHierarchy(t.groups || [])}));
+
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const E = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const superscripts={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','+':'⁺','-':'⁻','=':'⁼','(':'⁽',')':'⁾','n':'ⁿ','i':'ⁱ'};
+  const subscripts={'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉','+':'₊','-':'₋','=':'₌','(':'₍',')':'₎','a':'ₐ','e':'ₑ','h':'ₕ','i':'ᵢ','j':'ⱼ','k':'ₖ','l':'ₗ','m':'ₘ','n':'ₙ','o':'ₒ','p':'ₚ','r':'ᵣ','s':'ₛ','t':'ₜ','u':'ᵤ','v':'ᵥ','x':'ₓ'};
+  const script = (value,map) => [...String(value)].map(ch=>map[ch]||ch).join('');
+  function displayText(value){
+    let text=String(value ?? '');
+    text=text.replace(/\$\$?([\s\S]*?)\$\$?/g,'$1')
+      .replace(/\\text(?:rm|bf|it|normalfont)?\{([^{}]*)\}/g,'$1')
+      .replace(/\\(?:mathrm|mathbf|mathit|operatorname|mathbb|mathcal|mathsf|tilde|hat|bar|vec)\{([^{}]*)\}/g,'$1')
+      .replace(/\^\{([^{}]+)\}/g,(_,body)=>script(body,superscripts))
+      .replace(/\^([A-Za-z0-9+\-=()])/g,(_,body)=>script(body,superscripts))
+      .replace(/_\{([^{}]+)\}/g,(_,body)=>script(body,subscripts))
+      .replace(/_([A-Za-z0-9+\-=()])/g,(_,body)=>script(body,subscripts))
+      .replace(/\\([\\{}_$%&#])/g,'$1')
+      .replace(/\\(?:left|right|quad|qquad)\b/g,'')
+      .replace(/\\[,;:!]/g,'')
+      .replace(/[{}]/g,'');
+    return text.replace(/\s+/g,' ').trim();
+  }
+  const norm = s => displayText(s).toLocaleLowerCase()
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,c=>({'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9'}[c]))
+    .replace(/[\s_\-–—:：.,，。;；]/g,'');
+
+  document.title = D.metadata.title || (D.metadata.domain || 'Research Atlas') + ' · 技术演进图';
+  $('#domain-name').textContent = D.metadata.domain || 'Research Atlas';
+  $('#domain-cutoff').textContent = '检索截至 ' + (D.metadata.search_cutoff || '未记录');
+  $('#domain-description').textContent = (D.metadata.description || '沿着问题、机制与证据理解领域全貌。')
+    + (D.metadata.is_synthetic ? '【虚构示例，仅供流程测试】' : '');
+  $$('.hero-stats dt').forEach((e, i) => e.textContent = [D.methods.length, D.groups.length, D.edges.length][i]);
+  $('#overview-tab span').textContent = D.methods.length;
+  $('#evolution-tab span').textContent = D.methods.length + ' 节点';
+  $('[data-scope="all"]').textContent = '全部方法 ' + D.methods.length;
+  $('#track-buttons').innerHTML = D.tracks.map(t => `<button type="button" data-scope="research" data-track="${E(t.id)}" aria-pressed="false">${E(displayText(t.name))}</button>`).join('');
+
+  const methods = new Map(D.methods.map(m => [m.id, m]));
+  const groups = new Map(D.groups.map(g => [g.id, g]));
+  const hasHierarchy = D.groups.some(g => g.parent_id && groups.has(g.parent_id));
+  const groupColor = id => groups.get(id)?._color || 'var(--accent)';
+
+  let researchLanes = new Map(), researchPlacements = new Map(), researchEdges = [];
   function setTrack(id){
-    const t=D.tracks.find(t=>t.id===id)||D.tracks[0]||{id:'',name:'',groups:[],assignments:[],edges:[],method_ids:[]};
-    D.research={...t,title:t.name,lanes:t.groups||[],sections:t.sections||[],assignments:t.assignments||[],edges:t.edges||[],dateAudits:t.date_audits||[],update:t.update||{},evidence:t.evidence||[]};
-    researchLanes=new Map(D.research.lanes.map(l=>[l.id,l]));researchPlacements=new Map(D.research.assignments.map(p=>[p.method,p]));
-    const ids=new Set(t.method_ids);researchEdges=[...D.edges.filter(e=>ids.has(e.source)&&ids.has(e.target)&&(!t.global_edge_ids||t.global_edge_ids.includes(e.id))),...D.research.edges];
+    const t = D.tracks.find(t => t.id === id) || D.tracks[0] || {id:'',name:'',groups:[],assignments:[],edges:[],method_ids:[]};
+    D.research = {...t,title:t.name,lanes:t.groups||[],sections:t.sections||[],assignments:t.assignments||[],edges:t.edges||[],dateAudits:t.date_audits||[],update:t.update||{},evidence:t.evidence||[]};
+    researchLanes = new Map(D.research.lanes.map(l => [l.id, l]));
+    researchPlacements = new Map(D.research.assignments.map(p => [p.method, p]));
+    const ids = new Set(t.method_ids);
+    researchEdges = [...D.edges.filter(e => ids.has(e.source) && ids.has(e.target) && (!t.global_edge_ids || t.global_edge_ids.includes(e.id))), ...D.research.edges];
   }
   setTrack();
-  const currentEdges=()=>state.scope==='research'?researchEdges:D.edges;
-  const researchLane=m=>{const p=researchPlacements.get(m.id),f=$('#graph-direction').value;return f&&p.memberships.includes(f)?f:p.primary;};
-  const surveys = new Map(D.surveys.map(s=>[s.id,s]));
-  const types = {direct:'明确依赖',extension:'框架扩展',borrow:'技术借鉴',theme:'同方向研究'};
-  const state = {view:'overview',direction:'',page:1,pageSize:24,scope:'all',period:'all',selected:null,zoom:1,theme:'auto'};
+
+  const currentEdges = () => state.scope === 'research' ? researchEdges : D.edges;
+  const researchLane = m => {const p = researchPlacements.get(m.id), f = $('#graph-direction').value; return f && p.memberships.includes(f) ? f : p.primary;};
+  const surveys = new Map(D.surveys.map(s => [s.id, s]));
+  const types = {direct:'明确依赖', extension:'框架扩展', borrow:'技术借鉴', theme:'同方向研究'};
+  const verifyLabels = {verified:['已核实','ok'], partial:['部分核验','muted'], pending:['待核','warn'], disputed:['存在争议','warn']};
+  const state = {view:'overview', direction:'', page:1, pageSize:24, scope:'all', period:'all', selected:null, selectedEdge:null, zoom:1, theme:'auto'};
   let collection = [], graphMethods = [], graphEdges = [], positions = new Map(), graphWidth = 1660, graphHeight = 800;
   let searchTimer = null, graphTimer = null, pan = null;
-  const searchable = new Map(D.methods.map(m=>[m.id,norm([m.name,m.title,m.tech,m.problem,m.category,m.publication?.label,groups.get(m.group).name,...m.papers.map(p=>p.title),...(m.authors||[]),...m.aliases,...m.modules,...m.tags].join(' '))]));
-  const year = m => /^\d{4}/.test(m.date) ? m.date.slice(0,4) : 'pending';
-  const displayDate = m => year(m)==='pending'?'日期未录入':m.date;
-  const time = m => /^\d{4}/.test(m.date) ? m.date.replace('†','') : '9999';
-  const matches = (m,q) => !q || searchable.get(m.id).includes(norm(q));
-  const safeURL = u => {try {const url=new URL(u);return ['http:','https:'].includes(url.protocol)?url.href:'';} catch{return '';}};
-  const link = (u,label,cls='') => safeURL(u) ? `<a href="${E(safeURL(u))}" target="_blank" rel="noopener noreferrer" class="${cls}">${E(label)} ↗</a>` : '';
-  const years = [...new Set(D.methods.map(year))].filter(y=>y!=='pending').sort().reverse();
-  $('#method-year').insertAdjacentHTML('beforeend',years.map(y=>`<option value="${y}">${y}</option>`).join('')+'<option value="pending">日期未录入</option>');
-  ['graph-year-from','graph-year-to'].forEach(id=>$('#'+id).insertAdjacentHTML('beforeend',[...years].reverse().map(y=>`<option value="${y}">${y}</option>`).join('')));
-  const inGroup=(m,id)=>m.group_ids.some(g=>g===id||groups.get(g)?.parent_id===id);
-  function directionOptions(){const select=$('#graph-direction'),previous=select.value;
-    select.innerHTML='<option value="">全部技术方向</option>'+(state.scope==='research'?D.research.lanes:D.groups).map(g=>'<option value="'+E(g.id)+'">'+E((g.parent_id?'↳ ':'')+g.name)+'</option>').join('');
-    if([...select.options].some(o=>o.value===previous))select.value=previous;
+
+  const searchable = new Map(D.methods.map(m => [m.id, norm([
+    m.name, displayText(m.name), m.title, displayText(m.title), m.tech, m.problem, m.category,
+    m.publication?.label, groups.get(m.group)?.name,
+    ...m.papers.map(p => [p.title, displayText(p.title), p.arxiv_id, p.doi, p.venue]),
+    ...(m.authors || []), ...(m.aliases || []), ...(m.modules || []), ...(m.tags || [])
+  ].flat().join(' '))]));
+
+  const year = m => /^\d{4}/.test(m.date) ? m.date.slice(0, 4) : 'pending';
+  const displayDate = m => year(m) === 'pending' ? '日期未录入' : m.date;
+  const time = m => /^\d{4}/.test(m.date) ? m.date.replace('†', '') : '9999';
+  const matches = (m, q) => !q || searchable.get(m.id).includes(norm(q));
+  const safeURL = u => {try{const url = new URL(u); return ['http:','https:'].includes(url.protocol) ? url.href : '';}catch{return '';}};
+  const link = (u, label, cls='') => safeURL(u) ? `<a href="${E(safeURL(u))}" target="_blank" rel="noopener noreferrer" class="${cls}">${E(displayText(label))} ↗</a>` : '';
+
+  const arxivNorm = u => {const m = String(u || '').match(/arxiv\.org\/(?:abs|pdf|html)\/([^?#]+)/i); return m ? m[1].replace(/\.pdf$/i,'').replace(/v\d+$/i,'').toLowerCase() : '';};
+  const doiNorm = u => {const m = String(u || '').match(/doi\.org\/([^?#]+)/i); return m ? decodeURIComponent(m[1]).toLowerCase() : '';};
+  const papersByUrl = new Map(), papersByArxiv = new Map(), papersByDoi = new Map();
+  for(const p of D.canonical.papers || []){
+    const u = safeURL(p.url); if(u) papersByUrl.set(u.split('#')[0], p);
+    const ax = (p.arxiv_id || '').replace(/v\d+$/i,'').toLowerCase() || arxivNorm(p.url);
+    if(ax) papersByArxiv.set(ax, p);
+    const di = (p.doi || '').toLowerCase() || doiNorm(p.url);
+    if(di) papersByDoi.set(di, p);
+  }
+  function resolvePaperByUrl(u){
+    const clean = u.split('#')[0];
+    return papersByUrl.get(clean) || (arxivNorm(clean) && papersByArxiv.get(arxivNorm(clean))) || (doiNorm(clean) && papersByDoi.get(doiNorm(clean))) || null;
+  }
+
+  const years = [...new Set(D.methods.map(year))].filter(y => y !== 'pending').sort().reverse();
+  $('#method-year').insertAdjacentHTML('beforeend', years.map(y => `<option value="${y}">${y}</option>`).join('') + '<option value="pending">日期未录入</option>');
+  ['graph-year-from', 'graph-year-to'].forEach(id => $('#' + id).insertAdjacentHTML('beforeend', [...years].reverse().map(y => `<option value="${y}">${y}</option>`).join('')));
+  const inGroup = (m, id) => m.group_ids.some(g => g === id || groups.get(g)?.parent_id === id);
+
+  function directionOptions(){
+    const select = $('#graph-direction'), previous = select.value;
+    const list = state.scope === 'research' ? D.research.lanes : D.groups;
+    select.innerHTML = '<option value="">全部技术方向</option>' + list.map(g => `<option value="${E(g.id)}">${E(displayText((g.parent_id ? '↳ ' : '') + g.name))}</option>`).join('');
+    if([...select.options].some(o => o.value === previous)) select.value = previous;
   }
   directionOptions();
-  $('#featured-only').closest('label').hidden=!D.methods.some(m=>m.featured);
+  $('#featured-only').closest('label').hidden = !D.methods.some(m => m.featured);
 
-  function showView(v,scroll=false) {
-    state.view=v;
-    ['overview','evolution'].forEach(n=>{$('#'+n+'-view').hidden=n!==v;const tab=$('#'+n+'-tab');tab.classList.toggle('active',n===v);tab.setAttribute('aria-selected',n===v?'true':'false');tab.tabIndex=n===v?0:-1;});
-    if(v==='evolution'&&!$('#evolution-svg').childElementCount)renderGraph();
-    if(scroll)$('.page-nav').scrollIntoView({block:'start',behavior:'auto'});
+  function showView(v, scroll=false){
+    state.view = v;
+    ['overview', 'evolution'].forEach(n => {
+      $('#' + n + '-view').hidden = n !== v;
+      const tab = $('#' + n + '-tab');
+      tab.classList.toggle('active', n === v);
+      tab.setAttribute('aria-selected', n === v ? 'true' : 'false');
+      tab.tabIndex = n === v ? 0 : -1;
+    });
+    if(v === 'evolution' && !$('#evolution-svg').childElementCount) renderGraph();
+    if(scroll) $('.page-nav').scrollIntoView({block:'start', behavior:'auto'});
   }
-  $$('[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
-  $('.tabs').addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const v=e.key==='Home'?'overview':e.key==='End'?'evolution':state.view==='overview'?'evolution':'overview';showView(v);$('#'+v+'-tab').focus();});
+  $$('[data-view]').forEach(b => b.addEventListener('click', () => showView(b.dataset.view)));
+  $('.tabs').addEventListener('keydown', e => {
+    if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) return;
+    e.preventDefault();
+    const v = e.key === 'Home' ? 'overview' : e.key === 'End' ? 'evolution' : state.view === 'overview' ? 'evolution' : 'overview';
+    showView(v); $('#' + v + '-tab').focus();
+  });
+
   function directionButtons(){
-    $('#directions').innerHTML=[{id:'',name:'全部方法'},...D.groups].map(g=>{const count=g.id?D.methods.filter(m=>inGroup(m,g.id)).length:D.methods.length;return `<button type="button" class="direction ${state.direction===g.id?'active':''}" data-direction="${g.id}" aria-pressed="${state.direction===g.id}">${E(g.name)}<span>${count}</span></button>`;}).join('');
+    const items = [{id:'', name:'全部方法', _isAll:true}, ...D.groups];
+    $('#directions').innerHTML = items.map(g => {
+      const count = g.id ? D.methods.filter(m => inGroup(m, g.id)).length : D.methods.length;
+      const cls = ['direction', state.direction === g.id ? 'active' : '', g._isAll ? 'is-all' : (g.parent_id ? 'is-child' : (hasHierarchy ? 'is-parent' : ''))].filter(Boolean).join(' ');
+      const dot = g._isAll ? '' : `<i class="direction-dot" style="--g-color:${g._color || 'var(--accent)'}"></i>`;
+      return `<button type="button" class="${cls}" data-direction="${E(g.id)}" aria-pressed="${state.direction === g.id}"><span class="direction-label">${dot}${E(displayText(g.name))}</span><span class="dir-count">${count}</span></button>`;
+    }).join('');
   }
+
   function filterCollection(resetPage=true){
-    if(resetPage)state.page=1;
-    const q=$('#method-search').value,y=$('#method-year').value,featured=$('#featured-only').checked;
-    collection=D.methods.filter(m=>(!state.direction||inGroup(m,state.direction))&&(!y||year(m)===y)&&(!featured||m.featured)&&matches(m,q));
-    const sort=$('#method-sort').value;
-    collection.sort(sort==='name'?(a,b)=>a.name.localeCompare(b.name):sort==='newest'?(a,b)=>(year(a)==='pending')-(year(b)==='pending')||time(b).localeCompare(time(a))||a.name.localeCompare(b.name):(a,b)=>groups.get(a.group).index-groups.get(b.group).index||time(a).localeCompare(time(b))||a.name.localeCompare(b.name));
+    if(resetPage) state.page = 1;
+    const q = $('#method-search').value, y = $('#method-year').value, featured = $('#featured-only').checked;
+    collection = D.methods.filter(m => (!state.direction || inGroup(m, state.direction)) && (!y || year(m) === y) && (!featured || m.featured) && matches(m, q));
+    const sort = $('#method-sort').value;
+    collection.sort(
+      sort === 'name' ? (a, b) => displayText(a.name).localeCompare(displayText(b.name)) :
+      sort === 'newest' ? (a, b) => (year(a) === 'pending') - (year(b) === 'pending') || time(b).localeCompare(time(a)) || a.name.localeCompare(b.name) :
+      (a, b) => (groups.get(a.group)?._order ?? 0) - (groups.get(b.group)?._order ?? 0) || time(a).localeCompare(time(b)) || a.name.localeCompare(b.name)
+    );
     renderCollection();
   }
+
   function renderCollection(){
-    const pages=Math.max(1,Math.ceil(collection.length/state.pageSize));state.page=Math.min(state.page,pages);
-    const start=(state.page-1)*state.pageSize,slice=collection.slice(start,start+state.pageSize);
-    $('#method-count').innerHTML=`${state.direction?E(groups.get(state.direction).name)+' · ':''}找到 <b>${collection.length}</b> 个方法，合集共 <b>${D.methods.length}</b> 个`;
-    $('#method-list').innerHTML=slice.map(m=>`<article class="method-card"><div class="card-top"><span class="category-name">${E(groups.get(m.group).name)}</span><span>${E(displayDate(m))}</span></div><button type="button" class="method-name" data-open="${m.id}">${E(m.name)}</button><p class="card-description">${E(m.tech||m.problem)}</p><div class="card-bottom">${link(m.url,'论文 / 来源')}<button type="button" data-locate="${m.id}">图中定位</button>${m.featured?'<span class="featured-tag">代表方法</span>':''}</div></article>`).join('');
-    $('#collection-empty').hidden=collection.length>0;$('.pagination').hidden=!collection.length;
-    $('#page-status').textContent=`第 ${state.page} / ${pages} 页 · ${start+1}–${Math.min(start+state.pageSize,collection.length)}`;
-    $('#page-prev').disabled=state.page<=1;$('#page-next').disabled=state.page>=pages;
+    const pages = Math.max(1, Math.ceil(collection.length / state.pageSize));
+    state.page = Math.min(state.page, pages);
+    const start = (state.page - 1) * state.pageSize, slice = collection.slice(start, start + state.pageSize);
+    $('#method-count').innerHTML = `${state.direction ? E(displayText(groups.get(state.direction).name)) + ' · ' : ''}找到 <b>${collection.length}</b> 个方法，合集共 <b>${D.methods.length}</b> 个`;
+    $('#method-list').innerHTML = slice.map(m => {
+      const g = groups.get(m.group);
+      const color = g?._color || 'var(--accent)';
+      return `<article class="method-card" style="--g-color:${color}">
+        <div class="card-top">
+          <span class="category-name">${E(displayText(g?.name || m.group))}</span>
+          <span class="card-date">${E(displayDate(m))}</span>
+        </div>
+        <button type="button" class="method-name" data-open="${E(m.id)}">${E(displayText(m.name))}</button>
+        <p class="card-description">${E(displayText(m.tech || m.problem))}</p>
+        <div class="card-bottom">
+          ${link(m.url, '论文 / 来源')}
+          <button type="button" data-locate="${E(m.id)}">图中定位</button>
+          ${m.featured ? '<span class="featured-tag">代表方法</span>' : ''}
+        </div>
+      </article>`;
+    }).join('');
+    $('#collection-empty').hidden = collection.length > 0;
+    $('.pagination').hidden = !collection.length;
+    $('#page-status').textContent = `第 ${state.page} / ${pages} 页 · ${start + 1}–${Math.min(start + state.pageSize, collection.length)}`;
+    $('#page-prev').disabled = state.page <= 1;
+    $('#page-next').disabled = state.page >= pages;
   }
-  function resetCollection(){state.direction='';state.page=1;$('#method-search').value='';$('#method-year').value='';$('#method-sort').value='direction';$('#featured-only').checked=false;directionButtons();filterCollection();}
-  $('#directions').addEventListener('click',e=>{const b=e.target.closest('[data-direction]');if(!b)return;state.direction=b.dataset.direction;directionButtons();filterCollection();});
-  $('#method-search').addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(filterCollection,120);});
-  ['method-year','method-sort','featured-only'].forEach(id=>$('#'+id).addEventListener('change',()=>filterCollection()));
-  $('#method-reset').addEventListener('click',resetCollection);$('#empty-reset').addEventListener('click',resetCollection);
-  ['prev','next'].forEach(d=>$('#page-'+d).addEventListener('click',()=>{state.page+=d==='prev'?-1:1;renderCollection();$('.results-heading').scrollIntoView({block:'start',behavior:'auto'});}));
 
-  function field(title,text){return text?`<section class="detail-field"><h4>${E(title)}</h4><p>${E(text)}</p></section>`:'';}
-  function sourceLinks(items){const seen=new Set();return items.map(r=>{const u=safeURL(r.url);if(!u||seen.has(u))return '';seen.add(u);const s=surveys.get(r.survey_id)||D.surveys.find(s=>safeURL(s.url)===u.split('#')[0]),p=D.canonical.papers.find(p=>safeURL(p.url)===u);return '<li>'+link(u,s?.title||p?.title||r.title||'参考文献')+'</li>';}).filter(Boolean).join('');}
-  function surveySources(m){const ids=new Set([...m.references,...m.papers.flatMap(p=>p.provenance||[])].map(r=>r.survey_id).filter(id=>surveys.has(id))),seen=new Set();const refs=[...ids].map(id=>surveys.get(id)).filter(s=>{const u=safeURL(s.url);if(!u||seen.has(u))return false;seen.add(u);return true;});return refs.length?'<section class="detail-field survey-sources"><h4>参考来源</h4><ul class="source-list">'+refs.map(s=>'<li>'+link(s.url,(s.name?s.name+' · ':'')+(s.title||s.name))+'</li>').join('')+'</ul></section>':'';}
-  function relationItem(e,id){const incoming=e.target===id,other=methods.get(incoming?e.source:e.target);return '<div class="relation-item"><div class="relation-heading"><i class="line '+e.type+'"></i><span>'+types[e.type]+' · '+(e.type==='theme'?'同向关联':incoming?'来自':'关联到')+'</span></div><button type="button" data-focus="'+other.id+'">'+E(other.name)+'</button>'+((e.label&&e.label!==types[e.type])?'<p>'+E(e.label)+'</p>':'')+'</div>';}
-  function paperInfo(m){return m.papers.map(p=>{const a=p.legacy?.dateAudit||{},pub=p.legacy?.publication||{},published=/^(已发表|已录用|发表记录|会议记录)/.test(pub.status||''),venue=p.venue||(published?pub.label:''),doi=p.doi||[pub.source,a.source].map(u=>{try{const v=new URL(u);return /^(dx\.)?doi\.org$/.test(v.hostname)?decodeURIComponent(v.pathname.slice(1)):'';}catch{return '';}}).find(Boolean),status={published:'已发表',accepted:'已录用',preprint:'预印本',submitted:'投稿中'}[p.publication_status];const rows=[p.first_public_date?'首次公开：'+E(p.first_public_date):'',a.arxivFirst&&a.arxivFirst!==p.first_public_date?'arXiv 首次提交：'+E(a.arxivFirst):'',p.publication_date?'正式发表：'+E(p.publication_date):'',venue?'发表 / 录用：'+E(venue):'',status?'发表状态：'+E(status):'',doi?'DOI：'+link('https://doi.org/'+doi,doi):'',p.arxiv_id?'arXiv：'+link('https://arxiv.org/abs/'+p.arxiv_id,p.arxiv_id):''].filter(Boolean);const sources=[...new Set([a.source,pub.source].filter(u=>safeURL(u)))];return rows.length?'<section class="detail-field date-evidence"><h4>论文信息</h4>'+(m.papers.length>1?'<p>'+E(p.title)+'</p>':'')+'<p>'+rows.join('<br>')+'</p>'+(sources.length?'<div class="detail-links">'+sources.map((u,i)=>link(u,sources.length===1?'日期 / 发表来源':i?'发表来源':'日期来源')).join('')+'</div>':'')+'</section>':'';}).join('');}
-  function methodContent(id,dialog=false){const m=methods.get(id);if(!m)return '';const edges=currentEdges().filter(e=>e.source===id||e.target===id),p=researchPlacements.get(id);
-    const relations=[['前驱方法',edges.filter(e=>e.type!=='theme'&&e.target===id)],['后续方法',edges.filter(e=>e.type!=='theme'&&e.source===id)],['同方向方法',edges.filter(e=>e.type==='theme')]];
-    return '<div class="method-detail"><div class="kicker">'+E(groups.get(m.group).name)+'</div><'+(dialog?'h2 id="dialog-title"':'h3')+'>'+E(m.name)+'</'+(dialog?'h2':'h3')+'><p class="paper-title">'+E(m.title)+'</p>'+field('作者',m.authors.join('；'))+'<div class="detail-links">'+link(m.url,'论文 / 来源')+'<button type="button" data-locate="'+id+'">在演进图中定位</button></div>'+paperInfo(m)+field('研究问题',m.problem)+field('核心机制',m.tech)+field('创新贡献',m.contributions)+field('方法价值',m.value)+field('适用场景',m.scenarios)+field('方法局限',m.limit)+field('涉及模块',m.modules.join(' · '))+field('分类依据',m.classification_basis==='沿用既有方法合集的技术分类，具体归属待原文复核。'?'':m.classification_basis)+field('代表性依据',m.featured_reason)+(state.scope==='research'&&p?field('专题归属',p.memberships.map(x=>researchLanes.get(x)?.name||x).join(' / ')+'；'+(p.reason||'')):'')+surveySources(m)+relations.filter(x=>x[1].length).map(([name,es])=>'<section class="detail-field"><h4>'+name+' · '+es.length+'</h4><div class="relation-list">'+es.map(e=>relationItem(e,id)).join('')+'</div></section>').join('')+(!edges.length?field('演进关系','当前未整理该方法的具体关联。'):'')+'</div>';
+  function resetCollection(){
+    state.direction = ''; state.page = 1;
+    $('#method-search').value = ''; $('#method-year').value = ''; $('#method-sort').value = 'direction'; $('#featured-only').checked = false;
+    directionButtons(); filterCollection();
+  }
+  $('#directions').addEventListener('click', e => {
+    const b = e.target.closest('[data-direction]'); if(!b) return;
+    state.direction = b.dataset.direction; directionButtons(); filterCollection();
+  });
+  $('#method-search').addEventListener('input', () => {clearTimeout(searchTimer); searchTimer = setTimeout(filterCollection, 120);});
+  ['method-year','method-sort','featured-only'].forEach(id => $('#' + id).addEventListener('change', () => filterCollection()));
+  $('#method-reset').addEventListener('click', resetCollection);
+  $('#empty-reset').addEventListener('click', resetCollection);
+  ['prev','next'].forEach(d => $('#page-' + d).addEventListener('click', () => {
+    state.page += d === 'prev' ? -1 : 1; renderCollection();
+    $('.results-heading').scrollIntoView({block:'start', behavior:'auto'});
+  }));
+
+  function field(title, text){return text ? `<section class="detail-field"><h4>${E(displayText(title))}</h4><p>${E(displayText(text))}</p></section>` : '';}
+
+  function evidenceLinks(items, fallbackMethod){
+    const seen = new Set();
+    return (items || []).map(r => {
+      const u = safeURL(r.url);
+      const loc = r.locator && !/^(edge-|method-)/.test(r.locator) ? r.locator : '';
+      const key = (u || r.source_id || '') + '|' + loc;
+      if((!u && !loc) || seen.has(key)) return '';
+      seen.add(key);
+      const s = surveys.get(r.survey_id) || (u && D.surveys.find(s => safeURL(s.url) === u.split('#')[0]));
+      const p = u ? resolvePaperByUrl(u) : null;
+      const fallbackTitle = fallbackMethod && u && r.source_type === 'primary_paper' ? fallbackMethod.title : '';
+      const label = s?.title || p?.title || r.title || fallbackTitle || '参考文献';
+      const head = u ? link(u, label) : `<span>${E(displayText(label))}</span>`;
+      const locHtml = loc ? `<span class="ev-locator">原文位置：${E(displayText(loc))}</span>` : '';
+      const quoteHtml = r.quote ? `<blockquote class="ev-quote">“${E(displayText(r.quote))}”</blockquote>` : '';
+      const dateHtml = r.checked_at ? `<span class="ev-date">核验日期：${E(r.checked_at)}</span>` : '';
+      return `<li>${head}${locHtml}${quoteHtml}${dateHtml}</li>`;
+    }).filter(Boolean).join('');
   }
 
-  function openMethod(id){$('#dialog-content').innerHTML=methodContent(id,true);$('#method-dialog').showModal();$('#close-dialog').focus();}
-  $('#close-dialog').addEventListener('click',()=>$('#method-dialog').close());
-  $('#method-dialog').addEventListener('click',e=>{if(e.target===$('#method-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
-  document.addEventListener('click',e=>{const open=e.target.closest('[data-open]'),locate=e.target.closest('[data-locate]'),focus=e.target.closest('[data-focus]');if(open)openMethod(open.dataset.open);if(locate||focus){if($('#method-dialog').open)$('#method-dialog').close();locateMethod((locate||focus).dataset[locate?'locate':'focus']);}});
+  function surveySources(m){
+    const ids = new Set([...m.references, ...m.papers.flatMap(p => p.provenance || [])].map(r => r.survey_id).filter(id => surveys.has(id)));
+    const seen = new Set();
+    const refs = [...ids].map(id => surveys.get(id)).filter(s => {const u = safeURL(s.url); if(!u || seen.has(u)) return false; seen.add(u); return true;});
+    return refs.length ? `<section class="detail-field survey-sources"><h4>综述参考来源</h4><ul class="source-list">${refs.map(s => `<li>${link(s.url, (s.name ? s.name + ' · ' : '') + (s.title || s.name))}</li>`).join('')}</ul></section>` : '';
+  }
 
-  const columns=[...years].reverse().map(y=>({name:y,sub:'按首次公开记录；年内排序',width:360,cols:2})).concat([{name:'日期未录入',sub:'不推定先后',width:180,cols:1}]);
-  const nodeW=160,nodeH=66,stepY=83,left=200;
-  function band(m){return year(m)==='pending'?columns.length-1:columns.findIndex(c=>c.name===year(m));}
-  function periodMatches(m){const u=D.research.update,from=u.recent_from||'',cutoff=D.metadata.search_cutoff||'9999';return state.period==='all'||state.period==='recent'&&year(m)!=='pending'&&m.date>=from&&m.date<=cutoff||state.period==='review'&&!!m.secondPass||state.period==='updates'&&!!m.addedIn||state.period==='publication'&&m.papers.some(p=>p.publication_date&&p.publication_date>=from&&p.publication_date<=cutoff);}
-  function yearMatches(m){const from=$('#graph-year-from').value,to=$('#graph-year-to').value,y=year(m);return (!from&&!to)||(y!=='pending'&&(!from||y>=from)&&(!to||y<=to));}
-  function edgeTypeMatches(e){const r=$('#graph-relations').value;return r==='all'||r==='technical'&&e.type!=='theme'||r===e.type;}
-  function relatedIds(id,eligible){
-    const ids=new Set(eligible.has(id)?[id]:[]),mode=$('#graph-context').value;
-    const edges=currentEdges().filter(e=>eligible.has(e.source)&&eligible.has(e.target)&&edgeTypeMatches(e));
-    if(mode==='direct'){edges.filter(e=>e.source===id||e.target===id).forEach(e=>{ids.add(e.source);ids.add(e.target);});return ids;}
-    const technical=edges.filter(e=>e.type!=='theme');
-    function walk(reverse){const adjacency=new Map();technical.forEach(e=>{const a=reverse?e.target:e.source,b=reverse?e.source:e.target;if(!adjacency.has(a))adjacency.set(a,[]);adjacency.get(a).push(b);});const seen=new Set(ids),queue=[...ids];for(let i=0;i<queue.length;i++)for(const next of adjacency.get(queue[i])||[])if(!seen.has(next)){seen.add(next);queue.push(next);}return seen;}
-    const upstream=mode==='ancestors'||mode==='both'?walk(true):new Set(),downstream=mode==='descendants'||mode==='both'?walk(false):new Set();
-    return new Set([...ids,...upstream,...downstream]);
+  function relationItem(e, id){
+    const incoming = e.target === id, other = methods.get(incoming ? e.source : e.target);
+    return `<div class="relation-item"><div class="relation-heading"><i class="line ${e.type}"></i><span>${types[e.type]} · ${e.type === 'theme' ? '同向关联' : incoming ? '来自' : '关联到'}</span></div><button type="button" data-focus="${E(other.id)}">${E(displayText(other.name))}</button>${(e.label && e.label !== types[e.type]) ? `<p>${E(displayText(e.label))}</p>` : ''}</div>`;
+  }
+
+  function paperInfo(m){
+    return m.papers.map(p => {
+      const a = p.legacy?.dateAudit || {}, pub = p.legacy?.publication || {};
+      const published = /^(已发表|已录用|发表记录|会议记录)/.test(pub.status || '');
+      const venue = p.venue || (published ? pub.label : '');
+      const doi = p.doi || [pub.source, a.source].map(u => {try{const v = new URL(u); return /^(dx\.)?doi\.org$/.test(v.hostname) ? decodeURIComponent(v.pathname.slice(1)) : '';}catch{return '';}}).find(Boolean);
+      const status = {published:'已发表', accepted:'已录用', preprint:'预印本', submitted:'投稿中'}[p.publication_status];
+      const rows = [
+        p.first_public_date ? `<div><b>首次公开：</b>${E(p.first_public_date)}</div>` : '',
+        a.arxivFirst && a.arxivFirst !== p.first_public_date ? `<div><b>arXiv 首发：</b>${E(a.arxivFirst)}</div>` : '',
+        p.publication_date ? `<div><b>正式发表：</b>${E(p.publication_date)}</div>` : '',
+        venue ? `<div><b>发表 / 录用：</b>${E(displayText(venue))}</div>` : '',
+        status ? `<div><b>发表状态：</b>${E(status)}</div>` : '',
+        doi ? `<div><b>DOI：</b>${link('https://doi.org/' + doi, doi)}</div>` : '',
+        p.arxiv_id ? `<div><b>arXiv：</b>${link('https://arxiv.org/abs/' + p.arxiv_id, p.arxiv_id)}</div>` : ''
+      ].filter(Boolean);
+      const sources = [...new Set([a.source, pub.source].filter(u => safeURL(u)))];
+      return rows.length ? `<section class="detail-field date-evidence"><h4>论文信息</h4>${m.papers.length > 1 ? `<p><b>${E(displayText(p.title))}</b></p>` : ''}<div class="meta-grid">${rows.join('')}</div>${sources.length ? `<div class="detail-links">${sources.map((u, i) => link(u, sources.length === 1 ? '日期 / 发表来源' : i ? '发表来源' : '日期来源')).join('')}</div>` : ''}</section>` : '';
+    }).join('');
+  }
+
+  function methodContent(id, dialog=false){
+    const m = methods.get(id); if(!m) return '';
+    const g = groups.get(m.group);
+    const parentName = g?.parent_id ? groups.get(g.parent_id)?.name : '';
+    const edges = currentEdges().filter(e => e.source === id || e.target === id);
+    const p = researchPlacements.get(id);
+    const relations = [
+      ['前驱方法', edges.filter(e => e.type !== 'theme' && e.target === id)],
+      ['后续方法', edges.filter(e => e.type !== 'theme' && e.source === id)],
+      ['同方向方法', edges.filter(e => e.type === 'theme')]
+    ];
+    const showProblem = m.problem && (!m.tech || norm(m.problem) !== norm(m.tech));
+    const clsBasis = m.classification_basis === '沿用既有方法合集的技术分类，具体归属待原文复核。' ? '' : m.classification_basis;
+    return `<div class="method-detail">
+      <div class="kicker-row">
+        <span class="kicker">${E(displayText((parentName ? parentName + ' / ' : '') + (g?.name || m.group)))}</span>
+        ${m.featured ? '<span class="status-chip ok">代表方法</span>' : ''}
+      </div>
+      <${dialog ? 'h2 id="dialog-title"' : 'h3'}>${E(displayText(m.name))}</${dialog ? 'h2' : 'h3'}>
+      <p class="paper-title">${E(displayText(m.title))}</p>
+      ${field('作者', (m.authors || []).join('；'))}
+      <div class="detail-links">${link(m.url, '论文 / 来源')}<button type="button" data-locate="${E(id)}">在演进图中定位</button></div>
+      ${paperInfo(m)}
+      ${showProblem ? field('研究问题', m.problem) : ''}
+      ${field('核心机制', m.tech)}
+      ${field('创新贡献', m.contributions)}
+      ${field('方法价值', m.value)}
+      ${field('适用场景', m.scenarios)}
+      ${field('方法局限', m.limit)}
+      ${field('涉及模块', (m.modules || []).join(' · '))}
+      ${field('分类依据', clsBasis)}
+      ${field('代表性依据', m.featured_reason)}
+      ${state.scope === 'research' && p ? field('专题归属', p.memberships.map(x => researchLanes.get(x)?.name || x).join(' / ') + (p.reason ? '；' + p.reason : '')) : ''}
+      ${surveySources(m)}
+      ${relations.filter(x => x[1].length).map(([name, es]) => `<section class="detail-field"><h4>${name} · ${es.length}</h4><div class="relation-list">${es.map(e => relationItem(e, id)).join('')}</div></section>`).join('')}
+      ${!edges.length ? field('演进关系', '当前未整理该方法的具体关联。') : ''}
+    </div>`;
+  }
+
+  function openMethod(id){$('#dialog-content').innerHTML = methodContent(id, true); $('#method-dialog').showModal(); $('#close-dialog').focus();}
+  $('#close-dialog').addEventListener('click', () => $('#method-dialog').close());
+  $('#method-dialog').addEventListener('click', e => {
+    if(e.target === $('#method-dialog')){
+      const r = e.target.getBoundingClientRect();
+      if(e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) e.target.close();
+    }
+  });
+  document.addEventListener('click', e => {
+    const open = e.target.closest('[data-open]'), locate = e.target.closest('[data-locate]'), focus = e.target.closest('[data-focus]');
+    if(open) openMethod(open.dataset.open);
+    if(locate || focus){
+      if($('#method-dialog').open) $('#method-dialog').close();
+      locateMethod((locate || focus).dataset[locate ? 'locate' : 'focus']);
+    }
+  });
+
+  /* Graph Layout & Rendering */
+  const columns = [...years].reverse().map(y => ({name:y, sub:'按首次公开记录 · 年内排序', width:392, cols:2})).concat([{name:'日期未录入', sub:'不推定先后', width:206, cols:1}]);
+  const nodeW = 176, nodeH = 72, stepY = 88, left = 236;
+  function band(m){return year(m) === 'pending' ? columns.length - 1 : columns.findIndex(c => c.name === year(m));}
+  function periodMatches(m){
+    const u = D.research.update, from = u.recent_from || '', cutoff = D.metadata.search_cutoff || '9999';
+    return state.period === 'all'
+      || state.period === 'recent' && year(m) !== 'pending' && m.date >= from && m.date <= cutoff
+      || state.period === 'review' && !!m.secondPass
+      || state.period === 'updates' && !!m.addedIn
+      || state.period === 'publication' && m.papers.some(p => p.publication_date && p.publication_date >= from && p.publication_date <= cutoff);
+  }
+  function yearMatches(m){
+    const from = $('#graph-year-from').value, to = $('#graph-year-to').value, y = year(m);
+    return (!from && !to) || (y !== 'pending' && (!from || y >= from) && (!to || y <= to));
+  }
+  function edgeTypeMatches(e){
+    const r = $('#graph-relations').value;
+    return r === 'all' || r === 'technical' && e.type !== 'theme' || r === e.type;
+  }
+  function directionMatches(m, group){
+    return !group || (state.scope === 'research' ? researchPlacements.get(m.id)?.memberships.includes(group) : inGroup(m, group));
+  }
+  function relatedIds(id, eligible){
+    const ids = new Set(eligible.has(id) ? [id] : []), mode = $('#graph-context').value;
+    const edges = currentEdges().filter(e => eligible.has(e.source) && eligible.has(e.target) && edgeTypeMatches(e));
+    if(mode === 'direct'){
+      edges.filter(e => e.source === id || e.target === id).forEach(e => {ids.add(e.source); ids.add(e.target);});
+      return ids;
+    }
+    const technical = edges.filter(e => e.type !== 'theme');
+    function walk(reverse){
+      const adjacency = new Map();
+      technical.forEach(e => {
+        const a = reverse ? e.target : e.source, b = reverse ? e.source : e.target;
+        if(!adjacency.has(a)) adjacency.set(a, []);
+        adjacency.get(a).push(b);
+      });
+      const seen = new Set(ids), queue = [...ids];
+      for(let i = 0; i < queue.length; i++){
+        for(const next of adjacency.get(queue[i]) || []){
+          if(!seen.has(next)){seen.add(next); queue.push(next);}
+        }
+      }
+      return seen;
+    }
+    const upstream = mode === 'ancestors' || mode === 'both' ? walk(true) : new Set();
+    const downstream = mode === 'descendants' || mode === 'both' ? walk(false) : new Set();
+    return new Set([...ids, ...upstream, ...downstream]);
   }
 
   function graphFilter(){
-    const q=$('#graph-search').value,group=$('#graph-direction').value;
-    const eligible=D.methods.filter(m=>yearMatches(m)&&(state.scope!=='research'||researchPlacements.has(m.id)&&periodMatches(m)));
-    let list=eligible.filter(m=>(!group||(state.scope==='research'?researchPlacements.get(m.id).memberships.includes(group):inGroup(m,group)))&&matches(m,q));
-    if($('#neighbor-only').checked&&state.selected){const ids=relatedIds(state.selected,new Set(eligible.map(m=>m.id)));list=eligible.filter(m=>ids.has(m.id));}
+    const q = $('#graph-search').value, group = $('#graph-direction').value;
+    const eligible = D.methods.filter(m =>
+      yearMatches(m)
+      && directionMatches(m, group)
+      && (state.scope !== 'research' || (researchPlacements.has(m.id) && periodMatches(m)))
+    );
+    let list = eligible.filter(m => matches(m, q));
+    if($('#neighbor-only').checked && state.selected){
+      const ids = relatedIds(state.selected, new Set(eligible.map(m => m.id)));
+      list = eligible.filter(m => ids.has(m.id));
+    }
     return list;
   }
-  function wrap(text,max=23,lines=2){let result=[],line='',units=0;const tokens=String(text).match(/[A-Za-z0-9_]+|[^A-Za-z0-9_]/gu)||[];for(const token of tokens){const weight=[...token].reduce((sum,ch)=>sum+(/[^\x00-\xff]/.test(ch)?1.8:1),0);if(units+weight>max&&line.trim()){result.push(line.trim());line='';units=0;if(result.length===lines){result[lines-1]=result[lines-1].replace(/…$/,'')+'…';return result;}}if(!line&&!token.trim())continue;line+=token;units+=weight;}if(line.trim())result.push(line.trim());return result;}
-  function labelLines(text,x,y,cls,max=23){return `<text class="${cls}" x="${x}" y="${y}">${wrap(text,max).map((s,i)=>`<tspan x="${x}" dy="${i?16:0}">${E(s)}</tspan>`).join('')}</text>`;}
-  function edgePath(a,b){const ay=a.y+nodeH/2,by=b.y+nodeH/2;if(a.group!==b.group){const rail=left-9,sy=a.y+nodeH+7,sx=a.x+nodeW/2;return `M ${sx} ${a.y+nodeH} L ${sx} ${sy} L ${rail} ${sy} L ${rail} ${by} L ${b.x} ${by}`;}if(b.x>=a.x+nodeW+8){const sx=a.x+nodeW,tx=b.x,mid=(sx+tx)/2;return `M ${sx} ${ay} C ${mid} ${ay}, ${mid} ${by}, ${tx} ${by}`;}const sx=a.x+nodeW,tx=b.x+nodeW,bend=Math.max(sx,tx)+9;return `M ${sx} ${ay} C ${bend} ${ay}, ${bend} ${by}, ${tx} ${by}`;}
-  function renderResearchPanel(){const panel=$('#research-panel');panel.hidden=state.scope!=='research';if(panel.hidden)return;const active=$('#graph-direction').value,lane=researchLanes.get(active),u=D.research.update;
-    panel.innerHTML='<div class="research-intro"><div><span class="kicker">可选专题</span><h3>'+E(D.research.title)+'</h3><p>'+E(D.research.definition||'')+'</p></div><button data-research-route="">全部专题路线 · '+researchPlacements.size+'</button></div><div class="research-route-buttons">'+D.research.lanes.map(l=>'<button data-research-route="'+l.id+'" class="'+(active===l.id?'active':'')+'">'+E(l.name)+'<span>'+D.research.assignments.filter(p=>p.memberships.includes(l.id)&&periodMatches(methods.get(p.method))).length+'</span></button>').join('')+'</div>'+field('路线说明',lane?.path||lane?.definition)+(u.recent_from?'<div class="research-period-controls"><label>阅读范围 <select id="research-period"><option value="all">全部年份</option><option value="recent">近期公开记录</option><option value="publication">近期发表记录</option><option value="review">复核新增</option><option value="updates">增量补充</option></select></label></div>':'')+(D.research.dateAudits.length?'<button id="export-date-audit">导出日期核验表</button>':'')+'<p class="research-note">跨路线成员计数不可相加。检索截至 '+E(D.metadata.search_cutoff||'未记录')+'</p>';if($('#research-period'))$('#research-period').value=state.period;
+
+  function wrap(text, max=23, lines=2){
+    let result = [], line = '', units = 0;
+    const tokens = String(text).match(/[A-Za-z0-9_]+|[^A-Za-z0-9_]/gu) || [];
+    for(const token of tokens){
+      const weight = [...token].reduce((sum, ch) => sum + (/[^\x00-\xff]/.test(ch) ? 1.8 : 1), 0);
+      if(units + weight > max && line.trim()){
+        result.push(line.trim()); line = ''; units = 0;
+        if(result.length === lines){result[lines - 1] = result[lines - 1].replace(/…$/, '') + '…'; return result;}
+      }
+      if(!line && !token.trim()) continue;
+      line += token; units += weight;
+    }
+    if(line.trim()) result.push(line.trim());
+    return result;
+  }
+  function labelLines(text, x, y, cls, max=23, dy=17){
+    return `<text class="${cls}" x="${x}" y="${y}">${wrap(displayText(text), max).map((s, i) => `<tspan x="${x}" dy="${i ? dy : 0}">${E(s)}</tspan>`).join('')}</text>`;
   }
 
-  document.addEventListener('click',e=>{const button=e.target.closest('[data-research-route]');if(!button)return;state.scope='research';directionOptions();$('#graph-direction').value=button.dataset.researchRoute;$('#neighbor-only').checked=false;scopeButtons();renderGraph();if(state.selected)selectMethod(state.selected);});
+  function edgePath(a, b, railIdx=0){
+    const ay = a.y + nodeH / 2, by = b.y + nodeH / 2;
+    if(a.group !== b.group){
+      const rail = left - 12 - (railIdx % 7) * 5;
+      const sx = a.x + nodeW / 2, sy = a.y + nodeH + 8;
+      const dir = by >= sy ? 1 : -1;
+      const r = Math.min(7, Math.abs(by - sy) / 2);
+      return `M ${sx} ${a.y + nodeH} L ${sx} ${sy - 3} Q ${sx} ${sy} ${sx - 4} ${sy} L ${rail + r} ${sy} Q ${rail} ${sy} ${rail} ${sy + dir * r} L ${rail} ${by - dir * r} Q ${rail} ${by} ${rail + r} ${by} L ${b.x} ${by}`;
+    }
+    if(b.x >= a.x + nodeW + 8){
+      const sx = a.x + nodeW, tx = b.x, mid = (sx + tx) / 2;
+      return `M ${sx} ${ay} C ${mid} ${ay}, ${mid} ${by}, ${tx} ${by}`;
+    }
+    const sx = a.x + nodeW, tx = b.x + nodeW, bend = Math.max(sx, tx) + 14;
+    return `M ${sx} ${ay} C ${bend} ${ay}, ${bend} ${by}, ${tx} ${by}`;
+  }
+
+  function renderResearchPanel(){
+    const panel = $('#research-panel'); panel.hidden = state.scope !== 'research';
+    if(panel.hidden) return;
+    const active = $('#graph-direction').value, lane = researchLanes.get(active), u = D.research.update;
+    panel.innerHTML = `<div class="research-intro"><div><span class="kicker">可选专题</span><h3>${E(displayText(D.research.title))}</h3><p>${E(displayText(D.research.definition || ''))}</p></div><button data-research-route="">全部专题路线 · ${researchPlacements.size}</button></div><div class="research-route-buttons">${D.research.lanes.map(l => `<button data-research-route="${E(l.id)}" class="${active === l.id ? 'active' : ''}">${E(displayText(l.name))}<span>${D.research.assignments.filter(p => p.memberships.includes(l.id) && periodMatches(methods.get(p.method))).length}</span></button>`).join('')}</div>${field('路线说明', lane?.path || lane?.definition)}${u.recent_from ? '<div class="research-period-controls"><label>阅读范围 <select id="research-period"><option value="all">全部年份</option><option value="recent">近期公开记录</option><option value="publication">近期发表记录</option><option value="review">复核新增</option><option value="updates">增量补充</option></select></label></div>' : ''}${D.research.dateAudits.length ? '<button id="export-date-audit">导出日期核验表</button>' : ''}<p class="research-note">跨路线成员计数不可相加。检索截至 ${E(D.metadata.search_cutoff || '未记录')}</p>`;
+    if($('#research-period')) $('#research-period').value = state.period;
+  }
+
+  document.addEventListener('click', e => {
+    const button = e.target.closest('[data-research-route]'); if(!button) return;
+    state.scope = 'research'; directionOptions(); $('#graph-direction').value = button.dataset.researchRoute;
+    $('#neighbor-only').checked = false; scopeButtons(); renderGraph();
+    if(state.selected) selectMethod(state.selected);
+  });
+
   function renderGraph(resetScroll=true){
     renderResearchPanel();
-    graphMethods=graphFilter();const ids=new Set(graphMethods.map(m=>m.id));
-    if(state.selected&&!ids.has(state.selected)){state.selected=null;$('#neighbor-only').checked=false;$('#neighbor-only').disabled=true;$('#graph-context').disabled=true;$('#clear-selection').hidden=true;$('#graph-detail-body').className='detail-empty';$('#graph-detail-body').innerHTML='<strong>选择一个方法，展开它的技术脉络</strong><p>点击节点查看核心机制与论文，点击连线查看关系依据。</p>';}
-    const tracing=$('#neighbor-only').checked&&$('#graph-context').value!=='direct';
-    graphEdges=currentEdges().filter(e=>ids.has(e.source)&&ids.has(e.target)&&edgeTypeMatches(e)&&(!tracing||e.type!=='theme'));
-    const activeColumns=columns.map((c,i)=>({...c,band:i})).filter(c=>graphMethods.some(m=>band(m)===c.band));
-    graphWidth=left+activeColumns.reduce((sum,c)=>sum+c.width,0)+20;
-    const isResearch=state.scope==='research',groupOf=m=>isResearch?researchLane(m):m.group;
-    positions=new Map();let y=70;const laneMarkup=[];const activeGroups=(isResearch?D.research.lanes:D.groups).filter(g=>graphMethods.some(m=>groupOf(m)===g.id));
-    let previousSection='';
-    for(const g of activeGroups){
-      if(isResearch&&g.section&&g.section!==previousSection){const section=D.research.sections.find(s=>s.id===g.section);laneMarkup.push(`<g data-research-section="${g.section}"><rect class="research-section-bg" x="0" y="${y}" width="${graphWidth}" height="65"/><text class="research-section-title" x="18" y="${y+26}"> ${E(section.title)}</text><text class="research-section-desc" x="18" y="${y+47}">${E(section.desc)}</text></g>`);y+=65;previousSection=g.section;}
-      const rows=activeColumns.map(c=>graphMethods.filter(m=>groupOf(m)===g.id&&band(m)===c.band).sort((a,b)=>time(a).localeCompare(time(b))||a.name.localeCompare(b.name)));const rowsCount=Math.max(1,...rows.map((list,i)=>Math.ceil(list.length/activeColumns[i].cols)));const height=Math.max(isResearch?150:130,rowsCount*stepY+28);
-      laneMarkup.push(`<g data-lane="${g.id}"><rect class="lane-bg ${g.index%2?'alt':''}" x="0" y="${y}" width="${graphWidth}" height="${height}"/><line class="lane-line" x1="0" y1="${y}" x2="${graphWidth}" y2="${y}"/>${labelLines((isResearch&&g.code?g.code+' · ':'')+g.name,18,y+31,'lane-title',24)}${labelLines(g.desc,18,y+77,'lane-description',24)}<text class="lane-count" x="18" y="${y+height-14}">${rows.reduce((sum,a)=>sum+a.length,0)} 个方法${isResearch&&$('#graph-direction').value?' · 含交叉关联':''}</text></g>`);
-      let x=left;rows.forEach((list,i)=>{list.forEach((m,j)=>positions.set(m.id,{x:x+10+(j%activeColumns[i].cols)*180,y:y+14+Math.floor(j/activeColumns[i].cols)*stepY,group:g.id}));x+=activeColumns[i].width;});y+=height;
+    graphMethods = graphFilter();
+    const ids = new Set(graphMethods.map(m => m.id));
+    if(state.selected && !ids.has(state.selected)){
+      state.selected = null; state.selectedEdge = null;
+      $('#neighbor-only').checked = false; $('#neighbor-only').disabled = true; $('#graph-context').disabled = true;
+      $('#clear-selection').hidden = true;
+      $('#graph-detail-body').className = 'detail-empty';
+      $('#graph-detail-body').innerHTML = '<strong>选择一个方法，展开它的技术脉络</strong><p>点击节点查看核心机制与论文，点击连线查看关系依据与原文定位。</p>';
     }
-    graphHeight=Math.max(260,y+16);
-    let x=left;const axes=activeColumns.map(c=>{const text=`<line class="year-line" x1="${x}" y1="0" x2="${x}" y2="${graphHeight}"/><text class="axis-label" x="${x+14}" y="29">${c.name}</text><text class="axis-sub" x="${x+14}" y="48">${c.sub}</text>`;x+=c.width;return text;}).join('');
-    const definitions=`<defs>${['direct','extension','borrow'].map(t=>`<marker id="arrow-${t}" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="strokeWidth"><path d="M0 0 L7 3.5 L0 7 Z" fill="var(--${t})"/></marker>`).join('')}</defs>`;
-    const paths=graphEdges.map(e=>{const d=edgePath(positions.get(e.source),positions.get(e.target));return `<g data-edge="${e.id}"><path class="edge ${e.type}" d="${d}" ${e.type!=='theme'?`marker-end="url(#arrow-${e.type})"`:''}/><path class="edge-hit" d="${d}"><title>${E(methods.get(e.source).name)} → ${E(methods.get(e.target).name)} · ${E(e.label)} · ${types[e.type]}</title></path></g>`;}).join('');
-    const nodes=graphMethods.map(m=>{const p=positions.get(m.id),placement=researchPlacements.get(m.id),role=isResearch?(p.group!==placement.primary?'交叉关联':placement.role):m.featured?'代表':'';return `<g class="graph-node" data-node="${m.id}" transform="translate(${p.x} ${p.y})" tabindex="0" role="button" aria-label="${E(m.name+'，'+displayDate(m)+'，'+role+'，查看方法详情')}"><title>${E(m.name)} · ${E(displayDate(m))}\n${E(m.tech)}</title><rect class="node-bg" width="${nodeW}" height="${nodeH}" rx="6"/><rect class="node-stripe" x="0" y="10" width="3" height="46" rx="1"/>${labelLines(m.name,11,21,'node-name',23)}<text class="node-date" x="11" y="55">${E(displayDate(m))}${role?' · '+E(role):''}</text></g>`;}).join('');
-    $('#evolution-svg').innerHTML=`${definitions}${laneMarkup.join('')}<rect class="axis-bg" x="0" y="0" width="${graphWidth}" height="70"/><text class="axis-label" x="18" y="29">技术路线 / 时间</text><text class="axis-sub" x="18" y="48">时间位置不等同于继承</text>${axes}<g id="graph-edges">${paths}</g><g id="graph-nodes">${nodes}</g>`;
-    $('#evolution-svg').setAttribute('viewBox',`0 0 ${graphWidth} ${graphHeight}`);if(resetScroll&&($('#graph-direction').value||$('#graph-search').value))state.zoom=Math.max(.7,Math.min(1,($('#graph-viewport').clientWidth-12)/graphWidth));applyZoom();
-    $('#evolution-svg').hidden=!graphMethods.length;$('#graph-empty').hidden=!!graphMethods.length;
-    $('#graph-count').textContent=`${isResearch?'研究方向 · ':''}${tracing?$('#graph-context').selectedOptions[0].textContent+' · ':''}当前 ${graphMethods.length} / ${isResearch?researchPlacements.size:D.methods.length} 个方法 · ${activeGroups.length} 条路线 · ${graphEdges.length} 条连线`;
-    if(resetScroll){$('#graph-viewport').scrollTop=0;$('#graph-viewport').scrollLeft=0;}
+    const tracing = $('#neighbor-only').checked && $('#graph-context').value !== 'direct';
+    graphEdges = currentEdges().filter(e => ids.has(e.source) && ids.has(e.target) && edgeTypeMatches(e) && (!tracing || e.type !== 'theme'));
+    const activeColumns = columns.map((c, i) => ({...c, band:i})).filter(c => graphMethods.some(m => band(m) === c.band));
+    graphWidth = left + activeColumns.reduce((sum, c) => sum + c.width, 0) + 28;
+    const isResearch = state.scope === 'research', groupOf = m => isResearch ? researchLane(m) : m.group;
+    positions = new Map();
+    let y = 72;
+    const laneMarkup = [];
+    const activeGroups = (isResearch ? D.research.lanes : D.groups).filter(g => graphMethods.some(m => groupOf(m) === g.id));
+    let previousSection = '';
+    activeGroups.forEach((g, laneIdx) => {
+      if(isResearch && g.section && g.section !== previousSection){
+        const section = D.research.sections.find(s => s.id === g.section);
+        if(section){
+          laneMarkup.push(`<g data-research-section="${E(g.section)}"><rect class="research-section-bg" x="0" y="${y}" width="${graphWidth}" height="64"/><text class="research-section-title" x="20" y="${y + 26}">${E(displayText(section.title))}</text><text class="research-section-desc" x="20" y="${y + 47}">${E(displayText(section.desc))}</text></g>`);
+          y += 64; previousSection = g.section;
+        }
+      }
+      const rows = activeColumns.map(c => graphMethods.filter(m => groupOf(m) === g.id && band(m) === c.band).sort((a, b) => time(a).localeCompare(time(b)) || a.name.localeCompare(b.name)));
+      const rowsCount = Math.max(1, ...rows.map((list, i) => Math.ceil(list.length / activeColumns[i].cols)));
+      const height = Math.max(isResearch ? 156 : 136, rowsCount * stepY + 32);
+      const laneColor = g._color || 'var(--accent)';
+      const parentName = !isResearch && g.parent_id ? groups.get(g.parent_id)?.name : '';
+      const countText = `${rows.reduce((sum, a) => sum + a.length, 0)} 个方法${isResearch && $('#graph-direction').value ? ' · 含交叉关联' : ''}`;
+      laneMarkup.push(`<g data-lane="${E(g.id)}">
+        <rect class="lane-bg ${laneIdx % 2 ? 'alt' : ''}" x="0" y="${y}" width="${graphWidth}" height="${height}"/>
+        <rect x="0" y="${y}" width="4" height="${height}" fill="${laneColor}" opacity="0.82"/>
+        <line class="lane-line" x1="0" y1="${y}" x2="${graphWidth}" y2="${y}"/>
+        ${parentName ? `<text class="lane-parent-kicker" x="18" y="${y + 22}">${E(displayText(parentName))}</text>` : ''}
+        ${labelLines((isResearch && g.code ? g.code + ' · ' : '') + g.name, 18, y + (parentName ? 41 : 32), 'lane-title', 19, 17)}
+        ${labelLines(g.desc, 18, y + (parentName ? 80 : 72), 'lane-description', 19, 15)}
+        <text class="lane-count" x="18" y="${y + height - 14}">${E(countText)}</text>
+      </g>`);
+      let x = left;
+      rows.forEach((list, i) => {
+        list.forEach((m, j) => positions.set(m.id, {
+          x: x + 14 + (j % activeColumns[i].cols) * 188,
+          y: y + 16 + Math.floor(j / activeColumns[i].cols) * stepY,
+          group: g.id, color: laneColor
+        }));
+        x += activeColumns[i].width;
+      });
+      y += height;
+    });
+    graphHeight = Math.max(280, y + 18);
+
+    let x = left;
+    const colStripes = [], axes = [];
+    activeColumns.forEach((c, ci) => {
+      if(ci % 2 === 1) colStripes.push(`<rect class="col-bg-alt" x="${x}" y="72" width="${c.width}" height="${graphHeight - 72}"/>`);
+      axes.push(`<line class="year-line" x1="${x}" y1="0" x2="${x}" y2="${graphHeight}"/><text class="axis-label" x="${x + 14}" y="30">${E(c.name)}</text><text class="axis-sub" x="${x + 14}" y="50">${E(c.sub)}</text>`);
+      x += c.width;
+    });
+
+    const definitions = `<defs>
+      <filter id="node-shadow" x="-6%" y="-8%" width="112%" height="122%"><feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#132534" flood-opacity="0.08"/></filter>
+      ${['direct','extension','borrow'].map(t => `<marker id="arrow-${t}" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 1 L7.2 4 L0 7 L1.7 4 Z" fill="var(--${t})"/></marker>`).join('')}
+    </defs>`;
+
+    let crossIdx = 0;
+    const paths = graphEdges.map(e => {
+      const pa = positions.get(e.source), pb = positions.get(e.target);
+      const d = edgePath(pa, pb, pa.group !== pb.group ? crossIdx++ : 0);
+      return `<g data-edge="${E(e.id)}"><path class="edge ${e.type}" d="${d}" ${e.type !== 'theme' ? `marker-end="url(#arrow-${e.type})"` : ''}/><path class="edge-hit" d="${d}"><title>${E(displayText(methods.get(e.source).name))} → ${E(displayText(methods.get(e.target).name))} · ${E(displayText(e.label))} · ${types[e.type]}</title></path></g>`;
+    }).join('');
+
+    const nodes = graphMethods.map(m => {
+      const p = positions.get(m.id), placement = researchPlacements.get(m.id);
+      const role = isResearch ? (p.group !== placement.primary ? '交叉关联' : placement.role) : m.featured ? '代表' : '';
+      return `<g class="graph-node" data-node="${E(m.id)}" transform="translate(${p.x} ${p.y})" tabindex="0" role="button" aria-label="${E(displayText(m.name) + '，' + displayDate(m) + '，' + role + '，查看方法详情')}">
+        <title>${E(displayText(m.name))} · ${E(displayDate(m))}\n${E(displayText(m.tech))}</title>
+        <rect class="node-bg" width="${nodeW}" height="${nodeH}" rx="8" filter="url(#node-shadow)"/>
+        <rect class="node-stripe" x="5.5" y="11" width="3" height="${nodeH - 22}" rx="1.5" fill="${p.color}"/>
+        ${labelLines(m.name, 15, 24, 'node-name', 22, 17)}
+        <text class="node-date" x="15" y="${nodeH - 12}">${E(displayDate(m))}${role ? ' · ' + E(role) : ''}</text>
+      </g>`;
+    }).join('');
+
+    $('#evolution-svg').classList.toggle('dense-graph', graphEdges.length > 60);
+    $('#evolution-svg').innerHTML = `${definitions}<rect class="graph-canvas-bg" x="0" y="0" width="${graphWidth}" height="${graphHeight}"/>${laneMarkup.join('')}${colStripes.join('')}<rect class="axis-bg" x="0" y="0" width="${graphWidth}" height="72"/><line class="axis-border" x1="0" y1="72" x2="${graphWidth}" y2="72"/><text class="axis-label" x="18" y="30">技术路线 / 时间</text><text class="axis-sub" x="18" y="50">时间位置不等同于继承</text>${axes.join('')}<g id="graph-edges">${paths}</g><g id="graph-nodes">${nodes}</g>`;
+    $('#evolution-svg').setAttribute('viewBox', `0 0 ${graphWidth} ${graphHeight}`);
+    if(resetScroll && ($('#graph-direction').value || $('#graph-search').value)){
+      state.zoom = Math.max(.7, Math.min(1, ($('#graph-viewport').clientWidth - 16) / graphWidth));
+    }
+    applyZoom();
+    $('#evolution-svg').hidden = !graphMethods.length;
+    $('#graph-empty').hidden = !!graphMethods.length;
+    $('#graph-count').textContent = `${isResearch ? '研究方向 · ' : ''}${tracing ? $('#graph-context').selectedOptions[0].textContent + ' · ' : ''}当前 ${graphMethods.length} / ${isResearch ? researchPlacements.size : D.methods.length} 个方法 · ${activeGroups.length} 条路线 · ${graphEdges.length} 条连线`;
+    if(resetScroll){$('#graph-viewport').scrollTop = 0; $('#graph-viewport').scrollLeft = 0;}
     highlightSelection();
   }
+
   function highlightSelection(){
-    const neighbors=new Set(state.selected?[state.selected]:[]),edges=new Set();if(state.selected){const tracing=$('#neighbor-only').checked&&$('#graph-context').value!=='direct';if(tracing)graphMethods.forEach(m=>neighbors.add(m.id));graphEdges.filter(e=>tracing||e.source===state.selected||e.target===state.selected).forEach(e=>{neighbors.add(e.source);neighbors.add(e.target);edges.add(e.id);});}
-    $$('.graph-node').forEach(n=>{const id=n.dataset.node;n.classList.toggle('selected',id===state.selected);n.classList.toggle('related',id!==state.selected&&neighbors.has(id));n.classList.toggle('dim',!!state.selected&&!neighbors.has(id));});
-    $$('[data-edge]').forEach(g=>{const p=g.querySelector('.edge');p.classList.toggle('highlight',edges.has(g.dataset.edge));p.classList.toggle('dim',!!state.selected&&!edges.has(g.dataset.edge));});
+    const hasFocus = !!(state.selected || state.selectedEdge);
+    const neighbors = new Set(state.selected ? [state.selected] : []), activeEdges = new Set();
+    if(state.selected){
+      const tracing = $('#neighbor-only').checked && $('#graph-context').value !== 'direct';
+      if(tracing) graphMethods.forEach(m => neighbors.add(m.id));
+      graphEdges.filter(e => tracing || e.source === state.selected || e.target === state.selected).forEach(e => {
+        neighbors.add(e.source); neighbors.add(e.target); activeEdges.add(e.id);
+      });
+    } else if(state.selectedEdge){
+      const e = graphEdges.find(x => x.id === state.selectedEdge);
+      if(e){neighbors.add(e.source); neighbors.add(e.target); activeEdges.add(e.id);}
+    }
+    $$('.graph-node').forEach(n => {
+      const id = n.dataset.node;
+      n.classList.toggle('selected', id === state.selected);
+      n.classList.toggle('related', id !== state.selected && neighbors.has(id));
+      n.classList.toggle('dim', hasFocus && !neighbors.has(id));
+    });
+    const edgeLayer = $('#graph-edges');
+    const elevated = [];
+    $$('[data-edge]').forEach(g => {
+      const hit = activeEdges.has(g.dataset.edge);
+      const p = g.querySelector('.edge');
+      p.classList.toggle('highlight', hit);
+      p.classList.toggle('dim', hasFocus && !hit);
+      if(hit) elevated.push(g);
+    });
+    if(edgeLayer) elevated.forEach(g => edgeLayer.appendChild(g));
   }
-  function selectMethod(id){state.selected=id;$('#neighbor-only').disabled=false;$('#graph-context').disabled=false;$('#graph-detail-body').className='';$('#graph-detail-body').innerHTML=methodContent(id);$('#clear-selection').hidden=false;highlightSelection();}
+
+  function selectMethod(id){
+    state.selected = id; state.selectedEdge = null;
+    $('#neighbor-only').disabled = false; $('#graph-context').disabled = false;
+    $('#graph-detail-body').className = '';
+    $('#graph-detail-body').innerHTML = methodContent(id);
+    $('#clear-selection').hidden = false;
+    highlightSelection();
+  }
+
   function locateMethod(id){
-    $('#graph-search').value='';$('#graph-direction').value='';$('#graph-year-from').value='';$('#graph-year-to').value='';$('#graph-context').value='direct';state.period='all';$('#neighbor-only').checked=false;if(state.scope!=='research'||!researchPlacements.has(id))state.scope='all';directionOptions();scopeButtons();showView('evolution',true);renderGraph(false);selectMethod(id);
-    const p=positions.get(id),v=$('#graph-viewport');if(p){v.scrollLeft=Math.max(0,(p.x+nodeW/2)*state.zoom-v.clientWidth/2);v.scrollTop=Math.max(0,(p.y+nodeH/2)*state.zoom-v.clientHeight/2);const node=$(`[data-node="${id}"]`);node?.focus({preventScroll:true});}
+    $('#graph-search').value = ''; $('#graph-direction').value = '';
+    $('#graph-year-from').value = ''; $('#graph-year-to').value = '';
+    $('#graph-context').value = 'direct'; state.period = 'all'; $('#neighbor-only').checked = false;
+    if(state.scope !== 'research' || !researchPlacements.has(id)) state.scope = 'all';
+    directionOptions(); scopeButtons(); showView('evolution', true); renderGraph(false); selectMethod(id);
+    const p = positions.get(id), v = $('#graph-viewport');
+    if(p){
+      v.scrollLeft = Math.max(0, (p.x + nodeW / 2) * state.zoom - v.clientWidth / 2);
+      v.scrollTop = Math.max(0, (p.y + nodeH / 2) * state.zoom - v.clientHeight / 2);
+      const node = $(`[data-node="${id}"]`); node?.focus({preventScroll:true});
+    }
   }
-  function clearSelection(){state.selected=null;$('#neighbor-only').checked=false;$('#neighbor-only').disabled=true;$('#graph-context').disabled=true;$('#graph-context').value='direct';$('#clear-selection').hidden=true;$('#graph-detail-body').className='detail-empty';$('#graph-detail-body').innerHTML='<strong>选择一个方法，展开它的技术脉络</strong><p>点击节点查看核心机制与论文，点击连线查看关系依据。</p><div class="detail-help">同方向研究表示机制相关或并行探索，不表示直接继承。</div>';renderGraph(false);}
-  $('#clear-selection').addEventListener('click',clearSelection);
-  $('#evolution-svg').addEventListener('click',e=>{const n=e.target.closest('[data-node]'),edge=e.target.closest('[data-edge]');if(n){selectMethod(n.dataset.node);if($('#neighbor-only').checked)renderGraph(false);}else if(edge)selectEdge(edge.dataset.edge);});
-  $('#evolution-svg').addEventListener('keydown',e=>{if(!['Enter',' '].includes(e.key))return;const n=e.target.closest('[data-node]');if(n){e.preventDefault();selectMethod(n.dataset.node);if($('#neighbor-only').checked)renderGraph(false);}});
-  function selectEdge(id){const e=currentEdges().find(e=>e.id===id);if(!e)return;state.selected=null;$('#graph-context').disabled=true;$('#neighbor-only').checked=false;$('#neighbor-only').disabled=true;highlightSelection();$('#clear-selection').hidden=false;const basis=e.basis==='沿用原页的技术关系记录，尚未逐条重新核对原论文。'?'':e.basis,sources=sourceLinks(e.evidence||[]);$('#graph-detail-body').className='';$('#graph-detail-body').innerHTML='<div class="edge-detail"><div class="kicker">'+types[e.type]+(e.claim_basis==='inference'?' · 关系推断':'')+'</div><h4>'+E(e.label)+'</h4><p class="edge-names">'+E(methods.get(e.source).name)+(e.type==='theme'?' ↔ ':' → ')+E(methods.get(e.target).name)+'</p>'+field('关系说明',basis)+(e.verification==='disputed'?field('不同记录','该关系存在不同判断，详见数据中的证据记录。'):'')+(sources?'<section class="detail-field"><h4>参考来源</h4><ul class="source-list">'+sources+'</ul></section>':'')+(e.type==='theme'?field('关联类型','同方向研究，不表示直接继承。'):'')+'<button data-focus="'+e.source+'">定位起点</button><button data-focus="'+e.target+'">定位终点</button></div>';}
 
-  function scopeButtons(){$$('[data-scope]').forEach(b=>{const active=b.dataset.scope===state.scope&&(state.scope!=='research'||b.dataset.track===D.research.id);b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});}
-  $$('[data-scope]').forEach(b=>b.addEventListener('click',()=>{state.scope=b.dataset.scope;if(b.dataset.track)setTrack(b.dataset.track);state.period='all';$('#neighbor-only').checked=false;directionOptions();scopeButtons();renderGraph();if(state.selected)selectMethod(state.selected);}));
-  $('#graph-search').addEventListener('input',()=>{clearTimeout(graphTimer);graphTimer=setTimeout(()=>{$('#neighbor-only').checked=false;$('#graph-context').value='direct';renderGraph();if(graphMethods.length===1){const id=graphMethods[0].id;selectMethod(id);if(currentEdges().some(e=>e.source===id||e.target===id)){$('#neighbor-only').checked=true;renderGraph(false);}}},120);});
-  ['graph-direction','graph-relations','neighbor-only'].forEach(id=>$('#'+id).addEventListener('change',()=>renderGraph()));
-  ['graph-year-from','graph-year-to'].forEach(id=>$('#'+id).addEventListener('change',e=>{const from=$('#graph-year-from'),to=$('#graph-year-to');if(from.value&&to.value&&from.value>to.value)(e.target===from?to:from).value=e.target.value;renderGraph();}));
-  $('#graph-context').addEventListener('change',()=>{if(state.selected){$('#neighbor-only').checked=true;renderGraph();}});
-  function resetGraph(){if(state.scope!=='research')state.scope='all';state.selected=null;state.zoom=1;$('#graph-search').value='';$('#graph-direction').value='';$('#graph-year-from').value='';$('#graph-year-to').value='';$('#graph-relations').value='all';state.period='all';$('#neighbor-only').checked=false;directionOptions();scopeButtons();clearSelection();renderGraph();}
-  $('#graph-reset').addEventListener('click',resetGraph);$('#graph-empty-reset').addEventListener('click',resetGraph);
-  function applyZoom(){$('#evolution-svg').style.width=graphWidth*state.zoom+'px';$('#evolution-svg').style.height=graphHeight*state.zoom+'px';$('#zoom-status').textContent=Math.round(state.zoom*100)+'%';$('#graph-viewport').style.height=document.fullscreenElement?'':Math.max(window.innerWidth<540?260:360,Math.min(720,window.innerHeight*.74,graphHeight*state.zoom+12))+'px';}
-  function zoomTo(value,anchor=null){const v=$('#graph-viewport'),old=state.zoom,x=anchor?.x??v.clientWidth/2,y=anchor?.y??v.clientHeight/2;const gx=(v.scrollLeft+x)/old,gy=(v.scrollTop+y)/old;state.zoom=Math.max(.3,Math.min(2.2,value));applyZoom();v.scrollLeft=Math.max(0,gx*state.zoom-x);v.scrollTop=Math.max(0,gy*state.zoom-y);}
-  $('#zoom-in').addEventListener('click',()=>zoomTo(state.zoom*1.2));$('#zoom-out').addEventListener('click',()=>zoomTo(state.zoom/1.2));$('#fit-width').addEventListener('click',()=>{zoomTo(($('#graph-viewport').clientWidth-16)/graphWidth,{x:0,y:0});$('#graph-viewport').scrollLeft=0;});
-  const viewport=$('#graph-viewport');viewport.addEventListener('wheel',e=>{if(!e.ctrlKey)return;e.preventDefault();const r=viewport.getBoundingClientRect();zoomTo(state.zoom*Math.exp(-e.deltaY*.002),{x:e.clientX-r.left,y:e.clientY-r.top});},{passive:false});
-  viewport.addEventListener('pointerdown',e=>{if(e.button!==0||e.pointerType==='touch'||e.target.closest('[data-node],[data-edge],button'))return;pan={id:e.pointerId,x:e.clientX,y:e.clientY,left:viewport.scrollLeft,top:viewport.scrollTop};viewport.setPointerCapture(e.pointerId);viewport.classList.add('panning');});
-  viewport.addEventListener('pointermove',e=>{if(!pan||e.pointerId!==pan.id)return;viewport.scrollLeft=pan.left-(e.clientX-pan.x);viewport.scrollTop=pan.top-(e.clientY-pan.y);});
-  const stopPan=()=>{pan=null;viewport.classList.remove('panning');};viewport.addEventListener('pointerup',stopPan);viewport.addEventListener('pointercancel',stopPan);viewport.addEventListener('lostpointercapture',stopPan);
-  viewport.addEventListener('keydown',e=>{if(e.target!==viewport)return;const delta=100;if(e.key==='ArrowDown')viewport.scrollTop+=delta;else if(e.key==='ArrowUp')viewport.scrollTop-=delta;else if(e.key==='ArrowLeft')viewport.scrollLeft-=delta;else if(e.key==='ArrowRight')viewport.scrollLeft+=delta;else if(e.key==='Home'){viewport.scrollTop=0;viewport.scrollLeft=0;}else return;e.preventDefault();});
-  $('#graph-fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await $('#graph-workspace').requestFullscreen();}catch{$('#graph-fullscreen').textContent='全屏暂不可用';setTimeout(()=>$('#graph-fullscreen').textContent='全屏阅读',1800);}});
-  document.addEventListener('fullscreenchange',()=>{$('#graph-fullscreen').textContent=document.fullscreenElement?'退出全屏':'全屏阅读';applyZoom();});
+  function clearSelection(redraw=true){
+    state.selected = null; state.selectedEdge = null;
+    $('#neighbor-only').checked = false; $('#neighbor-only').disabled = true;
+    $('#graph-context').disabled = true; $('#graph-context').value = 'direct';
+    $('#clear-selection').hidden = true;
+    $('#graph-detail-body').className = 'detail-empty';
+    $('#graph-detail-body').innerHTML = '<strong>选择一个方法，展开它的技术脉络</strong><p>点击节点查看核心机制与论文，点击连线查看关系依据与原文定位。</p><div class="detail-help">同方向研究表示机制相关或并行探索，不代表直接继承。</div>';
+    if(redraw) renderGraph(false);
+  }
+  $('#clear-selection').addEventListener('click', () => clearSelection(true));
 
-  function download(content,name,type){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);}
-  document.addEventListener('change',e=>{if(e.target.id!=='research-period')return;state.period=e.target.value;$('#neighbor-only').checked=false;renderGraph();});
-  document.addEventListener('click',e=>{if(!e.target.closest('#export-date-audit'))return;const cell=s=>'"'+String(s??'').replace(/"/g,'""')+'"';const rows=D.research.dateAudits.map(r=>[r.name,r.title,r.oldDate,r.date,r.audit?.kind||'',r.audit?.arxivFirst||'',r.publication?.label||'未记录',r.publication?.date||'',r.publication?.status||'未记录',r.audit?.source||'',r.publication?.source||'',r.audit?.note||'',r.audit?.checkedAt||'',(r.authors||[]).join('; '),r.authorAudit?.source||'']);const headers=['方法','论文标题','原时间','图谱采用时间','时间依据','arXiv 首次提交','发表 / 录用记录','发表时间','发表状态','时间证据链接','发表证据链接','核验说明','核验记录日期','作者（按署名顺序）','作者证据链接'];download('\ufeff'+[headers,...rows].map(row=>row.map(cell).join(',')).join('\r\n'),'专题文献日期核验表.csv','text/csv;charset=utf-8');});
-  function currentSubset(){const ids=new Set(collection.map(m=>m.id)),ms=D.canonical.methods.filter(m=>ids.has(m.id)),pids=new Set(ms.flatMap(m=>m.paper_ids));return {...D.canonical,papers:D.canonical.papers.filter(p=>pids.has(p.id)),methods:ms,groups:D.canonical.groups.map(g=>({...g,representative_method_ids:(g.representative_method_ids||[]).filter(id=>ids.has(id))})),edges:D.canonical.edges.filter(e=>ids.has(e.source)&&ids.has(e.target)),research_tracks:[]};}
+  $('#evolution-svg').addEventListener('click', e => {
+    const n = e.target.closest('[data-node]'), edge = e.target.closest('[data-edge]');
+    if(n){selectMethod(n.dataset.node); if($('#neighbor-only').checked) renderGraph(false);}
+    else if(edge) selectEdge(edge.dataset.edge);
+  });
+  $('#evolution-svg').addEventListener('keydown', e => {
+    if(!['Enter',' '].includes(e.key)) return;
+    const n = e.target.closest('[data-node]');
+    if(n){e.preventDefault(); selectMethod(n.dataset.node); if($('#neighbor-only').checked) renderGraph(false);}
+  });
+
+  function selectEdge(id){
+    const e = currentEdges().find(x => x.id === id); if(!e) return;
+    state.selected = null; state.selectedEdge = id;
+    $('#graph-context').disabled = true; $('#neighbor-only').checked = false; $('#neighbor-only').disabled = true;
+    highlightSelection();
+    $('#clear-selection').hidden = false;
+    const basis = e.basis === '沿用原页的技术关系记录，尚未逐条重新核对原论文。' ? '' : e.basis;
+    const targetMethod = methods.get(e.target);
+    const sources = evidenceLinks(e.evidence || [], targetMethod);
+    const [vText, vTone] = verifyLabels[e.verification] || ['待核', 'warn'];
+    const claimChip = e.claim_basis === 'inference' ? '<span class="status-chip warn">关系推断</span>' : '<span class="status-chip ok">事实依据</span>';
+    $('#graph-detail-body').className = '';
+    $('#graph-detail-body').innerHTML = `<div class="edge-detail">
+      <div class="kicker-row">
+        <span class="kicker ${e.type}">${types[e.type]}</span>
+        ${claimChip}
+        <span class="status-chip ${vTone}">${vText}</span>
+      </div>
+      <h4>${E(displayText(e.label))}</h4>
+      <div class="edge-flow"><p class="edge-names">${E(displayText(methods.get(e.source).name))}${e.type === 'theme' ? ' ↔ ' : ' → '}${E(displayText(targetMethod.name))}</p></div>
+      ${field('关系说明', basis)}
+      ${e.verification === 'disputed' ? field('不同记录', '该关系存在不同判断，详见数据中的证据记录。') : ''}
+      ${sources ? `<section class="detail-field"><h4>参考来源与定位</h4><ul class="source-list">${sources}</ul></section>` : ''}
+      ${e.type === 'theme' ? field('关联类型', '同方向研究，不表示直接继承。') : ''}
+      <div class="edge-actions">
+        <button type="button" data-focus="${E(e.source)}">定位起点</button>
+        <button type="button" data-focus="${E(e.target)}">定位终点</button>
+      </div>
+    </div>`;
+  }
+
+  function scopeButtons(){
+    $$('[data-scope]').forEach(b => {
+      const active = b.dataset.scope === state.scope && (state.scope !== 'research' || b.dataset.track === D.research.id);
+      b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active));
+    });
+  }
+  $$('[data-scope]').forEach(b => b.addEventListener('click', () => {
+    state.scope = b.dataset.scope; if(b.dataset.track) setTrack(b.dataset.track);
+    state.period = 'all'; $('#neighbor-only').checked = false;
+    directionOptions(); scopeButtons(); renderGraph();
+    if(state.selected) selectMethod(state.selected);
+  }));
+  $('#graph-search').addEventListener('input', () => {
+    clearTimeout(graphTimer);
+    graphTimer = setTimeout(() => {
+      $('#neighbor-only').checked = false; $('#graph-context').value = 'direct';
+      renderGraph();
+      if(graphMethods.length === 1){
+        const id = graphMethods[0].id; selectMethod(id);
+        if(currentEdges().some(e => e.source === id || e.target === id)){
+          $('#neighbor-only').checked = true; renderGraph(true);
+        }
+      }
+    }, 120);
+  });
+  ['graph-direction','graph-relations','neighbor-only'].forEach(id => $('#' + id).addEventListener('change', () => renderGraph()));
+  ['graph-year-from','graph-year-to'].forEach(id => $('#' + id).addEventListener('change', e => {
+    const from = $('#graph-year-from'), to = $('#graph-year-to');
+    if(from.value && to.value && from.value > to.value) (e.target === from ? to : from).value = e.target.value;
+    renderGraph();
+  }));
+  $('#graph-context').addEventListener('change', () => {if(state.selected){$('#neighbor-only').checked = true; renderGraph();}});
+
+  function resetGraph(){
+    if(state.scope !== 'research') state.scope = 'all';
+    state.zoom = 1;
+    $('#graph-search').value = ''; $('#graph-direction').value = '';
+    $('#graph-year-from').value = ''; $('#graph-year-to').value = '';
+    $('#graph-relations').value = 'all'; state.period = 'all';
+    directionOptions(); scopeButtons(); clearSelection(false); renderGraph();
+  }
+  $('#graph-reset').addEventListener('click', resetGraph);
+  $('#graph-empty-reset').addEventListener('click', resetGraph);
+
+  function applyZoom(){
+    $('#evolution-svg').style.width = graphWidth * state.zoom + 'px';
+    $('#evolution-svg').style.height = graphHeight * state.zoom + 'px';
+    $('#zoom-status').textContent = Math.round(state.zoom * 100) + '%';
+    $('#graph-viewport').style.height = document.fullscreenElement ? '' : Math.max(window.innerWidth < 540 ? 260 : 360, Math.min(720, window.innerHeight * .74, graphHeight * state.zoom + 16)) + 'px';
+  }
+  function zoomTo(value, anchor=null){
+    const v = $('#graph-viewport'), old = state.zoom, x = anchor?.x ?? v.clientWidth / 2, y = anchor?.y ?? v.clientHeight / 2;
+    const gx = (v.scrollLeft + x) / old, gy = (v.scrollTop + y) / old;
+    state.zoom = Math.max(.3, Math.min(2.2, value));
+    applyZoom();
+    v.scrollLeft = Math.max(0, gx * state.zoom - x);
+    v.scrollTop = Math.max(0, gy * state.zoom - y);
+  }
+  $('#zoom-in').addEventListener('click', () => zoomTo(state.zoom * 1.2));
+  $('#zoom-out').addEventListener('click', () => zoomTo(state.zoom / 1.2));
+  $('#fit-width').addEventListener('click', () => {zoomTo(($('#graph-viewport').clientWidth - 16) / graphWidth, {x:0, y:0}); $('#graph-viewport').scrollLeft = 0;});
+
+  const viewport = $('#graph-viewport');
+  viewport.addEventListener('wheel', e => {
+    if(!e.ctrlKey) return;
+    e.preventDefault();
+    const r = viewport.getBoundingClientRect();
+    zoomTo(state.zoom * Math.exp(-e.deltaY * .002), {x: e.clientX - r.left, y: e.clientY - r.top});
+  }, {passive:false});
+  viewport.addEventListener('pointerdown', e => {
+    if(e.button !== 0 || e.pointerType === 'touch' || e.target.closest('[data-node],[data-edge],button')) return;
+    pan = {id: e.pointerId, x: e.clientX, y: e.clientY, left: viewport.scrollLeft, top: viewport.scrollTop};
+    viewport.setPointerCapture(e.pointerId); viewport.classList.add('panning');
+  });
+  viewport.addEventListener('pointermove', e => {
+    if(!pan || e.pointerId !== pan.id) return;
+    viewport.scrollLeft = pan.left - (e.clientX - pan.x);
+    viewport.scrollTop = pan.top - (e.clientY - pan.y);
+  });
+  const stopPan = () => {pan = null; viewport.classList.remove('panning');};
+  viewport.addEventListener('pointerup', stopPan);
+  viewport.addEventListener('pointercancel', stopPan);
+  viewport.addEventListener('lostpointercapture', stopPan);
+  viewport.addEventListener('keydown', e => {
+    if(e.target !== viewport) return;
+    const delta = 100;
+    if(e.key === 'ArrowDown') viewport.scrollTop += delta;
+    else if(e.key === 'ArrowUp') viewport.scrollTop -= delta;
+    else if(e.key === 'ArrowLeft') viewport.scrollLeft -= delta;
+    else if(e.key === 'ArrowRight') viewport.scrollLeft += delta;
+    else if(e.key === 'Home'){viewport.scrollTop = 0; viewport.scrollLeft = 0;}
+    else return;
+    e.preventDefault();
+  });
+  $('#graph-fullscreen').addEventListener('click', async () => {
+    try{
+      if(document.fullscreenElement) await document.exitFullscreen();
+      else await $('#graph-workspace').requestFullscreen();
+    }catch{
+      $('#graph-fullscreen').textContent = '全屏暂不可用';
+      setTimeout(() => $('#graph-fullscreen').textContent = '全屏阅读', 1800);
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {$('#graph-fullscreen').textContent = document.fullscreenElement ? '退出全屏' : '全屏阅读'; applyZoom();});
+
+  function download(content, name, type){
+    const url = URL.createObjectURL(new Blob([content], {type}));
+    const a = document.createElement('a'); a.href = url; a.download = name;
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  }
+  document.addEventListener('change', e => {
+    if(e.target.id !== 'research-period') return;
+    state.period = e.target.value; $('#neighbor-only').checked = false; renderGraph();
+  });
+  document.addEventListener('click', e => {
+    if(!e.target.closest('#export-date-audit')) return;
+    const cell = s => '"' + String(s ?? '').replace(/"/g, '""') + '"';
+    const rows = D.research.dateAudits.map(r => [r.name,r.title,r.oldDate,r.date,r.audit?.kind||'',r.audit?.arxivFirst||'',r.publication?.label||'未记录',r.publication?.date||'',r.publication?.status||'未记录',r.audit?.source||'',r.publication?.source||'',r.audit?.note||'',r.audit?.checkedAt||'',(r.authors||[]).join('; '),r.authorAudit?.source||'']);
+    const headers = ['方法','论文标题','原时间','图谱采用时间','时间依据','arXiv 首次提交','发表 / 录用记录','发表时间','发表状态','时间证据链接','发表证据链接','核验说明','核验记录日期','作者（按署名顺序）','作者证据链接'];
+    download('\ufeff' + [headers, ...rows].map(row => row.map(cell).join(',')).join('\r\n'), '专题文献日期核验表.csv', 'text/csv;charset=utf-8');
+  });
+
+  function currentSubset(){
+    const ids = new Set(collection.map(m => m.id)), ms = D.canonical.methods.filter(m => ids.has(m.id)), pids = new Set(ms.flatMap(m => m.paper_ids));
+    return {...D.canonical, papers:D.canonical.papers.filter(p => pids.has(p.id)), methods:ms, groups:D.canonical.groups.map(g => ({...g, representative_method_ids:(g.representative_method_ids || []).filter(id => ids.has(id))})), edges:D.canonical.edges.filter(e => ids.has(e.source) && ids.has(e.target)), research_tracks:[]};
+  }
   function bibliographyCSV(papers){
-    const keys=['id','title','authors','doi','arxiv_id','first_public_date','publication_date','venue','publication_status','url','verification'];
-    const cell=value=>{let s=String(value??'');if(/^\s*[=+\-@]/.test(s)||/^[\t\r\n]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';};
-    return '\ufeff'+[keys,...papers.map(p=>keys.map(k=>k==='authors'?(p.authors||[]).join('; '):p[k]))].map(row=>row.map(cell).join(',')).join('\r\n')+'\r\n';
+    const keys = ['id','title','authors','doi','arxiv_id','first_public_date','publication_date','venue','publication_status','url','verification'];
+    const cell = value => {let s = String(value ?? ''); if(/^\s*[=+\-@]/.test(s) || /^[\t\r\n]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"';};
+    return '\ufeff' + [keys, ...papers.map(p => keys.map(k => k === 'authors' ? (p.authors || []).join('; ') : p[k]))].map(row => row.map(cell).join(',')).join('\r\n') + '\r\n';
   }
   function bibliographyBib(papers){
-    const chars={'\\':'{\\textbackslash}','{':'\\{','}':'\\}','&':'\\&','%':'\\%','$':'\\$','#':'\\#','_':'\\_','~':'{\\textasciitilde}','^':'{\\textasciicircum}'};
-    const escape=value=>String(value).replace(/[\\{}&%$#_~^]/g,c=>chars[c]).replace(/\n/g,' ');
-    return papers.map(p=>{const fields={title:p.title,author:(p.authors||[]).join(' and '),doi:p.doi,eprint:p.arxiv_id,url:p.url},date=p.publication_date||p.first_public_date;if(date)fields.year=date.slice(0,4);if(p.venue)fields.howpublished=p.venue;if(p.arxiv_id)fields.archivePrefix='arXiv';return '@misc{'+p.id+',\n'+Object.entries(fields).filter(([,v])=>v).map(([k,v])=>'  '+k+' = {'+escape(v)+'}').join(',\n')+'\n}';}).join('\n\n')+'\n';
+    const chars = {'\\':'{\\textbackslash}','{':'\\{','}':'\\}','&':'\\&','%':'\\%','$':'\\$','#':'\\#','_':'\\_','~':'{\\textasciitilde}','^':'{\\textasciicircum}'};
+    const escape = value => String(value).replace(/[\\{}&%$#_~^]/g, c => chars[c]).replace(/\n/g, ' ');
+    return papers.map(p => {
+      const fields = {title:p.title, author:(p.authors || []).join(' and '), doi:p.doi, eprint:p.arxiv_id, url:p.url}, date = p.publication_date || p.first_public_date;
+      if(date) fields.year = date.slice(0, 4);
+      if(p.venue) fields.howpublished = p.venue;
+      if(p.arxiv_id) fields.archivePrefix = 'arXiv';
+      return '@misc{' + p.id + ',\n' + Object.entries(fields).filter(([, v]) => v).map(([k, v]) => '  ' + k + ' = {' + (k === 'title' ? '{' + escape(v) + '}' : escape(v)) + '}').join(',\n') + '\n}';
+    }).join('\n\n') + '\n';
   }
-  $('#export-methods').addEventListener('click',()=>{const data=currentSubset(),format=$('#method-export-format').value;if(format==='csv')download(bibliographyCSV(data.papers),'当前文献.csv','text/csv;charset=utf-8');else if(format==='bib')download(bibliographyBib(data.papers),'当前文献.bib','application/x-bibtex;charset=utf-8');else download(JSON.stringify(data,null,2),'当前方法合集.json','application/json;charset=utf-8');});
+  $('#export-methods').addEventListener('click', () => {
+    const data = currentSubset(), format = $('#method-export-format').value;
+    if(format === 'csv') download(bibliographyCSV(data.papers), '当前文献.csv', 'text/csv;charset=utf-8');
+    else if(format === 'bib') download(bibliographyBib(data.papers), '当前文献.bib', 'application/x-bibtex;charset=utf-8');
+    else download(JSON.stringify(data, null, 2), '当前方法合集.json', 'application/json;charset=utf-8');
+  });
 
-  $('#export-svg').addEventListener('click',()=>{if(!graphMethods.length)return;const clone=$('#evolution-svg').cloneNode(true);clone.querySelectorAll('.edge-hit').forEach(n=>n.remove());clone.querySelectorAll('.graph-node').forEach(n=>n.classList.remove('dim','selected','related'));clone.querySelectorAll('.edge').forEach(n=>n.classList.remove('dim','highlight'));clone.setAttribute('width',graphWidth);clone.setAttribute('height',graphHeight);clone.style.width='';clone.style.height='';const tokens=['panel','soft','ink','muted','line','accent','tint','grid','direct','extension','borrow','theme'];const computed=getComputedStyle(document.documentElement);tokens.forEach(t=>clone.style.setProperty('--'+t,computed.getPropertyValue('--'+t)));clone.style.fontFamily='Segoe UI,Microsoft YaHei,Arial,sans-serif';const style=document.createElementNS('http://www.w3.org/2000/svg','style');style.textContent=$('style').textContent;clone.insertBefore(style,clone.firstChild);download('<?xml version="1.0" encoding="UTF-8"?>\n'+new XMLSerializer().serializeToString(clone),'技术演进关系图.svg','image/svg+xml;charset=utf-8');});
-  function setTheme(theme){state.theme=theme;if(theme==='auto')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=theme;$('#theme-toggle').textContent='主题：'+({auto:'自动',light:'浅色',dark:'深色'}[theme]);try{localStorage.setItem('research-evolution-map-theme',theme);}catch{}}
-  $('#theme-toggle').addEventListener('click',()=>setTheme({auto:'light',light:'dark',dark:'auto'}[state.theme]));
-  try{const saved=localStorage.getItem('research-evolution-map-theme');if(['auto','light','dark'].includes(saved))setTheme(saved);}catch{}
-  $('#neighbor-only').disabled=true;directionButtons();filterCollection();
-  if(location.hash==='#research'&&D.tracks.length){state.scope='research';directionOptions();scopeButtons();showView('evolution');renderGraph();}
-  window.__RESEARCH_MAP__={methodCount:D.methods.length,edgeCount:D.edges.length,researchCount:researchPlacements.size,getGraphState:()=>({scope:state.scope,ids:graphMethods.map(m=>m.id),edges:graphEdges,positions:[...positions],width:graphWidth,height:graphHeight,zoom:state.zoom,selected:state.selected,period:state.period,context:$('#graph-context').value,yearFrom:$('#graph-year-from').value,yearTo:$('#graph-year-to').value})};
+  $('#export-svg').addEventListener('click', () => {
+    if(!graphMethods.length) return;
+    const clone = $('#evolution-svg').cloneNode(true);
+    clone.querySelectorAll('.edge-hit').forEach(n => n.remove());
+    clone.querySelectorAll('.graph-node').forEach(n => n.classList.remove('dim','selected','related'));
+    clone.querySelectorAll('.edge').forEach(n => n.classList.remove('dim','highlight'));
+    clone.setAttribute('width', graphWidth); clone.setAttribute('height', graphHeight);
+    clone.style.width = ''; clone.style.height = '';
+    const tokens = ['bg','panel','panel-alt','soft','ink','muted','line','accent','tint','grid','direct','extension','borrow','theme','g0','g1','g2','g3','g4','g5','g6','g7'];
+    const computed = getComputedStyle(document.documentElement);
+    tokens.forEach(t => clone.style.setProperty('--' + t, computed.getPropertyValue('--' + t)));
+    clone.style.fontFamily = '"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif';
+    const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    style.textContent = $('style').textContent;
+    clone.insertBefore(style, clone.firstChild);
+    download('<?xml version="1.0" encoding="UTF-8"?>\n' + new XMLSerializer().serializeToString(clone), '技术演进关系图.svg', 'image/svg+xml;charset=utf-8');
+  });
+
+  function setTheme(theme){
+    state.theme = theme;
+    if(theme === 'auto') delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = theme;
+    $('#theme-toggle').textContent = '主题：' + ({auto:'自动', light:'浅色', dark:'深色'}[theme]);
+    try{localStorage.setItem('research-evolution-map-theme', theme);}catch{}
+  }
+  $('#theme-toggle').addEventListener('click', () => setTheme({auto:'light', light:'dark', dark:'auto'}[state.theme]));
+  try{const saved = localStorage.getItem('research-evolution-map-theme'); if(['auto','light','dark'].includes(saved)) setTheme(saved);}catch{}
+
+  $('#neighbor-only').disabled = true;
+  directionButtons();
+  filterCollection();
+  if(location.hash === '#research' && D.tracks.length){
+    state.scope = 'research'; directionOptions(); scopeButtons(); showView('evolution'); renderGraph();
+  }
+  window.__RESEARCH_MAP__ = {
+    methodCount: D.methods.length,
+    edgeCount: D.edges.length,
+    researchCount: researchPlacements.size,
+    getGraphState: () => ({
+      scope: state.scope, ids: graphMethods.map(m => m.id), edges: graphEdges,
+      positions: [...positions], width: graphWidth, height: graphHeight,
+      zoom: state.zoom, selected: state.selected, period: state.period,
+      context: $('#graph-context').value, yearFrom: $('#graph-year-from').value, yearTo: $('#graph-year-to').value
+    })
+  };
 })();
 </script>
-</body></html>
+</body>
+</html>

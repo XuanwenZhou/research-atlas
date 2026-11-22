@@ -163,36 +163,75 @@ def validate(data):
             issue('warning', 'featured_reason', loc, '代表性推荐依据缺失')
         if not m.get('classification_basis'):
             issue('warning', 'classification_basis', loc, '分类依据待补')
+        if m.get('problem') and m.get('mechanism') and title_key(m['problem']) == title_key(m['mechanism']):
+            issue('warning', 'problem_equals_mechanism', loc, 'problem 与 mechanism 内容重复；无独立问题陈述时请置 null')
         state(m, loc)
         sources(m, loc)
     def group_check(groups, loc):
         gm = {g.get('id'): g for g in groups}
         if len(gm) != len(groups) or any(not isinstance(k, str) or not ID.fullmatch(k) for k in gm):
             issue('error', 'group_id', loc, '分类 ID 缺失或重复')
+        seen_roots, current_root, seen_ids = set(), None, set()
+        fragmented = False
         for g in groups:
+            gid = g.get('id')
             parent = g.get('parent_id')
             if parent:
-                if parent not in gm or parent == g.get('id') or gm.get(parent, {}).get('parent_id'):
-                    issue('error', 'hierarchy', loc + '.' + str(g.get('id')), '仅允许无环的一二级分类')
+                if parent not in gm or parent == gid or gm.get(parent, {}).get('parent_id'):
+                    issue('error', 'hierarchy', loc + '.' + str(gid), '仅允许无环的一二级分类')
+                elif parent not in seen_ids:
+                    fragmented = True
+            root = parent if (parent and parent in gm) else gid
+            if root != current_root:
+                if root in seen_roots:
+                    fragmented = True
+                if current_root is not None:
+                    seen_roots.add(current_root)
+                current_root = root
+            if isinstance(gid, str):
+                seen_ids.add(gid)
             ref(g.get('representative_method_ids', []), tables['methods'], loc)
             if not g.get('name'):
                 issue('error', 'group_name', loc, '分类名称缺失')
             if not g.get('definition') or not g.get('rationale'):
-                issue('warning', 'taxonomy_basis', loc + '.' + str(g.get('id')), '分类定义或依据待补')
+                issue('warning', 'taxonomy_basis', loc + '.' + str(gid), '分类定义或依据待补')
+        if fragmented:
+            issue('warning', 'group_order_fragmented', loc, '二级分类未紧随所属一级分类连续排列，建议保持同父分组相邻')
         return gm
     group_check(list(tables['groups'].values()), 'groups')
     seen_edges = set()
+    def earliest_year(mid):
+        m = tables['methods'].get(mid)
+        if not m:
+            return None
+        ys = [tables['papers'][pid]['first_public_date'][:4]
+              for pid in m.get('paper_ids', [])
+              if pid in tables['papers'] and isinstance(tables['papers'][pid].get('first_public_date'), str)
+              and len(tables['papers'][pid]['first_public_date']) >= 4]
+        return min(ys) if ys else None
     def edge_check(edges, loc):
+        pair_seen = {}
         for e in edges:
             el = loc + '.' + str(e.get('id'))
             if not isinstance(e.get('id'), str) or not ID.fullmatch(e['id']) or e['id'] in seen_edges:
                 issue('error', 'edge_id', el, '边 ID 缺失、非法或全局重复')
             seen_edges.add(e.get('id'))
-            ref([e.get('source'), e.get('target')], tables['methods'], el)
-            if e.get('source') == e.get('target'):
+            src, tgt, etype = e.get('source'), e.get('target'), e.get('type')
+            ref([src, tgt], tables['methods'], el)
+            if src == tgt:
                 issue('error', 'self_edge', el, '不允许自环')
-            if e.get('type') not in TYPES:
+            if etype not in TYPES:
                 issue('error', 'edge_type', el, '关系类型无效')
+            if isinstance(src, str) and isinstance(tgt, str) and src != tgt and etype in TYPES:
+                ukey = frozenset((src, tgt))
+                prev = pair_seen.setdefault(ukey, [])
+                if any((p_s == src and p_t == tgt) or p_ty == 'theme' or etype == 'theme' for p_s, p_t, p_ty in prev):
+                    issue('warning', 'duplicate_edge_pair', el, '同一对方法存在重复边或与技术边重叠的同方向边')
+                prev.append((src, tgt, etype))
+                if etype != 'theme':
+                    sy, ty = earliest_year(src), earliest_year(tgt)
+                    if sy and ty and sy > ty:
+                        issue('warning', 'reverse_date_edge', el, f'起点首次公开年({sy})晚于终点({ty})，请核查预印本与发表日期')
             if e.get('claim_basis') not in {'fact', 'inference'}:
                 issue('error', 'claim_basis', el, '必须区分事实与推断')
             c = e.get('confidence')
@@ -207,11 +246,18 @@ def validate(data):
             primary = any(x.get('source_type') == 'primary_paper' and x.get('access_level') == 'full_text'
                           and x.get('locator') and (x.get('url') or x.get('source_id')) and x.get('checked_at')
                           and (x.get('summary') or x.get('quote')) for x in ev)
-            if e.get('type') != 'theme' and e.get('verification') == 'verified' and (e.get('claim_basis') != 'fact' or not primary):
+            if etype != 'theme' and e.get('verification') == 'verified' and (e.get('claim_basis') != 'fact' or not primary):
                 issue('error', 'unsupported_verified_edge', el, '已核技术边必须是事实并有原始全文证据、位置和核验日')
-            elif e.get('type') != 'theme' and not primary:
+            elif etype != 'theme' and not primary:
                 issue('warning', 'edge_evidence_pending', el, '技术关系缺少已定位的原始全文证据')
+            if etype != 'theme' and e.get('claim_basis') == 'fact' and ev and all(x.get('access_level') in {'metadata', 'metadata_only'} for x in ev):
+                issue('warning', 'title_only_fact_edge', el, '仅凭题名/元数据记录不得标为 fact，请核对摘要或全文后确认')
     edge_check(list(tables['edges'].values()), 'edges')
+    if len(tables['methods']) >= 20:
+        connected = {nid for e in tables['edges'].values() for nid in (e.get('source'), e.get('target')) if nid in tables['methods']}
+        isolated = len(tables['methods']) - len(connected)
+        if isolated > len(tables['methods']) * 0.5:
+            issue('warning', 'isolated_methods_high', 'edges', f'孤立方法占比偏高（{isolated}/{len(tables["methods"])}），请核查新增批次是否遗漏有依据的关系，勿无依据强连')
     for tid, t in tables['research_tracks'].items():
         loc = 'research_tracks.' + tid
         ref(t.get('method_ids', []), tables['methods'], loc)
@@ -288,6 +334,10 @@ def view_model(data):
                                edges=[edge(e) for e in t.get('edges', [])]))
     return dict(methods=methods, groups=groups, edges=[edge(e) for e in data['edges']],
                 surveys=data['surveys'], tracks=tracks, metadata=data['metadata'], canonical=data)
+
+def html_payload(data):
+    """Slim single-source payload embedded in HTML; the viewer hydrates view models client-side."""
+    return dict(canonical=data)
 
 def merge_papers(data, plan):
     result = copy.deepcopy(data)
